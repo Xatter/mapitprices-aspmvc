@@ -1,0 +1,70 @@
+﻿h1 {
+	border-width: 1px;
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	color: #000000;
+	border-bottom-style: solid;
+}
+
+.top_navStyle
+{
+	background-color: #009933;
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	color: #FFFFFF;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-width: 1px;
+	border-color: #000000;
+	list-style-type: none;
+	list-style-image: none;
+	list-style-position: inherit;
+}
+
+.mastheadStyle
+{
+	font-size: 60px;
+}
+
+.page_contentStyle
+{
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	background-color: #FFFFFF;
+}
+
+.footerStyle
+{
+	
+}
+.androidAppInfoStyle {
+	position: relative;
+}
+.androidBarCodeandIcon {
+	position: relative;
+	float: left;
+}
+.navItemStyle {
+	position: fixed;
+	border-width: 1px;
+	border-color: #000000;
+	border-right-style: groove;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+.blockQuote {
+	background-color: #C0C0C0;
+	text-align: justify;
+	padding: 5px;
+	clip: rect(auto, auto, auto, 27px);
+}
+
+.footerText
+{
+	font-style: italic;
+	font-size: small;
+}
+.pageBackground {
+	background-color: #4F524F;
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.box_text {
+	border: 1px solid #000000;
+}

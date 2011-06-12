@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/Utils
+END
+WebUtils.cs
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/Utils/WebUtils.cs
+END
+JsonArrayBuilder.cs
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/Utils/JsonArrayBuilder.cs
+END
+JsonObjectBuilder.cs
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/Utils/JsonObjectBuilder.cs
+END

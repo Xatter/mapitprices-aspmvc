@@ -1,0 +1,15 @@
+C:\Users\Xatter\Desktop\MvcMaps\bin\Debug\MvcMaps.dll
+C:\Users\Xatter\Desktop\MvcMaps\bin\Debug\MvcMaps.pdb
+C:\Users\Xatter\Desktop\MvcMaps\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Xatter\Desktop\MvcMaps\obj\Debug\MvcMaps.dll
+C:\Users\Xatter\Desktop\MvcMaps\obj\Debug\MvcMaps.pdb
+T:\MapItPrices\MapItPrices\MvcMaps\bin\Debug\MvcMaps.dll
+T:\MapItPrices\MapItPrices\MvcMaps\bin\Debug\MvcMaps.pdb
+T:\MapItPrices\MapItPrices\MvcMaps\obj\Debug\ResolveAssemblyReference.cache
+T:\MapItPrices\MapItPrices\MvcMaps\obj\Debug\MvcMaps.dll
+T:\MapItPrices\MapItPrices\MvcMaps\obj\Debug\MvcMaps.pdb
+T:\Codes\MapItPrices\MapItPrices\MvcMaps\bin\Debug\MvcMaps.dll
+T:\Codes\MapItPrices\MapItPrices\MvcMaps\bin\Debug\MvcMaps.pdb
+T:\Codes\MapItPrices\MapItPrices\MvcMaps\obj\Debug\ResolveAssemblyReference.cache
+T:\Codes\MapItPrices\MapItPrices\MvcMaps\obj\Debug\MvcMaps.dll
+T:\Codes\MapItPrices\MapItPrices\MvcMaps\obj\Debug\MvcMaps.pdb

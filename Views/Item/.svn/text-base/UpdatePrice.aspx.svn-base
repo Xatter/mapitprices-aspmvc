@@ -1,0 +1,54 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<MapItPrices.ViewModels.ItemPriceUpdateViewModel>" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
+    UpdatePrice
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+    <h2>UpdatePrice</h2>
+
+    <% using (Html.BeginForm()) { %>
+        <%: Html.ValidationSummary(true) %>
+        <%: Html.HiddenFor(model => model.StoreItem.ItemId) %>
+
+        <fieldset>
+            <legend>Fields</legend>
+
+            <div class="item-details">
+                Item: <strong><%: Model.StoreItem.Item.Name %> - <%: Model.StoreItem.Item.Size %></strong>
+            </div>
+            <div class="store-selector">
+                <!-- TODO: jwallace. Should be a MAP instead of dropdown -->
+                <div class="editor-label">
+                    Store
+                </div>
+                <div class="editor-field">
+                    <%: Html.DropDownListFor(model => model.StoreItem.StoreId, new SelectList(Model.Stores,"ID","Name")) %> <%: Html.ActionLink("New Store","Create","Store") %>
+                </div>
+                <div class="editor-label">
+                    <%: Html.LabelFor(model => model.StoreItem.Price) %>
+                </div>
+                <div class="editor-field">
+                    <%: Html.TextBoxFor(model => model.StoreItem.Price, new { value = Model.StoreItem.Price })%>
+                    <%: Html.ValidationMessageFor(model => model.StoreItem.Price) %>
+                </div>
+            </div>
+            <p>
+                <input type="submit" value="Update" />
+            </p>
+        </fieldset>
+       <% } %>
+
+       <script type="text/javascript">
+           $(function () {
+               $('#StoreItem_StoreId')
+                .click(function () {
+                    
+                })
+                .change(function () {
+                    
+                });
+           });
+       </script>
+</asp:Content>

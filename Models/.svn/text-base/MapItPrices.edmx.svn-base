@@ -1,0 +1,797 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MapItPricesModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="MapItPricesModelStoreContainer">
+    <EntitySet Name="Items" EntityType="MapItPricesModel.Store.Items" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StoreItems" EntityType="MapItPricesModel.Store.StoreItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Stores" EntityType="MapItPricesModel.Store.Stores" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OpenIDs" EntityType="MapItPricesModel.Store.OpenIDs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="MapItPricesModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Badges" EntityType="MapItPricesModel.Store.Badges" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BetaInviteCodes" EntityType="MapItPricesModel.Store.BetaInviteCodes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="MapItPricesModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShoppingLists" EntityType="MapItPricesModel.Store.ShoppingLists" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BadgeUser" EntityType="MapItPricesModel.Store.BadgeUser" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserRole" EntityType="MapItPricesModel.Store.UserRole" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ItemShoppingList" EntityType="MapItPricesModel.Store.ItemShoppingList" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_StoreItems_Items" Association="MapItPricesModel.Store.FK_StoreItems_Items">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="StoreItem" EntitySet="StoreItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StoreItems_Stores" Association="MapItPricesModel.Store.FK_StoreItems_Stores">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="StoreItem" EntitySet="StoreItems" />
+    </AssociationSet>
+    <AssociationSet Name="UserOpenID" Association="MapItPricesModel.Store.UserOpenID">
+      <End Role="User" EntitySet="Users" />
+      <End Role="OpenID" EntitySet="OpenIDs" />
+    </AssociationSet>
+    <AssociationSet Name="UserStoreItem" Association="MapItPricesModel.Store.UserStoreItem">
+      <End Role="User" EntitySet="Users" />
+      <End Role="StoreItem" EntitySet="StoreItems" />
+    </AssociationSet>
+    <AssociationSet Name="UserItem" Association="MapItPricesModel.Store.UserItem">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="UserStore" Association="MapItPricesModel.Store.UserStore">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BadgeUser_Badge" Association="MapItPricesModel.Store.FK_BadgeUser_Badge">
+      <End Role="Badge" EntitySet="Badges" />
+      <End Role="BadgeUser" EntitySet="BadgeUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BadgeUser_User" Association="MapItPricesModel.Store.FK_BadgeUser_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="BadgeUser" EntitySet="BadgeUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_User" Association="MapItPricesModel.Store.FK_UserRole_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_Role" Association="MapItPricesModel.Store.FK_UserRole_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="UserShoppingList" Association="MapItPricesModel.Store.UserShoppingList">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ShoppingList" EntitySet="ShoppingLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemShoppingList_Item" Association="MapItPricesModel.Store.FK_ItemShoppingList_Item">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="ItemShoppingList" EntitySet="ItemShoppingList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemShoppingList_ShoppingList" Association="MapItPricesModel.Store.FK_ItemShoppingList_ShoppingList">
+      <End Role="ShoppingList" EntitySet="ShoppingLists" />
+      <End Role="ItemShoppingList" EntitySet="ItemShoppingList" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Items">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="UPC" Type="nvarchar(max)" Nullable="true" DefaultValue="null" />
+    <Property Name="Size" Type="nchar" Nullable="true" MaxLength="20" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Brand" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="StoreItems">
+    <Key>
+      <PropertyRef Name="ItemId" />
+      <PropertyRef Name="StoreId" />
+    </Key>
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="StoreId" Type="int" Nullable="false" />
+    <Property Name="Price" Type="decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Stores">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Address" Type="nvarchar" Nullable="true" MaxLength="200" />
+    <Property Name="City" Type="nvarchar" Nullable="true" MaxLength="30" />
+    <Property Name="State" Type="nvarchar" Nullable="true" MaxLength="2" />
+    <Property Name="Zip" Type="nvarchar" Nullable="true" MaxLength="10" />
+    <Property Name="Latitude" Type="float" Nullable="true" />
+    <Property Name="Longitude" Type="float" Nullable="true" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OpenIDs">
+    <Key>
+      <PropertyRef Name="ClaimedIdentifier" />
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="ClaimedIdentifier" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="RealName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Badges">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BetaInviteCodes">
+    <Key>
+      <PropertyRef Name="InviteCode" />
+    </Key>
+    <Property Name="InviteCode" Type="nvarchar" StoreGeneratedPattern="Identity" Nullable="false" MaxLength="20" />
+    <Property Name="IsUsed" Type="bit" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShoppingLists">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BadgeUser">
+    <Key>
+      <PropertyRef Name="Badges_ID" />
+      <PropertyRef Name="Users_ID" />
+    </Key>
+    <Property Name="Badges_ID" Type="int" Nullable="false" />
+    <Property Name="Users_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="Users_ID" />
+      <PropertyRef Name="Roles_ID" />
+    </Key>
+    <Property Name="Users_ID" Type="int" Nullable="false" />
+    <Property Name="Roles_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ItemShoppingList">
+    <Key>
+      <PropertyRef Name="Items_ID" />
+      <PropertyRef Name="ShoppingLists_Id" />
+    </Key>
+    <Property Name="Items_ID" Type="int" Nullable="false" />
+    <Property Name="ShoppingLists_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_StoreItems_Items">
+    <End Role="Item" Type="MapItPricesModel.Store.Items" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="StoreItem" Type="MapItPricesModel.Store.StoreItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StoreItem">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StoreItems_Stores">
+    <End Role="Store" Type="MapItPricesModel.Store.Stores" Multiplicity="1" />
+    <End Role="StoreItem" Type="MapItPricesModel.Store.StoreItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StoreItem">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserOpenID">
+    <End Role="User" Type="MapItPricesModel.Store.Users" Multiplicity="1" />
+    <End Role="OpenID" Type="MapItPricesModel.Store.OpenIDs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OpenID">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserStoreItem">
+    <End Role="User" Type="MapItPricesModel.Store.Users" Multiplicity="1" />
+    <End Role="StoreItem" Type="MapItPricesModel.Store.StoreItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StoreItem">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserItem">
+    <End Role="User" Type="MapItPricesModel.Store.Users" Multiplicity="1" />
+    <End Role="Item" Type="MapItPricesModel.Store.Items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserStore">
+    <End Role="User" Type="MapItPricesModel.Store.Users" Multiplicity="1" />
+    <End Role="Store" Type="MapItPricesModel.Store.Stores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserShoppingList">
+    <End Role="User" Type="MapItPricesModel.Store.Users" Multiplicity="1" />
+    <End Role="ShoppingList" Type="MapItPricesModel.Store.ShoppingLists" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ShoppingList">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BadgeUser_Badge">
+    <End Role="Badge" Type="MapItPricesModel.Store.Badges" Multiplicity="1" />
+    <End Role="BadgeUser" Type="MapItPricesModel.Store.BadgeUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Badge">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BadgeUser">
+        <PropertyRef Name="Badges_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BadgeUser_User">
+    <End Role="BadgeUser" Type="MapItPricesModel.Store.BadgeUser" Multiplicity="*" />
+    <End Role="User" Type="MapItPricesModel.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BadgeUser">
+        <PropertyRef Name="Users_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_User">
+    <End Role="User" Type="MapItPricesModel.Store.Users" Multiplicity="1" />
+    <End Role="UserRole" Type="MapItPricesModel.Store.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="Users_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_Role">
+    <End Role="UserRole" Type="MapItPricesModel.Store.UserRole" Multiplicity="*" />
+    <End Role="Role" Type="MapItPricesModel.Store.Roles" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="Roles_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemShoppingList_Item">
+    <End Role="Item" Type="MapItPricesModel.Store.Items" Multiplicity="1" />
+    <End Role="ItemShoppingList" Type="MapItPricesModel.Store.ItemShoppingList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ItemShoppingList">
+        <PropertyRef Name="Items_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemShoppingList_ShoppingList">
+    <End Role="ItemShoppingList" Type="MapItPricesModel.Store.ItemShoppingList" Multiplicity="*" />
+    <End Role="ShoppingList" Type="MapItPricesModel.Store.ShoppingLists" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ShoppingList">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemShoppingList">
+        <PropertyRef Name="ShoppingLists_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MapItPricesModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MapItPricesEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="Items" EntityType="MapItPricesModel.Item" />
+          <EntitySet Name="StoreItems" EntityType="MapItPricesModel.StoreItem" />
+          <EntitySet Name="Stores" EntityType="MapItPricesModel.Store" />
+          <AssociationSet Name="FK_StoreItems_Items" Association="MapItPricesModel.FK_StoreItems_Items">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="StoreItem" EntitySet="StoreItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoreItems_Stores" Association="MapItPricesModel.FK_StoreItems_Stores">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="StoreItem" EntitySet="StoreItems" />
+          </AssociationSet>
+          <EntitySet Name="OpenIDs" EntityType="MapItPricesModel.OpenID" />
+          <EntitySet Name="Users" EntityType="MapItPricesModel.User" />
+          <AssociationSet Name="UserOpenID" Association="MapItPricesModel.UserOpenID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="OpenID" EntitySet="OpenIDs" />
+          </AssociationSet>
+          <AssociationSet Name="UserStoreItem" Association="MapItPricesModel.UserStoreItem">
+            <End EntitySet="Users" Role="User" />
+            <End EntitySet="StoreItems" Role="StoreItem" />
+          </AssociationSet>
+          <AssociationSet Name="UserItem" Association="MapItPricesModel.UserItem">
+            <End EntitySet="Users" Role="User" />
+            <End EntitySet="Items" Role="Item" />
+          </AssociationSet>
+          <AssociationSet Name="UserStore" Association="MapItPricesModel.UserStore">
+            <End EntitySet="Users" Role="User" />
+            <End EntitySet="Stores" Role="Store" />
+          </AssociationSet>
+          <EntitySet Name="Badges" EntityType="MapItPricesModel.Badge" />
+          <AssociationSet Name="BadgeUser" Association="MapItPricesModel.BadgeUser">
+            <End Role="Badge" EntitySet="Badges" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="BetaInviteCodes" EntityType="MapItPricesModel.BetaInviteCodes" />
+          <EntitySet Name="Roles" EntityType="MapItPricesModel.Role" />
+          <AssociationSet Name="UserRole" Association="MapItPricesModel.UserRole">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <EntitySet Name="ShoppingLists" EntityType="MapItPricesModel.ShoppingList" />
+          <AssociationSet Name="UserShoppingList" Association="MapItPricesModel.UserShoppingList">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ShoppingList" EntitySet="ShoppingLists" />
+          </AssociationSet>
+          <AssociationSet Name="ItemShoppingList" Association="MapItPricesModel.ItemShoppingList">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="ShoppingList" EntitySet="ShoppingLists" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="UPC" Type="String" DefaultValue="null" Nullable="true" />
+          <Property Type="String" Name="Size" MaxLength="20" FixedLength="true" Unicode="true" Nullable="true" />
+          <NavigationProperty Name="StoreItems" Relationship="MapItPricesModel.FK_StoreItems_Items" FromRole="Item" ToRole="StoreItem" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Public" />
+          <NavigationProperty Name="User" Relationship="MapItPricesModel.UserItem" FromRole="Item" ToRole="User" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Brand" Nullable="true" />
+          <NavigationProperty Name="ShoppingLists" Relationship="MapItPricesModel.ItemShoppingList" FromRole="Item" ToRole="ShoppingList" />
+        </EntityType>
+        <EntityType Name="StoreItem">
+          <Key>
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="StoreId" />
+          </Key>
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="StoreId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Item" Relationship="MapItPricesModel.FK_StoreItems_Items" FromRole="StoreItem" ToRole="Item" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Public" />
+          <NavigationProperty Name="Store" Relationship="MapItPricesModel.FK_StoreItems_Stores" FromRole="StoreItem" ToRole="Store" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Public" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="MapItPricesModel.UserStoreItem" FromRole="StoreItem" ToRole="User" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Address" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="State" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
+          <Property Name="Zip" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="StoreItems" Relationship="MapItPricesModel.FK_StoreItems_Stores" FromRole="Store" ToRole="StoreItem" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Public" />
+          <Property Type="Double" Name="Latitude" Nullable="true" />
+          <Property Type="Double" Name="Longitude" Nullable="true" />
+          <NavigationProperty Name="User" Relationship="MapItPricesModel.UserStore" FromRole="Store" ToRole="User" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          </EntityType>
+        <Association Name="FK_StoreItems_Items">
+          <End Type="MapItPricesModel.Item" Role="Item" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MapItPricesModel.StoreItem" Role="StoreItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StoreItem">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+          
+        </Association>
+        <Association Name="FK_StoreItems_Stores">
+          <End Type="MapItPricesModel.Store" Role="Store" Multiplicity="1" />
+          <End Type="MapItPricesModel.StoreItem" Role="StoreItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StoreItem">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+          
+        </Association>
+        <EntityType Name="OpenID">
+          <Key>
+            <PropertyRef Name="ClaimedIdentifier" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Type="String" Name="ClaimedIdentifier" Nullable="false" FixedLength="false" Unicode="true" MaxLength="200" />
+          <NavigationProperty Name="User" Relationship="MapItPricesModel.UserOpenID" FromRole="OpenID" ToRole="User" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OpenIDs" Relationship="MapItPricesModel.UserOpenID" FromRole="User" ToRole="OpenID" />
+          <Property Type="String" Name="RealName" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <Property Type="Int32" Name="ID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <NavigationProperty Name="StoreItems" Relationship="MapItPricesModel.UserStoreItem" FromRole="User" ToRole="StoreItem" />
+          <NavigationProperty Name="Items" Relationship="MapItPricesModel.UserItem" FromRole="User" ToRole="Item" />
+          <NavigationProperty Name="Stores" Relationship="MapItPricesModel.UserStore" FromRole="User" ToRole="Store" />
+          <NavigationProperty Name="Badges" Relationship="MapItPricesModel.BadgeUser" FromRole="User" ToRole="Badge" />
+          <NavigationProperty Name="Roles" Relationship="MapItPricesModel.UserRole" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="ShoppingLists" Relationship="MapItPricesModel.UserShoppingList" FromRole="User" ToRole="ShoppingList" />
+        </EntityType>
+        <Association Name="UserOpenID">
+          <End Type="MapItPricesModel.User" Role="User" Multiplicity="1" />
+          <End Type="MapItPricesModel.OpenID" Role="OpenID" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OpenID">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserStoreItem">
+          <End Type="MapItPricesModel.User" Multiplicity="1" Role="User" />
+          <End Type="MapItPricesModel.StoreItem" Multiplicity="*" Role="StoreItem" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StoreItem">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserItem">
+          <End Type="MapItPricesModel.User" Multiplicity="1" Role="User" />
+          <End Type="MapItPricesModel.Item" Multiplicity="*" Role="Item" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserStore">
+          <End Type="MapItPricesModel.User" Multiplicity="1" Role="User" />
+          <End Type="MapItPricesModel.Store" Multiplicity="*" Role="Store" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Badge">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="MapItPricesModel.BadgeUser" FromRole="Badge" ToRole="User" />
+        </EntityType>
+        <Association Name="BadgeUser">
+          <End Type="MapItPricesModel.Badge" Role="Badge" Multiplicity="*" />
+          <End Type="MapItPricesModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <EntityType Name="BetaInviteCodes">
+          <Key>
+            <PropertyRef Name="InviteCode" />
+          </Key>
+          <Property Type="String" Name="InviteCode" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" MaxLength="20" />
+          <Property Type="Boolean" Name="IsUsed" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="MapItPricesModel.UserRole" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <Association Name="UserRole">
+          <End Type="MapItPricesModel.User" Role="User" Multiplicity="*" />
+          <End Type="MapItPricesModel.Role" Role="Role" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ShoppingList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <NavigationProperty Name="User" Relationship="MapItPricesModel.UserShoppingList" FromRole="ShoppingList" ToRole="User" />
+          <Property Type="Int32" Name="UserID" Nullable="false" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <NavigationProperty Name="Items" Relationship="MapItPricesModel.ItemShoppingList" FromRole="ShoppingList" ToRole="Item" />
+          <Property Type="String" Name="Name" Nullable="false" />
+        </EntityType>
+        <Association Name="UserShoppingList">
+          <End Type="MapItPricesModel.User" Role="User" Multiplicity="1" />
+          <End Type="MapItPricesModel.ShoppingList" Role="ShoppingList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ShoppingList">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ItemShoppingList">
+          <End Type="MapItPricesModel.Item" Role="Item" Multiplicity="*" />
+          <End Type="MapItPricesModel.ShoppingList" Role="ShoppingList" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MapItPricesModelStoreContainer" CdmEntityContainer="MapItPricesEntities">
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="IsTypeOf(MapItPricesModel.Item)">
+        <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UPC" ColumnName="UPC" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Brand" ColumnName="Brand" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreItems">
+      <EntityTypeMapping TypeName="IsTypeOf(MapItPricesModel.StoreItem)">
+        <MappingFragment StoreEntitySet="StoreItems">
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stores">
+      <EntityTypeMapping TypeName="IsTypeOf(MapItPricesModel.Store)">
+        <MappingFragment StoreEntitySet="Stores">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OpenIDs">
+      <EntityTypeMapping TypeName="IsTypeOf(MapItPricesModel.OpenID)">
+        <MappingFragment StoreEntitySet="OpenIDs">
+          <ScalarProperty Name="ClaimedIdentifier" ColumnName="ClaimedIdentifier" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(MapItPricesModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="RealName" ColumnName="RealName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Badges">
+      <EntityTypeMapping TypeName="IsTypeOf(MapItPricesModel.Badge)">
+        <MappingFragment StoreEntitySet="Badges">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BetaInviteCodes">
+      <EntityTypeMapping TypeName="IsTypeOf(MapItPricesModel.BetaInviteCodes)">
+        <MappingFragment StoreEntitySet="BetaInviteCodes">
+          <ScalarProperty Name="InviteCode" ColumnName="InviteCode" />
+          <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(MapItPricesModel.Role)">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShoppingLists">
+      <EntityTypeMapping TypeName="IsTypeOf(MapItPricesModel.ShoppingList)">
+        <MappingFragment StoreEntitySet="ShoppingLists">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="BadgeUser" TypeName="MapItPricesModel.BadgeUser" StoreEntitySet="BadgeUser">
+      <EndProperty Name="Badge">
+        <ScalarProperty Name="ID" ColumnName="Badges_ID" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="ID" ColumnName="Users_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserRole" TypeName="MapItPricesModel.UserRole" StoreEntitySet="UserRole">
+      <EndProperty Name="User">
+        <ScalarProperty Name="ID" ColumnName="Users_ID" />
+      </EndProperty>
+      <EndProperty Name="Role">
+        <ScalarProperty Name="ID" ColumnName="Roles_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ItemShoppingList" TypeName="MapItPricesModel.ItemShoppingList" StoreEntitySet="ItemShoppingList">
+      <EndProperty Name="Item">
+        <ScalarProperty Name="ID" ColumnName="Items_ID" />
+      </EndProperty>
+      <EndProperty Name="ShoppingList">
+        <ScalarProperty Name="Id" ColumnName="ShoppingLists_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="DatabaseGenerationWorkflow" Value="$(VSEFTools)\DBGen\TablePerTypeStrategy.xaml" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="MapItPrices">
+        <EntityTypeShape EntityType="MapItPricesModel.Item" Width="1.5" PointX="0.5" PointY="3.125" Height="2.5571907552083326" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapItPricesModel.StoreItem" Width="1.5" PointX="3.125" PointY="2.625" Height="2.5571907552083331" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapItPricesModel.Store" Width="1.5" PointX="5.5" PointY="3.25" Height="3.1340950520833335" IsExpanded="true" />
+        <AssociationConnector Association="MapItPricesModel.FK_StoreItems_Items">
+          <ConnectorPoint PointX="2" PointY="4.1535953776041659" />
+          <ConnectorPoint PointX="3.125" PointY="4.1535953776041659" />
+        </AssociationConnector>
+        <AssociationConnector Association="MapItPricesModel.FK_StoreItems_Stores">
+          <ConnectorPoint PointX="5.5" PointY="4.2160953776041667" />
+          <ConnectorPoint PointX="4.625" PointY="4.2160953776041667" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="MapItPricesModel.OpenID" Width="1.5" PointX="11.375" PointY="4.375" Height="1.59568359375" />
+        <EntityTypeShape EntityType="MapItPricesModel.User" Width="1.5" PointX="8.5" PointY="0.75" Height="2.941793619791667" />
+        <AssociationConnector Association="MapItPricesModel.UserOpenID" ManuallyRouted="true">
+          <ConnectorPoint PointX="10" PointY="2.7327957825520839" />
+          <ConnectorPoint PointX="12.150573816265272" PointY="2.7327957825520839" />
+          <ConnectorPoint PointX="12.150573816265272" PointY="4.375" />
+        </AssociationConnector>
+        <AssociationConnector Association="MapItPricesModel.UserStoreItem">
+          <ConnectorPoint PointX="8.5" PointY="2.90625" />
+          <ConnectorPoint PointX="4.625" PointY="2.90625" />
+        </AssociationConnector>
+        <AssociationConnector Association="MapItPricesModel.UserItem">
+          <ConnectorPoint PointX="8.5" PointY="1.6562500000000002" />
+          <ConnectorPoint PointX="1.25" PointY="1.6562500000000002" />
+          <ConnectorPoint PointX="1.25" PointY="3.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="MapItPricesModel.UserStore">
+          <ConnectorPoint PointX="8.5" PointY="3.5670475260416667" />
+          <ConnectorPoint PointX="7" PointY="3.5670475260416667" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="MapItPricesModel.Badge" Width="1.5" PointX="11.25" PointY="0.5" Height="1.7879850260416665" />
+        <AssociationConnector Association="MapItPricesModel.BadgeUser">
+          <ConnectorPoint PointX="11.25" PointY="1.5189925130208333" />
+          <ConnectorPoint PointX="10" PointY="1.5189925130208333" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="MapItPricesModel.BetaInviteCodes" Width="1.5" PointX="13.625" PointY="1" Height="1.59568359375" />
+        <EntityTypeShape EntityType="MapItPricesModel.Role" Width="1.5" PointX="8.125" PointY="4.875" Height="1.5956835937499996" />
+        <AssociationConnector Association="MapItPricesModel.UserRole">
+          <ConnectorPoint PointX="9.0625" PointY="3.691793619791667" />
+          <ConnectorPoint PointX="9.0625" PointY="4.875" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="MapItPricesModel.ShoppingList" Width="1.5" PointX="3.125" PointY="6.125" Height="1.9802864583333335" />
+        <AssociationConnector Association="MapItPricesModel.UserShoppingList">
+          <ConnectorPoint PointX="9.84375" PointY="3.8840950520833331" />
+          <ConnectorPoint PointX="9.84375" PointY="7.3720914713541665" />
+          <ConnectorPoint PointX="4.625" PointY="7.3720914713541665" />
+        </AssociationConnector>
+        <AssociationConnector Association="MapItPricesModel.ItemShoppingList">
+          <ConnectorPoint PointX="1.25" PointY="5.8744921875" />
+          <ConnectorPoint PointX="1.25" PointY="7.1151432291666667" />
+          <ConnectorPoint PointX="3.125" PointY="7.1151432291666667" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

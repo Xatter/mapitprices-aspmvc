@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/MapItPrices/!svn/ver/49/MapItPrices/Models
+END
+Store.cs
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/MapItPrices/!svn/ver/42/MapItPrices/Models/Store.cs
+END
+RealDatabaseEntities.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/MapItPrices/!svn/ver/48/MapItPrices/Models/RealDatabaseEntities.cs
+END
+Item.cs
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/MapItPrices/!svn/ver/51/MapItPrices/Models/Item.cs
+END
+MapItPrices.Designer.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/MapItPrices/!svn/ver/48/MapItPrices/Models/MapItPrices.Designer.cs
+END
+MapItMembershipProvider.cs
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/MapItPrices/!svn/ver/44/MapItPrices/Models/MapItMembershipProvider.cs
+END
+APICallResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/MapItPrices/!svn/ver/34/MapItPrices/Models/APICallResult.cs
+END
+ObjectResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/MapItPrices/!svn/ver/38/MapItPrices/Models/ObjectResult.cs
+END
+MapItAuthorize.cs
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/MapItPrices/!svn/ver/44/MapItPrices/Models/MapItAuthorize.cs
+END
+MapItPrices.edmx.sql
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/MapItPrices/!svn/ver/49/MapItPrices/Models/MapItPrices.edmx.sql
+END
+MapItRoleProvider.cs
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/MapItPrices/!svn/ver/44/MapItPrices/Models/MapItRoleProvider.cs
+END
+MapItPrices.edmx
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/MapItPrices/!svn/ver/48/MapItPrices/Models/MapItPrices.edmx
+END
+IMapItEntities.cs
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/MapItPrices/!svn/ver/48/MapItPrices/Models/IMapItEntities.cs
+END
+GeoResponse.cs
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/MapItPrices/!svn/ver/30/MapItPrices/Models/GeoResponse.cs
+END

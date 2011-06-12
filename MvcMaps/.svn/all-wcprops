@@ -1,0 +1,155 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/MapItPrices/!svn/ver/42/MapItPrices/MvcMaps
+END
+BingMap.cs
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/BingMap.cs
+END
+Map.cs
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/Map.cs
+END
+MapType.cs
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/MapType.cs
+END
+GoogleMap.js
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/GoogleMap.js
+END
+LatLng.cs
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/MapItPrices/!svn/ver/42/MapItPrices/MvcMaps/LatLng.cs
+END
+IJsonRender.cs
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/IJsonRender.cs
+END
+BingMapMode.cs
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/BingMapMode.cs
+END
+GooglePushpin.cs
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/GooglePushpin.cs
+END
+BingMap.js
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/BingMap.js
+END
+Map.js
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/Map.js
+END
+IMap.cs
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/IMap.cs
+END
+Pushpin.cs
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/Pushpin.cs
+END
+BingPolygon.cs
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/BingPolygon.cs
+END
+Polygon.cs
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/Polygon.cs
+END
+GoogleMapExtensions.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/GoogleMapExtensions.cs
+END
+BingPolyline.cs
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/BingPolyline.cs
+END
+BingOrientation.cs
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/BingOrientation.cs
+END
+Polyline.cs
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/Polyline.cs
+END
+IBingPoly.cs
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/IBingPoly.cs
+END
+BingMapExtensions.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/BingMapExtensions.cs
+END
+DynamicMapOptions.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/DynamicMapOptions.cs
+END
+MvcMaps.csproj
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/MvcMaps.csproj
+END
+MapDataResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/MapDataResult.cs
+END
+GooglePushpinShowEvents.cs
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/MapItPrices/!svn/ver/26/MapItPrices/MvcMaps/GooglePushpinShowEvents.cs
+END
+GoogleMap.cs
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/MapItPrices/!svn/ver/29/MapItPrices/MvcMaps/GoogleMap.cs
+END

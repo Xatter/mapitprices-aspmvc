@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/MapItPrices/!svn/ver/48/MapItPrices/ViewModels
+END
+MainViewModel.cs
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/MapItPrices/!svn/ver/43/MapItPrices/ViewModels/MainViewModel.cs
+END
+SearchResultViewModel.cs
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/MapItPrices/!svn/ver/44/MapItPrices/ViewModels/SearchResultViewModel.cs
+END
+ItemPriceUpdateViewModel.cs
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/MapItPrices/!svn/ver/47/MapItPrices/ViewModels/ItemPriceUpdateViewModel.cs
+END
+SearchResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/MapItPrices/!svn/ver/45/MapItPrices/ViewModels/SearchResult.cs
+END
+StoreMapViewModel.cs
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/MapItPrices/!svn/ver/42/MapItPrices/ViewModels/StoreMapViewModel.cs
+END
+StoreItemViewModel.cs
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/MapItPrices/!svn/ver/48/MapItPrices/ViewModels/StoreItemViewModel.cs
+END
+StoreViewModel.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/MapItPrices/!svn/ver/48/MapItPrices/ViewModels/StoreViewModel.cs
+END
+MapViewModel.cs
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/MapItPrices/!svn/ver/17/MapItPrices/ViewModels/MapViewModel.cs
+END
+ReportPriceViewModel.cs
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/MapItPrices/!svn/ver/50/MapItPrices/ViewModels/ReportPriceViewModel.cs
+END

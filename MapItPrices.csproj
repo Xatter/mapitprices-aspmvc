@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{68F91740-214A-476B-B5AA-46CCDCBB5F4A}</ProjectGuid>
+    <ProjectTypeGuids>{F85E285D-A4E0-4152-9332-AB1D724D3325};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MapItPrices</RootNamespace>
+    <AssemblyName>MapItPrices</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
+    <PublishDatabaseSettings>
+      <Objects>
+      </Objects>
+    </PublishDatabaseSettings>
+    <ExcludeApp_Data>true</ExcludeApp_Data>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="MapItPricesEntities-Deployment" Order="1">
+          <Destination Path="Data Source=sql2k804.discountasp.net%3bInitial Catalog=SQL2008R2_778484_mapitprices%3bUser ID=SQL2008R2_778484_mapitprices_user%3bPassword=jmtaz3" />
+          <Object Type="dbFullSql" Enabled="False">
+            <PreSource Path="Data Source=.\SQLEXPRESS%3bInitial Catalog=T:\CODES\MAPITPRICES\MAPITPRICES\APP_DATA\MAPITPRICES.MDF%3bIntegrated Security=True" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" />
+            <Source Path="obj\Release\AutoScripts\MapItPricesEntities-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <ExcludeApp_Data>true</ExcludeApp_Data>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetOpenAuth, Version=3.4.5.10202, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>Lib\DotNetOpenAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="ViewModels\ReportPriceViewModel.cs" />
+    <Compile Include="Controllers\ShoppingListController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\APIController.cs" />
+    <Compile Include="Controllers\DynamicMapController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\StoreController.cs" />
+    <Compile Include="Models\Attributes\UPCFieldAttribute.cs" />
+    <Compile Include="Models\GeoResponse.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\APICallResult.cs" />
+    <Compile Include="Models\IMapItEntities.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\MapItAuthorize.cs" />
+    <Compile Include="Models\MapItMembershipProvider.cs" />
+    <Compile Include="Models\MapItPrices.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MapItPrices.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MapItRoleProvider.cs" />
+    <Compile Include="Models\ObjectResult.cs" />
+    <Compile Include="Models\RealDatabaseEntities.cs" />
+    <Compile Include="Models\Store.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ItemPriceUpdateViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MapViewModel.cs" />
+    <Compile Include="ViewModels\SearchResult.cs" />
+    <Compile Include="ViewModels\SearchResultViewModel.cs" />
+    <Compile Include="ViewModels\StoreItemViewModel.cs" />
+    <Compile Include="ViewModels\StoreMapViewModel.cs" />
+    <Compile Include="ViewModels\StoreViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\2010-11-11_Logo_03.png" />
+    <Content Include="Content\MapItPrices Logo.png" />
+    <Content Include="Content\openid.css" />
+    <Content Include="Content\OpenID\images.large\aol.gif" />
+    <Content Include="Content\OpenID\images.large\facebook.gif" />
+    <Content Include="Content\OpenID\images.large\google.gif" />
+    <Content Include="Content\OpenID\images.large\myopenid.gif" />
+    <Content Include="Content\OpenID\images.large\openid.gif" />
+    <Content Include="Content\OpenID\images.large\rambler.gif" />
+    <Content Include="Content\OpenID\images.large\verisign.gif" />
+    <Content Include="Content\OpenID\images.large\yahoo.gif" />
+    <Content Include="Content\OpenID\images.large\yandex.gif" />
+    <Content Include="Content\OpenID\images.small\aol.ico" />
+    <Content Include="Content\OpenID\images.small\aol.ico.gif" />
+    <Content Include="Content\OpenID\images.small\aol.ico.png" />
+    <Content Include="Content\OpenID\images.small\blogger.ico" />
+    <Content Include="Content\OpenID\images.small\blogger.ico.gif" />
+    <Content Include="Content\OpenID\images.small\blogger.ico.png" />
+    <Content Include="Content\OpenID\images.small\claimid.ico" />
+    <Content Include="Content\OpenID\images.small\claimid.ico.gif" />
+    <Content Include="Content\OpenID\images.small\claimid.ico.png" />
+    <Content Include="Content\OpenID\images.small\clickpass.ico" />
+    <Content Include="Content\OpenID\images.small\clickpass.ico.gif" />
+    <Content Include="Content\OpenID\images.small\clickpass.ico.png" />
+    <Content Include="Content\OpenID\images.small\facebook.ico" />
+    <Content Include="Content\OpenID\images.small\facebook.ico.gif" />
+    <Content Include="Content\OpenID\images.small\facebook.ico.png" />
+    <Content Include="Content\OpenID\images.small\flickr.ico" />
+    <Content Include="Content\OpenID\images.small\flickr.ico.gif" />
+    <Content Include="Content\OpenID\images.small\flickr.ico.png" />
+    <Content Include="Content\OpenID\images.small\google.ico" />
+    <Content Include="Content\OpenID\images.small\google.ico.gif" />
+    <Content Include="Content\OpenID\images.small\google.ico.png" />
+    <Content Include="Content\OpenID\images.small\google_profile.ico" />
+    <Content Include="Content\OpenID\images.small\google_profile.ico.gif" />
+    <Content Include="Content\OpenID\images.small\google_profile.ico.png" />
+    <Content Include="Content\OpenID\images.small\launchpad.ico" />
+    <Content Include="Content\OpenID\images.small\launchpad.ico.gif" />
+    <Content Include="Content\OpenID\images.small\launchpad.ico.png" />
+    <Content Include="Content\OpenID\images.small\linkedin.ico" />
+    <Content Include="Content\OpenID\images.small\linkedin.ico.gif" />
+    <Content Include="Content\OpenID\images.small\linkedin.ico.png" />
+    <Content Include="Content\OpenID\images.small\livejournal.ico" />
+    <Content Include="Content\OpenID\images.small\livejournal.ico.gif" />
+    <Content Include="Content\OpenID\images.small\livejournal.ico.png" />
+    <Content Include="Content\OpenID\images.small\myopenid.ico" />
+    <Content Include="Content\OpenID\images.small\myopenid.ico.gif" />
+    <Content Include="Content\OpenID\images.small\myopenid.ico.png" />
+    <Content Include="Content\OpenID\images.small\openid.ico" />
+    <Content Include="Content\OpenID\images.small\openid.ico.gif" />
+    <Content Include="Content\OpenID\images.small\openid.ico.png" />
+    <Content Include="Content\OpenID\images.small\rambler.ico" />
+    <Content Include="Content\OpenID\images.small\rambler.ico.gif" />
+    <Content Include="Content\OpenID\images.small\rambler.ico.png" />
+    <Content Include="Content\OpenID\images.small\technorati.ico" />
+    <Content Include="Content\OpenID\images.small\technorati.ico.gif" />
+    <Content Include="Content\OpenID\images.small\technorati.ico.png" />
+    <Content Include="Content\OpenID\images.small\twitter.ico" />
+    <Content Include="Content\OpenID\images.small\twitter.ico.gif" />
+    <Content Include="Content\OpenID\images.small\twitter.ico.png" />
+    <Content Include="Content\OpenID\images.small\verisign.ico" />
+    <Content Include="Content\OpenID\images.small\verisign.ico.gif" />
+    <Content Include="Content\OpenID\images.small\verisign.ico.png" />
+    <Content Include="Content\OpenID\images.small\vidoop.ico" />
+    <Content Include="Content\OpenID\images.small\vidoop.ico.gif" />
+    <Content Include="Content\OpenID\images.small\vidoop.ico.png" />
+    <Content Include="Content\OpenID\images.small\wordpress.ico" />
+    <Content Include="Content\OpenID\images.small\wordpress.ico.gif" />
+    <Content Include="Content\OpenID\images.small\wordpress.ico.png" />
+    <Content Include="Content\OpenID\images.small\yahoo.ico" />
+    <Content Include="Content\OpenID\images.small\yahoo.ico.gif" />
+    <Content Include="Content\OpenID\images.small\yahoo.ico.png" />
+    <Content Include="Content\OpenID\images.small\yandex.ico" />
+    <Content Include="Content\OpenID\images.small\yandex.ico.gif" />
+    <Content Include="Content\OpenID\images.small\yandex.ico.png" />
+    <Content Include="Content\OpenID\images\openid-inputicon.gif" />
+    <Content Include="Content\OpenID\images\openid-providers-en.png" />
+    <Content Include="Content\OpenID\images\openid-providers-ru.png" />
+    <Content Include="Content\OpenID\images\openid-providers-uk.png" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Models\MapItPrices.edmx.sql" />
+    <Content Include="Scripts\openid-jquery-en.js" />
+    <Content Include="Scripts\openid-jquery-ru.js" />
+    <Content Include="Scripts\openid-jquery-uk.js" />
+    <Content Include="Scripts\openid-jquery.js" />
+    <Content Include="Views\Item\Create.aspx" />
+    <Content Include="Views\Item\Details.aspx" />
+    <Content Include="Views\Item\ReportPrice.aspx" />
+    <Content Include="Views\Shared\LogOnUserControl.ascx" />
+    <Content Include="Views\ShoppingList\Index.aspx" />
+    <Content Include="Views\Users\Create.aspx" />
+    <Content Include="Views\Users\Login.aspx" />
+    <Content Include="Views\DynamicMap\Index.aspx" />
+    <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Content\colors.css" />
+    <Content Include="Content\layout.css" />
+    <Content Include="Views\Item\Delete.aspx" />
+    <Content Include="Views\Item\Edit.aspx" />
+    <Content Include="Views\Item\Index.aspx" />
+    <Content Include="Views\Map\Index.aspx" />
+    <Content Include="Views\Search\Index.aspx" />
+    <Content Include="Views\Store\Create.aspx" />
+    <Content Include="Views\Store\Delete.aspx" />
+    <Content Include="Views\Store\Edit.aspx" />
+    <Content Include="Views\Store\Index.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-1.4.1.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Site.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Models\MapItPrices.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MapItPrices.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="MvcMaps\MvcMaps.csproj">
+      <Project>{578DC3BC-E37E-41E0-B38F-D1DC54602BFE}</Project>
+      <Name>MvcMaps</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>61418</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

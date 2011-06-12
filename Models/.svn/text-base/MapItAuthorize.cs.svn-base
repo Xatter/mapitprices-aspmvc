@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Security.Principal;
+
+namespace MapItPrices.Models
+{
+    public class MapItAuthorize : AuthorizeAttribute
+    {
+        IMapItEntities mapitDB;
+
+        public MapItAuthorize()
+        {
+            mapitDB = new RealDatabaseEntities(new MapItPricesEntities());
+        }
+
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
+
+            IPrincipal user = httpContext.User;
+            
+            if (!user.Identity.IsAuthenticated)
+                return false;
+
+            var openid = mapitDB.OpenIDs.SingleOrDefault(o => o.ClaimedIdentifier == user.Identity.Name);
+            
+            if (openid == null)
+            {
+                return false;
+            }
+            else
+            {
+                var usersSplit = this.Users.Split(',');
+                
+                foreach (var userAttribute in usersSplit)
+                {
+                    if (userAttribute == openid.User.Username)
+                        return true;
+                }
+
+                var rolesSplit = this.Roles.Split(',');
+                var roles = openid.User.Roles.Select(r => r.Name);
+
+                foreach (var role in rolesSplit)
+                {
+                    if (roles.Contains(role))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+    }
+}

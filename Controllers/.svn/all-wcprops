@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/MapItPrices/!svn/ver/49/MapItPrices/Controllers
+END
+HomeController.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/MapItPrices/!svn/ver/44/MapItPrices/Controllers/HomeController.cs
+END
+APIController.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/MapItPrices/!svn/ver/49/MapItPrices/Controllers/APIController.cs
+END
+BaseController.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/MapItPrices/!svn/ver/49/MapItPrices/Controllers/BaseController.cs
+END
+StoreController.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/MapItPrices/!svn/ver/50/MapItPrices/Controllers/StoreController.cs
+END
+MapController.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/MapItPrices/!svn/ver/48/MapItPrices/Controllers/MapController.cs
+END
+ItemController.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/MapItPrices/!svn/ver/51/MapItPrices/Controllers/ItemController.cs
+END
+UsersController.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/MapItPrices/!svn/ver/50/MapItPrices/Controllers/UsersController.cs
+END
+DynamicMapController.cs
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/MapItPrices/!svn/ver/48/MapItPrices/Controllers/DynamicMapController.cs
+END
+ShoppingListController.cs
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/MapItPrices/!svn/ver/48/MapItPrices/Controllers/ShoppingListController.cs
+END
+SearchController.cs
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/MapItPrices/!svn/ver/51/MapItPrices/Controllers/SearchController.cs
+END

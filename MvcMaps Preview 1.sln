@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other Files", "Other Files", "{CFD12D6C-127F-4C13-905E-51B01405ADAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractiveSDKWebsite", "InteractiveSDKWebsite\InteractiveSDKWebsite.csproj", "{090BF210-8193-4C02-AA64-64F773149EDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcMaps", "MvcMaps\MvcMaps.csproj", "{578DC3BC-E37E-41E0-B38F-D1DC54602BFE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{090BF210-8193-4C02-AA64-64F773149EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{090BF210-8193-4C02-AA64-64F773149EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{090BF210-8193-4C02-AA64-64F773149EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{090BF210-8193-4C02-AA64-64F773149EDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{578DC3BC-E37E-41E0-B38F-D1DC54602BFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{578DC3BC-E37E-41E0-B38F-D1DC54602BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{578DC3BC-E37E-41E0-B38F-D1DC54602BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{578DC3BC-E37E-41E0-B38F-D1DC54602BFE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
