@@ -2,9 +2,12 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 01/19/2011 12:32:23
--- Generated from EDMX file: C:\MapItPrices\MapItPrices\Models\MapItPrices.edmx
+-- Date Created: 06/12/2011 19:44:06
+-- Generated from EDMX file: C:\mapitprices\Models\MapItPrices.edmx
 -- --------------------------------------------------
+
+CREATE DATABASE [SQL2008R2_778484_mapitprices];
+GO
 
 SET QUOTED_IDENTIFIER OFF;
 GO

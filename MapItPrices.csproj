@@ -57,6 +57,9 @@
     <Reference Include="DotNetOpenAuth, Version=3.4.5.10202, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <HintPath>Lib\DotNetOpenAuth.dll</HintPath>
     </Reference>
+    <Reference Include="Elmah">
+      <HintPath>Lib\Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data">
       <Private>False</Private>
@@ -219,6 +222,7 @@
     <Content Include="Scripts\openid-jquery-ru.js" />
     <Content Include="Scripts\openid-jquery-uk.js" />
     <Content Include="Scripts\openid-jquery.js" />
+    <Content Include="SQLServer.sql" />
     <Content Include="Views\Item\Create.aspx" />
     <Content Include="Views\Item\Details.aspx" />
     <Content Include="Views\Item\ReportPrice.aspx" />

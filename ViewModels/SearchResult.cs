@@ -9,6 +9,6 @@ namespace MapItPrices.ViewModels
     public class SearchResult
     {
         public Store Store { get; set; }
-        public IEnumerable<StoreItem> Items { get; set; }
+        public List<StoreItem> Items { get; set; }
     }
 }

@@ -222,6 +222,22 @@ namespace MapItPrices.Models
             }
         }
         private ObjectSet<ShoppingList> _ShoppingLists;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BetaSignup> BetaSignups
+        {
+            get
+            {
+                if ((_BetaSignups == null))
+                {
+                    _BetaSignups = base.CreateObjectSet<BetaSignup>("BetaSignups");
+                }
+                return _BetaSignups;
+            }
+        }
+        private ObjectSet<BetaSignup> _BetaSignups;
 
         #endregion
         #region AddTo Methods
@@ -296,6 +312,14 @@ namespace MapItPrices.Models
         public void AddToShoppingLists(ShoppingList shoppingList)
         {
             base.AddObject("ShoppingLists", shoppingList);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BetaSignups EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBetaSignups(BetaSignup betaSignup)
+        {
+            base.AddObject("BetaSignups", betaSignup);
         }
 
         #endregion
@@ -540,6 +564,87 @@ namespace MapItPrices.Models
         private global::System.Int32 _UserID;
         partial void OnUserIDChanging(global::System.Int32 value);
         partial void OnUserIDChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="MapItPricesModel", Name="BetaSignup")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BetaSignup : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BetaSignup object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="email">Initial value of the Email property.</param>
+        public static BetaSignup CreateBetaSignup(global::System.Int32 id, global::System.String email)
+        {
+            BetaSignup betaSignup = new BetaSignup();
+            betaSignup.Id = id;
+            betaSignup.Email = email;
+            return betaSignup;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Email
+        {
+            get
+            {
+                return _Email;
+            }
+            set
+            {
+                OnEmailChanging(value);
+                ReportPropertyChanging("Email");
+                _Email = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Email");
+                OnEmailChanged();
+            }
+        }
+        private global::System.String _Email;
+        partial void OnEmailChanging(global::System.String value);
+        partial void OnEmailChanged();
 
         #endregion
     

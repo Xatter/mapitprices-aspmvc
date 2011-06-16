@@ -391,6 +391,7 @@
             <End Role="Item" EntitySet="Items" />
             <End Role="ShoppingList" EntitySet="ShoppingLists" />
           </AssociationSet>
+          <EntitySet Name="BetaSignups" EntityType="MapItPricesModel.BetaSignup" />
         </EntityContainer>
         <EntityType Name="Item">
           <Key>
@@ -596,6 +597,13 @@
           <End Type="MapItPricesModel.Item" Role="Item" Multiplicity="*" />
           <End Type="MapItPricesModel.ShoppingList" Role="ShoppingList" Multiplicity="*" />
         </Association>
+        <EntityType Name="BetaSignup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Email" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -791,6 +799,7 @@
           <ConnectorPoint PointX="1.25" PointY="7.1151432291666667" />
           <ConnectorPoint PointX="3.125" PointY="7.1151432291666667" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="MapItPricesModel.BetaSignup" Width="1.5" PointX="1.25" PointY="8.625" Height="1.4033821614583335" />
       </Diagram>
     </Diagrams>
   </Designer>

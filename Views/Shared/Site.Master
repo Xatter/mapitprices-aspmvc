@@ -14,12 +14,12 @@
     <style type="text/css">
         .BingMap
         {
-            height: 500px;
+            height: 100%;
             border: solid 1px black;
         }
         .GoogleMap
         {
-            height: 500px;
+            height: 100%;
             border: solid 1px black;
         }
         .style1

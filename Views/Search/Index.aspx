@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<MapItPrices.ViewModels.SearchResultViewModel>" %>
+﻿<%@ Page Title="" Language="C#" Debug="true" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<MapItPrices.ViewModels.SearchResultViewModel>" %>
 
 <%@ Import Namespace="MvcMaps" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">

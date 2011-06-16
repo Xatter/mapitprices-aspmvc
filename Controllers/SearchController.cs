@@ -26,36 +26,11 @@ namespace MapItPrices.Controllers
             var search = itemsearchtext.ToUpperInvariant();
 
             SearchResultViewModel model = new SearchResultViewModel();
-            var items = MapItDB.Items.ToList();
 
-            List<Item> matchingItems = new List<Item>();
-            List<SearchResult> searchResults = new List<SearchResult>();
+            model.SearchResult = new List<SearchResult>();
+            model.Items = new List<Item>();
 
-            // Do basic Contains search
-            foreach (var item in items)
-            {
-                var itemSearchText = item.Name.ToUpperInvariant() + "_" + item.Brand.ToUpperInvariant() + "_" + item.UPC;
-
-                if (itemSearchText.Contains(search))
-                {
-                    matchingItems.Add(item);
-                    var thing = item.StoreItems.ToList();
-                    var searchResult = from i in item.StoreItems
-                                       group i by i.Store into g
-                                       select new SearchResult
-                                       {
-                                           Store = g.Key,
-                                           Items = g.Select(s => s).AsEnumerable()
-                                       };
-                    searchResults.AddRange(searchResult);
-                }
-            }
-
-            // Do the joins to get all the metadata in
-            model.SearchResult = searchResults;
-            model.Items = (from i in MapItDB.Items
-                           where i.Name.Contains(search)
-                           select i).AsEnumerable();
+            var items = MapItDB.Items.Where(i => i.Name.ToUpper().Contains(search));
 
             return View(model);
         }
