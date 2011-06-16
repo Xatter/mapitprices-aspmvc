@@ -8,22 +8,27 @@
         <h3 class="top_navStyle">
             What is this?</h3>
         <p>
-            MapItPrices.com is a website that will take all the known prices for an item and
-            lay them out on a map so it's easy for you to see which place has the best price
-            and how far away that is from you. Just type in a search at the top for an item,
-            then select the exact item you meant off the list.
-        </p>
+            MapItPrices.com takes all the known prices for an item and shows you on a map. It
+            makes it easy for you to see which place has the best price and how far away that
+            is from you. Just type in a search at the top for an item, then select the exact
+            item off the list. Currently this only works in New York City. Although there is
+            no particular reason that it won't work in your area.</p>
+        <h3 class="top_navStyle">
+            Like Mobile?</h3>
         <p>
-            Currently this only really works in <strong>New York City.</strong> Although there
-            is no particular reason that it won't work in your area, but there just won't be
-            as much data.
-        </p>
-
-        <h3 class="top_navStyle">Interested?</h3>
-        <p>Sign up to be notified when the BETA starts:</p>
+            Cool, so do we! That's why there's an Android Application to go along with it. This
+            way you can keep your shopping list handy while you're on the go, including the
+            map of where to go.</p>
+        <h3 class="top_navStyle">
+            Interested?</h3>
+        <p>
+            Sign up to be notified when the BETA starts:</p>
         <div>
-            <% using (Html.BeginForm("Signup","Home", FormMethod.Post)) { %>
-            <div>Email:<%:Html.TextBox("email",string.Empty) %> <input type="submit" value="Submit"/></div>
+            <% using (Html.BeginForm("Signup", "Home", FormMethod.Post))
+               { %>
+            <div>
+                Email:<%:Html.TextBox("email",string.Empty) %>
+                <input type="submit" value="Submit" /></div>
             <% } %>
         </div>
     </div>
