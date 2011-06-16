@@ -45,6 +45,16 @@ namespace MapItPrices.Models
             get { return _context.ShoppingLists; }
         }
 
+        public IObjectSet<BetaSignup> BetaSignups
+        {
+            get { return _context.BetaSignups; }
+        }
+
+        public IObjectSet<BetaInviteCodes> BetaInviteCodes
+        {
+            get { return _context.BetaInviteCodes; }
+        }
+
         public RealDatabaseEntities(MapItPricesEntities context)
         {
             _context = context;

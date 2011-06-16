@@ -2,12 +2,9 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 06/12/2011 19:44:06
+-- Date Created: 06/16/2011 11:53:05
 -- Generated from EDMX file: C:\mapitprices\Models\MapItPrices.edmx
 -- --------------------------------------------------
-
-CREATE DATABASE [SQL2008R2_778484_mapitprices];
-GO
 
 SET QUOTED_IDENTIFIER OFF;
 GO
@@ -187,6 +184,13 @@ CREATE TABLE [dbo].[ShoppingLists] (
 );
 GO
 
+-- Creating table 'BetaSignups'
+CREATE TABLE [dbo].[BetaSignups] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Email] nvarchar(max)  NOT NULL
+);
+GO
+
 -- Creating table 'BadgeUser'
 CREATE TABLE [dbo].[BadgeUser] (
     [Badges_ID] int  NOT NULL,
@@ -263,6 +267,12 @@ GO
 -- Creating primary key on [Id] in table 'ShoppingLists'
 ALTER TABLE [dbo].[ShoppingLists]
 ADD CONSTRAINT [PK_ShoppingLists]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'BetaSignups'
+ALTER TABLE [dbo].[BetaSignups]
+ADD CONSTRAINT [PK_BetaSignups]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

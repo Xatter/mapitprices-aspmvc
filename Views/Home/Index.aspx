@@ -18,5 +18,13 @@
             is no particular reason that it won't work in your area, but there just won't be
             as much data.
         </p>
+
+        <h3 class="top_navStyle">Interested?</h3>
+        <p>Sign up to be notified when the BETA starts:</p>
+        <div>
+            <% using (Html.BeginForm("Signup","Home", FormMethod.Post)) { %>
+            <div>Email:<%:Html.TextBox("email",string.Empty) %> <input type="submit" value="Submit"/></div>
+            <% } %>
+        </div>
     </div>
 </asp:Content>

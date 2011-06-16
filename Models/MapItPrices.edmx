@@ -15,6 +15,7 @@
     <EntitySet Name="BetaInviteCodes" EntityType="MapItPricesModel.Store.BetaInviteCodes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Roles" EntityType="MapItPricesModel.Store.Roles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ShoppingLists" EntityType="MapItPricesModel.Store.ShoppingLists" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BetaSignups" EntityType="MapItPricesModel.Store.BetaSignups" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="BadgeUser" EntityType="MapItPricesModel.Store.BadgeUser" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserRole" EntityType="MapItPricesModel.Store.UserRole" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ItemShoppingList" EntityType="MapItPricesModel.Store.ItemShoppingList" store:Type="Tables" Schema="dbo" />
@@ -154,6 +155,13 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BetaSignups">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="BadgeUser">
     <Key>
@@ -698,6 +706,14 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BetaSignups">
+      <EntityTypeMapping TypeName="IsTypeOf(MapItPricesModel.BetaSignup)">
+        <MappingFragment StoreEntitySet="BetaSignups">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

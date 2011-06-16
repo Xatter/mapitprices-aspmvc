@@ -17,5 +17,31 @@ namespace MapItPrices.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Signup(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return RedirectToAction("Index");
+            }
+            
+            var alreadyExists = MapItDB.BetaSignups.SingleOrDefault(s => s.Email.ToUpper() == email.ToUpper());
+
+            if (alreadyExists == null)
+            {
+                BetaSignup signup = new BetaSignup();
+                signup.Email = email;
+                MapItDB.BetaSignups.AddObject(signup);
+                MapItDB.SaveChanges();
+            }
+
+            return RedirectToAction("SayThanks");
+        }
+
+        public ActionResult SayThanks()
+        {
+            return View();
+        }
     }
 }

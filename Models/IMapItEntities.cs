@@ -18,6 +18,9 @@ namespace MapItPrices.Models
         IObjectSet<Role> Roles { get;  }
         IObjectSet<ShoppingList> ShoppingLists { get; }
 
+        IObjectSet<BetaSignup> BetaSignups { get; }
+        IObjectSet<BetaInviteCodes> BetaInviteCodes { get; }
+
         void SaveChanges();
     }
 }

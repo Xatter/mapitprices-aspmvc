@@ -39,21 +39,6 @@
         <strong><span class="style1">BETA</span></strong>&nbsp; &lt;-- heh like Google.
         Get it?
     </div>
-    <div class="container_12">
-        <div class="grid_2" style="font-size: large; font-weight: bold">
-            Item Search</div>
-        <% using (Html.BeginForm("Index", "Search", FormMethod.Get))
-           { %>
-        <%: Html.ValidationSummary(true) %>
-        <%: Html.TextBox("itemsearchtext", string.Empty, new System.Collections.Generic.Dictionary<string, object>{{"class","grid_8"}})%>
-        <input type="submit" value="Search" class="grid_1" />
-        <%  } %>
-    </div>
-    <div id="nav" class="container_12">
-        <div class="nav-login">
-            <% Html.RenderPartial("LogOnUserControl"); %>
-        </div>
-    </div>
     <div id="content" class="container_12">
         <asp:ContentPlaceHolder ID="MainContent" runat="server">
         </asp:ContentPlaceHolder>
