@@ -228,6 +228,7 @@
     <Content Include="Scripts\openid-jquery.js" />
     <Content Include="Elmah-SQLServer.sql" />
     <Content Include="Views\Home\SayThanks.aspx" />
+    <Content Include="Views\Home\WhoSignedUp.aspx" />
     <Content Include="Views\Item\Create.aspx" />
     <Content Include="Views\Item\Details.aspx" />
     <Content Include="Views\Item\ReportPrice.aspx" />
