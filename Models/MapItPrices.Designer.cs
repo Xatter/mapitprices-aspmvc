@@ -477,13 +477,11 @@ namespace MapItPrices.Models
         /// </summary>
         /// <param name="inviteCode">Initial value of the InviteCode property.</param>
         /// <param name="isUsed">Initial value of the IsUsed property.</param>
-        /// <param name="userID">Initial value of the UserID property.</param>
-        public static BetaInviteCodes CreateBetaInviteCodes(global::System.String inviteCode, global::System.Boolean isUsed, global::System.Int32 userID)
+        public static BetaInviteCodes CreateBetaInviteCodes(global::System.String inviteCode, global::System.Boolean isUsed)
         {
             BetaInviteCodes betaInviteCodes = new BetaInviteCodes();
             betaInviteCodes.InviteCode = inviteCode;
             betaInviteCodes.IsUsed = isUsed;
-            betaInviteCodes.UserID = userID;
             return betaInviteCodes;
         }
 
@@ -544,26 +542,26 @@ namespace MapItPrices.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 UserID
+        public global::System.String User_ID
         {
             get
             {
-                return _UserID;
+                return _User_ID;
             }
             set
             {
-                OnUserIDChanging(value);
-                ReportPropertyChanging("UserID");
-                _UserID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("UserID");
-                OnUserIDChanged();
+                OnUser_IDChanging(value);
+                ReportPropertyChanging("User_ID");
+                _User_ID = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("User_ID");
+                OnUser_IDChanged();
             }
         }
-        private global::System.Int32 _UserID;
-        partial void OnUserIDChanging(global::System.Int32 value);
-        partial void OnUserIDChanged();
+        private global::System.String _User_ID;
+        partial void OnUser_IDChanging(global::System.String value);
+        partial void OnUser_IDChanged();
 
         #endregion
     

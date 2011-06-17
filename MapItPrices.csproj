@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Models\BetaCodeRequest.cs" />
     <Compile Include="ViewModels\ReportPriceViewModel.cs" />
     <Compile Include="Controllers\ShoppingListController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -117,14 +118,14 @@
     <Compile Include="Models\APICallResult.cs" />
     <Compile Include="Models\IMapItEntities.cs" />
     <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\MapItAuthorize.cs" />
-    <Compile Include="Models\MapItMembershipProvider.cs" />
+    <Compile Include="Models\Authentication\MapItAuthorize.cs" />
+    <Compile Include="Models\Authentication\MapItMembershipProvider.cs" />
     <Compile Include="Models\MapItPrices.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MapItPrices.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\MapItRoleProvider.cs" />
+    <Compile Include="Models\Authentication\MapItRoleProvider.cs" />
     <Compile Include="Models\ObjectResult.cs" />
     <Compile Include="Models\RealDatabaseEntities.cs" />
     <Compile Include="Models\Store.cs" />
@@ -249,6 +250,7 @@
     <Content Include="Views\Store\Delete.aspx" />
     <Content Include="Views\Store\Edit.aspx" />
     <Content Include="Views\Store\Index.aspx" />
+    <Content Include="Views\Users\RequestBetaCode.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

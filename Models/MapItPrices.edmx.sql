@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 06/16/2011 11:53:05
+-- Date Created: 06/17/2011 09:07:06
 -- Generated from EDMX file: C:\mapitprices\Models\MapItPrices.edmx
 -- --------------------------------------------------
 
@@ -56,6 +56,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ItemShoppingList_ShoppingList]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ItemShoppingList] DROP CONSTRAINT [FK_ItemShoppingList_ShoppingList];
 GO
+IF OBJECT_ID(N'[dbo].[FK_UserBetaInviteCodes]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[BetaInviteCodes] DROP CONSTRAINT [FK_UserBetaInviteCodes];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -87,6 +90,9 @@ IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[ShoppingLists]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ShoppingLists];
+GO
+IF OBJECT_ID(N'[dbo].[BetaSignups]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BetaSignups];
 GO
 IF OBJECT_ID(N'[dbo].[BadgeUser]', 'U') IS NOT NULL
     DROP TABLE [dbo].[BadgeUser];
@@ -165,7 +171,7 @@ GO
 CREATE TABLE [dbo].[BetaInviteCodes] (
     [InviteCode] nvarchar(20)  NOT NULL,
     [IsUsed] bit  NOT NULL,
-    [UserID] int  NOT NULL
+    [User_ID] nvarchar(max)  NULL
 );
 GO
 

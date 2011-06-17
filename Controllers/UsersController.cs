@@ -25,6 +25,7 @@ namespace MapItPrices.Controllers
 
             base.Initialize(requestContext);
         }
+
         public ActionResult Login()
         {
 #if DEBUG
@@ -32,7 +33,7 @@ namespace MapItPrices.Controllers
             provider.ValidateUser("TEST_USER",string.Empty);
 
             return RedirectToAction("Index", "Home");
-#else 
+#else
             return View();
 #endif
         }
@@ -66,6 +67,32 @@ namespace MapItPrices.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult RequestBetaCode(string claimedIdentifier)
+        {
+            BetaCodeRequest request = new BetaCodeRequest();
+            request.ClaimedIdentifier = claimedIdentifier;
+            return View(request);
+        }
+
+        [HttpPost]
+        public ActionResult RequestBetaCode(BetaCodeRequest request)
+        {
+            var inviteCode = MapItDB.BetaInviteCodes.SingleOrDefault(c => c.InviteCode.ToUpper() == request.BetaCode.ToUpper());
+            if (inviteCode == null)
+            {
+                request.ErrorMessage = "Invalid Beta Code";
+                return View("RequestBetaCode", request);
+            }
+            else
+            {
+                inviteCode.IsUsed = true;
+                MapItDB.SaveChanges();
+
+                return RedirectToAction("Create", new { identifier = request.ClaimedIdentifier });
+            }
+
         }
 
         public ActionResult Authenticate()
@@ -110,13 +137,14 @@ namespace MapItPrices.Controllers
                         if (existingUser == null)
                         {
                             // Display the 'New Users' dialog
-                            return RedirectToAction("Create", new { identifier = response.ClaimedIdentifier.ToString() });
+                            return RedirectToAction("RequestBetaCode", new { claimedIdentifier = response.ClaimedIdentifier.ToString() });
                         }
                         else
                         {
                             FormsAuthentication.SetAuthCookie(response.ClaimedIdentifier, false);
                             provider.ValidateUser(response.ClaimedIdentifier, null);
                         }
+
                         return RedirectToAction("Index", "Home");
 
                     case AuthenticationStatus.Canceled:
