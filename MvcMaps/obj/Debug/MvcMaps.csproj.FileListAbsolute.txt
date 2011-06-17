@@ -13,3 +13,8 @@ T:\Codes\MapItPrices\MapItPrices\MvcMaps\bin\Debug\MvcMaps.pdb
 T:\Codes\MapItPrices\MapItPrices\MvcMaps\obj\Debug\ResolveAssemblyReference.cache
 T:\Codes\MapItPrices\MapItPrices\MvcMaps\obj\Debug\MvcMaps.dll
 T:\Codes\MapItPrices\MapItPrices\MvcMaps\obj\Debug\MvcMaps.pdb
+C:\mapitprices\MvcMaps\bin\Debug\MvcMaps.dll
+C:\mapitprices\MvcMaps\bin\Debug\MvcMaps.pdb
+C:\mapitprices\MvcMaps\obj\Debug\ResolveAssemblyReference.cache
+C:\mapitprices\MvcMaps\obj\Debug\MvcMaps.dll
+C:\mapitprices\MvcMaps\obj\Debug\MvcMaps.pdb
