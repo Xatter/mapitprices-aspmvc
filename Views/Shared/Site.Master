@@ -32,12 +32,8 @@
     <div id="header" class="container_12">
         <div class="grid_12">
             <a href="/">
-                <img src="../../Content/2010-11-09_Logo_28.png" style="border: none" alt="Is this big enough? ... That's what she said" /></a>
+                <img src="../../Content/2011-06-17_Logo_TEMP.png" style="border: none" alt="Is this big enough? ... That's what she said" /></a>
         </div>
-    </div>
-    <div class="container_12">
-        <strong><span class="style1">BETA</span></strong>&nbsp; &lt;-- heh like Google.
-        Get it?
     </div>
     <div id="content" class="container_12">
         <asp:ContentPlaceHolder ID="MainContent" runat="server">

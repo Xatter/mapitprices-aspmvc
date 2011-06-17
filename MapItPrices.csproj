@@ -142,6 +142,7 @@
   <ItemGroup>
     <Content Include="Content\2010-11-09_Logo_28.png" />
     <Content Include="Content\2010-11-11_Logo_03.png" />
+    <Content Include="Content\2011-06-17_Logo_TEMP.png" />
     <Content Include="Content\MapItPrices Logo.png" />
     <Content Include="Content\openid.css" />
     <Content Include="Content\OpenID\images.large\aol.gif" />
