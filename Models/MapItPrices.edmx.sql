@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 06/17/2011 09:07:06
--- Generated from EDMX file: C:\mapitprices\Models\MapItPrices.edmx
+-- Date Created: 06/18/2011 22:44:17
+-- Generated from EDMX file: T:\Codes\mapitprices\Models\MapItPrices.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,38 +17,11 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_StoreItems_Items]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_StoreItems_Items];
-GO
-IF OBJECT_ID(N'[dbo].[FK_StoreItems_Stores]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_StoreItems_Stores];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserOpenID]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[OpenIDs] DROP CONSTRAINT [FK_UserOpenID];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserStoreItem]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_UserStoreItem];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserItem]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Items] DROP CONSTRAINT [FK_UserItem];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserStore]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Stores] DROP CONSTRAINT [FK_UserStore];
-GO
 IF OBJECT_ID(N'[dbo].[FK_BadgeUser_Badge]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[BadgeUser] DROP CONSTRAINT [FK_BadgeUser_Badge];
 GO
 IF OBJECT_ID(N'[dbo].[FK_BadgeUser_User]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[BadgeUser] DROP CONSTRAINT [FK_BadgeUser_User];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserRole_User]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserRole] DROP CONSTRAINT [FK_UserRole_User];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserRole_Role]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserRole] DROP CONSTRAINT [FK_UserRole_Role];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserShoppingList]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ShoppingLists] DROP CONSTRAINT [FK_UserShoppingList];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ItemShoppingList_Item]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ItemShoppingList] DROP CONSTRAINT [FK_ItemShoppingList_Item];
@@ -56,34 +29,58 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ItemShoppingList_ShoppingList]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ItemShoppingList] DROP CONSTRAINT [FK_ItemShoppingList_ShoppingList];
 GO
-IF OBJECT_ID(N'[dbo].[FK_UserBetaInviteCodes]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[BetaInviteCodes] DROP CONSTRAINT [FK_UserBetaInviteCodes];
+IF OBJECT_ID(N'[dbo].[FK_StoreItems_Items]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_StoreItems_Items];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreItems_Stores]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_StoreItems_Stores];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Items] DROP CONSTRAINT [FK_UserItem];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserOpenID]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OpenIDs] DROP CONSTRAINT [FK_UserOpenID];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserRole_Role]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRole] DROP CONSTRAINT [FK_UserRole_Role];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserRole_User]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRole] DROP CONSTRAINT [FK_UserRole_User];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserShoppingList]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ShoppingLists] DROP CONSTRAINT [FK_UserShoppingList];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserStore]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Stores] DROP CONSTRAINT [FK_UserStore];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserStoreItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_UserStoreItem];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Items]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Items];
-GO
-IF OBJECT_ID(N'[dbo].[StoreItems]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StoreItems];
-GO
-IF OBJECT_ID(N'[dbo].[Stores]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Stores];
-GO
-IF OBJECT_ID(N'[dbo].[OpenIDs]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[OpenIDs];
-GO
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
-GO
 IF OBJECT_ID(N'[dbo].[Badges]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Badges];
 GO
+IF OBJECT_ID(N'[dbo].[BadgeUser]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BadgeUser];
+GO
 IF OBJECT_ID(N'[dbo].[BetaInviteCodes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[BetaInviteCodes];
+GO
+IF OBJECT_ID(N'[dbo].[BetaSignups]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BetaSignups];
+GO
+IF OBJECT_ID(N'[dbo].[Items]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Items];
+GO
+IF OBJECT_ID(N'[dbo].[ItemShoppingList]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ItemShoppingList];
+GO
+IF OBJECT_ID(N'[dbo].[OpenIDs]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OpenIDs];
 GO
 IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Roles];
@@ -91,17 +88,17 @@ GO
 IF OBJECT_ID(N'[dbo].[ShoppingLists]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ShoppingLists];
 GO
-IF OBJECT_ID(N'[dbo].[BetaSignups]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BetaSignups];
+IF OBJECT_ID(N'[dbo].[StoreItems]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreItems];
 GO
-IF OBJECT_ID(N'[dbo].[BadgeUser]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BadgeUser];
+IF OBJECT_ID(N'[dbo].[Stores]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Stores];
 GO
 IF OBJECT_ID(N'[dbo].[UserRole]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserRole];
 GO
-IF OBJECT_ID(N'[dbo].[ItemShoppingList]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ItemShoppingList];
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
 GO
 
 -- --------------------------------------------------

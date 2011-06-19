@@ -17,6 +17,9 @@
             <th>
                 Email
             </th>
+            <th>
+                Created
+            </th>
         </tr>
 
     <% foreach (var item in Model) { %>
@@ -32,6 +35,9 @@
             </td>
             <td>
                 <%: item.Email %>
+            </td>
+            <td>
+                <%: item.Created %>
             </td>
         </tr>
     

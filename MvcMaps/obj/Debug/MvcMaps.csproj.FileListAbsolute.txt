@@ -18,3 +18,8 @@ C:\mapitprices\MvcMaps\bin\Debug\MvcMaps.pdb
 C:\mapitprices\MvcMaps\obj\Debug\ResolveAssemblyReference.cache
 C:\mapitprices\MvcMaps\obj\Debug\MvcMaps.dll
 C:\mapitprices\MvcMaps\obj\Debug\MvcMaps.pdb
+T:\Codes\mapitprices\MvcMaps\bin\Debug\MvcMaps.dll
+T:\Codes\mapitprices\MvcMaps\bin\Debug\MvcMaps.pdb
+T:\Codes\mapitprices\MvcMaps\obj\Debug\ResolveAssemblyReference.cache
+T:\Codes\mapitprices\MvcMaps\obj\Debug\MvcMaps.dll
+T:\Codes\mapitprices\MvcMaps\obj\Debug\MvcMaps.pdb

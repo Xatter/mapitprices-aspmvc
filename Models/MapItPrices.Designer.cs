@@ -582,11 +582,13 @@ namespace MapItPrices.Models
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="email">Initial value of the Email property.</param>
-        public static BetaSignup CreateBetaSignup(global::System.Int32 id, global::System.String email)
+        /// <param name="created">Initial value of the Created property.</param>
+        public static BetaSignup CreateBetaSignup(global::System.Int32 id, global::System.String email, global::System.DateTime created)
         {
             BetaSignup betaSignup = new BetaSignup();
             betaSignup.Id = id;
             betaSignup.Email = email;
+            betaSignup.Created = created;
             return betaSignup;
         }
 
@@ -643,6 +645,30 @@ namespace MapItPrices.Models
         private global::System.String _Email;
         partial void OnEmailChanging(global::System.String value);
         partial void OnEmailChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime Created
+        {
+            get
+            {
+                return _Created;
+            }
+            set
+            {
+                OnCreatedChanging(value);
+                ReportPropertyChanging("Created");
+                _Created = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Created");
+                OnCreatedChanged();
+            }
+        }
+        private global::System.DateTime _Created;
+        partial void OnCreatedChanging(global::System.DateTime value);
+        partial void OnCreatedChanged();
 
         #endregion
     
@@ -664,12 +690,16 @@ namespace MapItPrices.Models
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="userID">Initial value of the UserID property.</param>
-        public static Item CreateItem(global::System.Int32 id, global::System.String name, global::System.Int32 userID)
+        /// <param name="created">Initial value of the Created property.</param>
+        /// <param name="lastUpdated">Initial value of the LastUpdated property.</param>
+        public static Item CreateItem(global::System.Int32 id, global::System.String name, global::System.Int32 userID, global::System.DateTime created, global::System.DateTime lastUpdated)
         {
             Item item = new Item();
             item.ID = id;
             item.Name = name;
             item.UserID = userID;
+            item.Created = created;
+            item.LastUpdated = lastUpdated;
             return item;
         }
 
@@ -822,6 +852,54 @@ namespace MapItPrices.Models
         private global::System.String _Brand;
         partial void OnBrandChanging(global::System.String value);
         partial void OnBrandChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime Created
+        {
+            get
+            {
+                return _Created;
+            }
+            set
+            {
+                OnCreatedChanging(value);
+                ReportPropertyChanging("Created");
+                _Created = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Created");
+                OnCreatedChanged();
+            }
+        }
+        private global::System.DateTime _Created;
+        partial void OnCreatedChanging(global::System.DateTime value);
+        partial void OnCreatedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdated
+        {
+            get
+            {
+                return _LastUpdated;
+            }
+            set
+            {
+                OnLastUpdatedChanging(value);
+                ReportPropertyChanging("LastUpdated");
+                _LastUpdated = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdated");
+                OnLastUpdatedChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdated;
+        partial void OnLastUpdatedChanging(global::System.DateTime value);
+        partial void OnLastUpdatedChanged();
 
         #endregion
     
@@ -927,11 +1005,13 @@ namespace MapItPrices.Models
         /// </summary>
         /// <param name="claimedIdentifier">Initial value of the ClaimedIdentifier property.</param>
         /// <param name="userID">Initial value of the UserID property.</param>
-        public static OpenID CreateOpenID(global::System.String claimedIdentifier, global::System.Int32 userID)
+        /// <param name="created">Initial value of the Created property.</param>
+        public static OpenID CreateOpenID(global::System.String claimedIdentifier, global::System.Int32 userID, global::System.DateTime created)
         {
             OpenID openID = new OpenID();
             openID.ClaimedIdentifier = claimedIdentifier;
             openID.UserID = userID;
+            openID.Created = created;
             return openID;
         }
 
@@ -991,6 +1071,30 @@ namespace MapItPrices.Models
         private global::System.Int32 _UserID;
         partial void OnUserIDChanging(global::System.Int32 value);
         partial void OnUserIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime Created
+        {
+            get
+            {
+                return _Created;
+            }
+            set
+            {
+                OnCreatedChanging(value);
+                ReportPropertyChanging("Created");
+                _Created = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Created");
+                OnCreatedChanged();
+            }
+        }
+        private global::System.DateTime _Created;
+        partial void OnCreatedChanging(global::System.DateTime value);
+        partial void OnCreatedChanged();
 
         #endregion
     
@@ -1245,6 +1349,54 @@ namespace MapItPrices.Models
         private global::System.String _Name;
         partial void OnNameChanging(global::System.String value);
         partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> Created
+        {
+            get
+            {
+                return _Created;
+            }
+            set
+            {
+                OnCreatedChanging(value);
+                ReportPropertyChanging("Created");
+                _Created = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Created");
+                OnCreatedChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _Created;
+        partial void OnCreatedChanging(Nullable<global::System.DateTime> value);
+        partial void OnCreatedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdated
+        {
+            get
+            {
+                return _LastUpdated;
+            }
+            set
+            {
+                OnLastUpdatedChanging(value);
+                ReportPropertyChanging("LastUpdated");
+                _LastUpdated = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdated");
+                OnLastUpdatedChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdated;
+        partial void OnLastUpdatedChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedChanged();
 
         #endregion
     
@@ -1329,12 +1481,14 @@ namespace MapItPrices.Models
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="userID">Initial value of the UserID property.</param>
-        public static Store CreateStore(global::System.Int32 id, global::System.String name, global::System.Int32 userID)
+        /// <param name="created">Initial value of the Created property.</param>
+        public static Store CreateStore(global::System.Int32 id, global::System.String name, global::System.Int32 userID, global::System.DateTime created)
         {
             Store store = new Store();
             store.ID = id;
             store.Name = name;
             store.UserID = userID;
+            store.Created = created;
             return store;
         }
 
@@ -1559,6 +1713,30 @@ namespace MapItPrices.Models
         private global::System.Int32 _UserID;
         partial void OnUserIDChanging(global::System.Int32 value);
         partial void OnUserIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime Created
+        {
+            get
+            {
+                return _Created;
+            }
+            set
+            {
+                OnCreatedChanging(value);
+                ReportPropertyChanging("Created");
+                _Created = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Created");
+                OnCreatedChanged();
+            }
+        }
+        private global::System.DateTime _Created;
+        partial void OnCreatedChanging(global::System.DateTime value);
+        partial void OnCreatedChanged();
 
         #endregion
     
@@ -1645,7 +1823,8 @@ namespace MapItPrices.Models
         /// <param name="price">Initial value of the Price property.</param>
         /// <param name="lastUpdated">Initial value of the LastUpdated property.</param>
         /// <param name="userID">Initial value of the UserID property.</param>
-        public static StoreItem CreateStoreItem(global::System.Int32 itemId, global::System.Int32 storeId, global::System.Decimal price, global::System.DateTime lastUpdated, global::System.Int32 userID)
+        /// <param name="created">Initial value of the Created property.</param>
+        public static StoreItem CreateStoreItem(global::System.Int32 itemId, global::System.Int32 storeId, global::System.Decimal price, global::System.DateTime lastUpdated, global::System.Int32 userID, global::System.DateTime created)
         {
             StoreItem storeItem = new StoreItem();
             storeItem.ItemId = itemId;
@@ -1653,6 +1832,7 @@ namespace MapItPrices.Models
             storeItem.Price = price;
             storeItem.LastUpdated = lastUpdated;
             storeItem.UserID = userID;
+            storeItem.Created = created;
             return storeItem;
         }
 
@@ -1784,6 +1964,30 @@ namespace MapItPrices.Models
         private global::System.Int32 _UserID;
         partial void OnUserIDChanging(global::System.Int32 value);
         partial void OnUserIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime Created
+        {
+            get
+            {
+                return _Created;
+            }
+            set
+            {
+                OnCreatedChanging(value);
+                ReportPropertyChanging("Created");
+                _Created = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Created");
+                OnCreatedChanged();
+            }
+        }
+        private global::System.DateTime _Created;
+        partial void OnCreatedChanging(global::System.DateTime value);
+        partial void OnCreatedChanged();
 
         #endregion
     
@@ -1923,13 +2127,17 @@ namespace MapItPrices.Models
         /// <param name="realName">Initial value of the RealName property.</param>
         /// <param name="email">Initial value of the Email property.</param>
         /// <param name="id">Initial value of the ID property.</param>
-        public static User CreateUser(global::System.String username, global::System.String realName, global::System.String email, global::System.Int32 id)
+        /// <param name="created">Initial value of the Created property.</param>
+        /// <param name="lastUpdated">Initial value of the LastUpdated property.</param>
+        public static User CreateUser(global::System.String username, global::System.String realName, global::System.String email, global::System.Int32 id, global::System.DateTime created, global::System.DateTime lastUpdated)
         {
             User user = new User();
             user.Username = username;
             user.RealName = realName;
             user.Email = email;
             user.ID = id;
+            user.Created = created;
+            user.LastUpdated = lastUpdated;
             return user;
         }
 
@@ -2034,6 +2242,54 @@ namespace MapItPrices.Models
         private global::System.Int32 _ID;
         partial void OnIDChanging(global::System.Int32 value);
         partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime Created
+        {
+            get
+            {
+                return _Created;
+            }
+            set
+            {
+                OnCreatedChanging(value);
+                ReportPropertyChanging("Created");
+                _Created = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Created");
+                OnCreatedChanged();
+            }
+        }
+        private global::System.DateTime _Created;
+        partial void OnCreatedChanging(global::System.DateTime value);
+        partial void OnCreatedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdated
+        {
+            get
+            {
+                return _LastUpdated;
+            }
+            set
+            {
+                OnLastUpdatedChanging(value);
+                ReportPropertyChanging("LastUpdated");
+                _LastUpdated = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdated");
+                OnLastUpdatedChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdated;
+        partial void OnLastUpdatedChanging(global::System.DateTime value);
+        partial void OnLastUpdatedChanged();
 
         #endregion
     

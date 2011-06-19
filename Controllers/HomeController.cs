@@ -47,7 +47,7 @@ namespace MapItPrices.Controllers
         [Authorize]
         public ActionResult WhoSignedUp()
         {
-            return View(MapItDB.BetaSignups.AsEnumerable());
+            return View(MapItDB.BetaSignups.OrderBy(b => b.Id).AsEnumerable());
         }
     }
 }
