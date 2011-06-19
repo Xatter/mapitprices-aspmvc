@@ -41,7 +41,7 @@
                 rpp: 4,
                 interval: 6000,
                 width: 'auto',
-                height: 300,
+                height: 200,
                 theme: {
                     shell: {
                         background: '#099c2b',
