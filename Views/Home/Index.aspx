@@ -31,5 +31,38 @@
                 <input type="submit" value="Submit" /></div>
             <% } %>
         </div>
+        <h3 class="top_navStyle">
+            Look Twitter!</h3>
+        <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+        <script>
+            new TWTR.Widget({
+                version: 2,
+                type: 'profile',
+                rpp: 4,
+                interval: 6000,
+                width: 'auto',
+                height: 300,
+                theme: {
+                    shell: {
+                        background: '#099c2b',
+                        color: '#ffffff'
+                    },
+                    tweets: {
+                        background: '#ffffff',
+                        color: '#18c724',
+                        links: '#bd2cb3'
+                    }
+                },
+                features: {
+                    scrollbar: true,
+                    loop: false,
+                    live: false,
+                    hashtags: true,
+                    timestamp: true,
+                    avatars: true,
+                    behavior: 'all'
+                }
+            }).render().setUser('MapItPrices').start();
+        </script>
     </div>
 </asp:Content>
