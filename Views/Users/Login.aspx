@@ -5,7 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="form-error" />
-    <form action="/Users/Login" method="post" id="openid_form">
+    <form action="/Users/Authenticate" method="post" id="openid_form">
     <%: Html.Hidden("returnUrl", ViewData["returnUrl"]) %>
     <input type="hidden" name="action" value="verify" />
     <fieldset>
