@@ -148,7 +148,7 @@
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Created" Type="datetime2" Nullable="false" />
+          <Property Name="Created" Type="datetime2" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="LastUpdated" Type="datetime2" Nullable="false" />
         </EntityType>
         <EntityType Name="StoreItems">
@@ -605,8 +605,8 @@
           <Property Type="Int32" Name="UserID" Nullable="false" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <NavigationProperty Name="Items" Relationship="MapItPricesModel.ItemShoppingList" FromRole="ShoppingList" ToRole="Item" />
           <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="DateTime" Name="Created" />
-          <Property Type="DateTime" Name="LastUpdated" />
+          <Property Type="DateTime" Name="Created" Nullable="false" a:StoreGeneratedPattern="Computed" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
         </EntityType>
         <Association Name="UserShoppingList">
           <End Type="MapItPricesModel.User" Role="User" Multiplicity="1" />

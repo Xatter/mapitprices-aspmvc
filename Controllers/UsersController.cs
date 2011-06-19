@@ -8,6 +8,7 @@ using DotNetOpenAuth.OpenId;
 using DotNetOpenAuth.Messaging;
 using System.Web.Security;
 using MapItPrices.Models;
+using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
 
 namespace MapItPrices.Controllers
 {
@@ -18,24 +19,14 @@ namespace MapItPrices.Controllers
         MembershipProvider provider;
         RoleProvider roleProvider;
 
+        private string _returnURL;
+
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             if (provider == null) { provider = new MapItMembershipProvider(); }
             if (roleProvider == null) { roleProvider = new MapItRoleProvider(); }
 
             base.Initialize(requestContext);
-        }
-
-        public ActionResult Login()
-        {
-#if DEBUG
-            FormsAuthentication.SetAuthCookie("TEST_USER", false);
-            provider.ValidateUser("TEST_USER",string.Empty);
-
-            return RedirectToAction("Index", "Home");
-#else
-            return View();
-#endif
         }
 
         public ActionResult Logout()
@@ -95,68 +86,100 @@ namespace MapItPrices.Controllers
 
         }
 
-        public ActionResult Authenticate()
+        public ActionResult Login(string returnUrl)
         {
-            var response = OPENID.GetResponse();
-            var statusMessage = "";
-            if (response == null)
-            {
-                Identifier id;
+#if DEBUG
+            FormsAuthentication.SetAuthCookie("TEST_USER", false);
+            provider.ValidateUser("TEST_USER",string.Empty);
 
-                //make sure your users openid_identifier is valid
-                if (Identifier.TryParse(Request.Form["openid_identifier"], out id))
+            return RedirectToAction("Index", "Home");
+#else
+            ViewData["returnUrl"] = Url.Encode(returnUrl);
+
+            return View();
+#endif
+        }
+
+        [HttpPost]
+        public ActionResult Authenticate(FormCollection collection)
+        {
+            string returnUrl = collection["returnUrl"];
+            var response = OPENID.GetResponse();
+            //string loginIdentifier = collection["loginIdentifier"];
+
+            //var openid = new OpenIdRelyingParty();
+            //IAuthenticationRequest request = openid.CreateRequest(Identifier.Parse(loginIdentifier));
+            var statusMessage = "";
+            Identifier id;
+
+            //make sure your users openid_identifier is valid
+            if (Identifier.TryParse(Request.Form["openid_identifier"], out id))
+            {
+                try
                 {
-                    try
+                    //request openid_identifier
+                    var request = OPENID.CreateRequest(Request.Form["openid_identifier"]);
+
+                    if (!string.IsNullOrEmpty(returnUrl))
+                        request.AddCallbackArguments("returnUrl", returnUrl);
+
+                    request.AddExtension(new ClaimsRequest
                     {
-                        //request openid_identifier
-                        return OPENID.CreateRequest(Request.Form["openid_identifier"]).RedirectingResponse.AsActionResult();
-                    }
-                    catch (ProtocolException ex)
-                    {
-                        statusMessage = ex.Message;
-                        return View("Login", statusMessage);
-                    }
+                        BirthDate = DemandLevel.NoRequest,
+                        Email = DemandLevel.NoRequest,
+                        FullName = DemandLevel.NoRequest
+                    });
+
+                    return request.RedirectingResponse.AsActionResult();
                 }
-                else
+                catch (ProtocolException ex)
                 {
-                    statusMessage = "Invalid identifier";
+                    statusMessage = ex.Message;
                     return View("Login", statusMessage);
                 }
             }
             else
             {
-                //check the response status
-                switch (response.Status)
-                {
-                    case AuthenticationStatus.Authenticated:
-                        Session["FriendlyIdentifier"] = response.FriendlyIdentifierForDisplay;
-                        var identifyer = response.ClaimedIdentifier.ToString();
-
-                        var existingUser = MapItDB.OpenIDs.SingleOrDefault(o => o.ClaimedIdentifier == identifyer);
-
-                        if (existingUser == null)
-                        {
-                            // Display the 'New Users' dialog
-                            return RedirectToAction("RequestBetaCode", new { claimedIdentifier = response.ClaimedIdentifier.ToString() });
-                        }
-                        else
-                        {
-                            FormsAuthentication.SetAuthCookie(response.ClaimedIdentifier, false);
-                            provider.ValidateUser(response.ClaimedIdentifier, null);
-                        }
-
-                        return RedirectToAction("Index", "Home");
-
-                    case AuthenticationStatus.Canceled:
-                        statusMessage = "Canceled at provider";
-                        return View("Login", statusMessage);
-                    case AuthenticationStatus.Failed:
-                        statusMessage = response.Exception.Message;
-                        return View("Login", statusMessage);
-                    default:
-                        return new EmptyResult();
-                }
+                statusMessage = "Invalid identifier";
+                return View("Login", statusMessage);
             }
+        }
+
+        public ActionResult Authenticate()
+        {
+            var response = OPENID.GetResponse();
+
+            //check the response status
+            switch (response.Status)
+            {
+                case AuthenticationStatus.Authenticated:
+                    Session["FriendlyIdentifier"] = response.FriendlyIdentifierForDisplay;
+                    var identifyer = response.ClaimedIdentifier.ToString();
+
+                    var existingUser = MapItDB.OpenIDs.SingleOrDefault(o => o.ClaimedIdentifier == identifyer);
+
+                    if (existingUser == null)
+                    {
+                        // Display the 'New Users' dialog
+                        return RedirectToAction("RequestBetaCode", new { claimedIdentifier = response.ClaimedIdentifier.ToString() });
+                    }
+                    else
+                    {
+                        FormsAuthentication.SetAuthCookie(response.ClaimedIdentifier, false);
+                        provider.ValidateUser(response.ClaimedIdentifier, null);
+                    }
+
+                    FormsAuthentication.RedirectFromLoginPage(response.ClaimedIdentifier, false);
+                    break;
+                case AuthenticationStatus.Canceled:
+                    ModelState.AddModelError("loginIdentifier", "Canceled at provider");
+                    break;
+                case AuthenticationStatus.Failed:
+                    ModelState.AddModelError("loginIdentifier", response.Exception.Message);
+                    break;
+            }
+
+            return View();
         }
     }
 }

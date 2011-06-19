@@ -1263,12 +1263,16 @@ namespace MapItPrices.Models
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="userID">Initial value of the UserID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
-        public static ShoppingList CreateShoppingList(global::System.Int32 id, global::System.Int32 userID, global::System.String name)
+        /// <param name="created">Initial value of the Created property.</param>
+        /// <param name="lastUpdated">Initial value of the LastUpdated property.</param>
+        public static ShoppingList CreateShoppingList(global::System.Int32 id, global::System.Int32 userID, global::System.String name, global::System.DateTime created, global::System.DateTime lastUpdated)
         {
             ShoppingList shoppingList = new ShoppingList();
             shoppingList.Id = id;
             shoppingList.UserID = userID;
             shoppingList.Name = name;
+            shoppingList.Created = created;
+            shoppingList.LastUpdated = lastUpdated;
             return shoppingList;
         }
 
@@ -1353,9 +1357,9 @@ namespace MapItPrices.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> Created
+        public global::System.DateTime Created
         {
             get
             {
@@ -1370,16 +1374,16 @@ namespace MapItPrices.Models
                 OnCreatedChanged();
             }
         }
-        private Nullable<global::System.DateTime> _Created;
-        partial void OnCreatedChanging(Nullable<global::System.DateTime> value);
+        private global::System.DateTime _Created;
+        partial void OnCreatedChanging(global::System.DateTime value);
         partial void OnCreatedChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> LastUpdated
+        public global::System.DateTime LastUpdated
         {
             get
             {
@@ -1394,8 +1398,8 @@ namespace MapItPrices.Models
                 OnLastUpdatedChanged();
             }
         }
-        private Nullable<global::System.DateTime> _LastUpdated;
-        partial void OnLastUpdatedChanging(Nullable<global::System.DateTime> value);
+        private global::System.DateTime _LastUpdated;
+        partial void OnLastUpdatedChanging(global::System.DateTime value);
         partial void OnLastUpdatedChanged();
 
         #endregion
