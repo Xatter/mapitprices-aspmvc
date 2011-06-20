@@ -49,9 +49,17 @@
             <Source Path="obj\Release\AutoScripts\MapItPricesEntities-Deployment_SchemaOnly.sql" Transacted="True" />
           </Object>
         </ObjectGroup>
+        <ObjectGroup Name="ErrorLogConnectionString-Deployment" Order="2" Enabled="True" xmlns="">
+          <Destination Path="" />
+          <Object Type="dbFullSql">
+            <PreSource Path="Data Source=tcp:sql2k804.discountasp.net%3bInitial Catalog=SQL2008R2_778484_mapitprices%3bUser ID=SQL2008R2_778484_mapitprices_user%3bPassword=jmtaz3%3b" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" />
+            <Source Path="obj\Release\AutoScripts\ErrorLogConnectionString-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
       </Objects>
     </PublishDatabaseSettings>
     <ExcludeApp_Data>true</ExcludeApp_Data>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DotNetOpenAuth, Version=3.4.5.10202, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
@@ -231,12 +239,12 @@
     <Content Include="Scripts\openid-jquery.js" />
     <Content Include="Elmah-SQLServer.sql" />
     <Content Include="Views\Home\SayThanks.aspx" />
-    <Content Include="Views\Home\WhoSignedUp.aspx" />
     <Content Include="Views\Item\Create.aspx" />
     <Content Include="Views\Item\Details.aspx" />
     <Content Include="Views\Item\ReportPrice.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
     <Content Include="Views\ShoppingList\Index.aspx" />
+    <Content Include="Views\Users\Authenticate.aspx" />
     <Content Include="Views\Users\Create.aspx" />
     <Content Include="Views\Users\Login.aspx" />
     <Content Include="Views\DynamicMap\Index.aspx" />
@@ -312,6 +320,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\WhoSignedUp.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
