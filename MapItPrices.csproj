@@ -49,7 +49,7 @@
             <Source Path="obj\Release\AutoScripts\MapItPricesEntities-Deployment_SchemaOnly.sql" Transacted="True" />
           </Object>
         </ObjectGroup>
-        <ObjectGroup Name="ErrorLogConnectionString-Deployment" Order="2" Enabled="True" xmlns="">
+        <ObjectGroup Name="ErrorLogConnectionString-Deployment" Order="2" Enabled="False" xmlns="">
           <Destination Path="" />
           <Object Type="dbFullSql">
             <PreSource Path="Data Source=tcp:sql2k804.discountasp.net%3bInitial Catalog=SQL2008R2_778484_mapitprices%3bUser ID=SQL2008R2_778484_mapitprices_user%3bPassword=jmtaz3%3b" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" />
@@ -231,7 +231,7 @@
     <Content Include="Content\OpenID\images\openid-providers-uk.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="MigrationScripts\20110616.sql" />
+    <Content Include="MigrationScripts\AddCreated.sql" />
     <Content Include="Models\MapItPrices.edmx.sql" />
     <Content Include="Scripts\openid-jquery-en.js" />
     <Content Include="Scripts\openid-jquery-ru.js" />
