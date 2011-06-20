@@ -51,7 +51,6 @@ namespace MapItPrices.Controllers
             {
                 MapItDB.OpenIDs.AddObject(openid);
                 MapItDB.SaveChanges();
-
                 return RedirectToAction("Index", "Home");
             }
             catch
