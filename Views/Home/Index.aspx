@@ -9,11 +9,11 @@
             What is this?</h3>
         <p>
             MapItPrices.com takes all the known prices for an item and shows you on a map. Not
-            just national prices, but the <i>bodega on the corner too!</i> It makes it easy for you
-            to see which place has the best price and how far away that is from you. Just type
-            in a search at the top for an item, then select the exact item off the list. Currently
-            this only works in New York City. Although there is no particular reason that it
-            won't work in your area.</p>
+            just national prices, but the <i>bodega on the corner too!</i> It makes it easy
+            for you to see which place has the best price and how far away that is from you.
+            Just type in a search at the top for an item, then select the exact item off the
+            list. Currently this only works in New York City. Although there is no particular
+            reason that it won't work in your area.</p>
         <h3 class="top_navStyle">
             Like Mobile?</h3>
         <p>
@@ -65,5 +65,12 @@
                 }
             }).render().setUser('MapItPrices').start();
         </script>
+    </div>
+    <div class="grid_12">
+        <div id="fb-root">
+        </div>
+        <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+        <fb:like href="http://www.mapitprices.com" send="true" width="450" show_faces="true"
+            font=""></fb:like>
     </div>
 </asp:Content>
