@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<MapItPrices.Models.BetaSignup>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     Welcome to MapItPrices.com
@@ -25,11 +25,15 @@
         <p>
             Sign up to be notified when the BETA starts:</p>
         <div>
+            <% Html.EnableClientValidation(); %>
             <% using (Html.BeginForm("Signup", "Home", FormMethod.Post))
                { %>
+
+            <%: Html.ValidationSummary(true) %>
             <div>
-                Email:<%:Html.TextBox("email",string.Empty) %>
+                Email: <%: Html.TextBoxFor(m => m.Email) %>
                 <input type="submit" value="Submit" /></div>
+                <%:Html.ValidationMessageFor(m => m.Email) %>
             <% } %>
         </div>
         <h3 class="top_navStyle">
