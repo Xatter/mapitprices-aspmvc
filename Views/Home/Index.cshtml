@@ -1,0 +1,82 @@
+﻿@model MapItPrices.Models.BetaSignup
+@{
+    ViewBag.Title = "Welcome to MapItPrices";
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<div class="grid_12">
+    <h3 class="top_navStyle">
+        What is this?</h3>
+    <p>
+        MapItPrices.com takes all the known prices for an item and shows you on a map. <b>Not
+            just national prices, but the bodega on the corner too!</b> It makes it easy
+        for you to see which place has the best price and how far away that is from you.
+    </p>
+    <p>
+        Just type in a search at the top for an item, then select the exact item off the
+        list. Currently this only works in New York City. Although there is no particular
+        reason that it won't work in your area.</p>
+    <h3 class="top_navStyle">
+        Like Mobile?</h3>
+    <p>
+        Cool, so do we! That's why there's an <strong>android application</strong> to go
+        along with it. This way you can keep your shopping list handy while you're on the
+        go, including the map of where to go.</p>
+    <h3 class="top_navStyle">
+        Interested?</h3>
+    <p>
+        Sign up to be notified when the Beta starts:</p>
+    @using (Html.BeginForm("Signup", "Home", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Email)
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+                <input type="submit" value="Submit" />
+            </div>
+        </fieldset>
+    }
+    <h3 class="top_navStyle">
+        Look Twitter!</h3>
+    <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+    <script>
+        new TWTR.Widget({
+            version: 2,
+            type: 'profile',
+            rpp: 30,
+            interval: 6000,
+            width: 'auto',
+            height: 200,
+            theme: {
+                shell: {
+                    background: '#099c2b',
+                    color: '#ffffff'
+                },
+                tweets: {
+                    background: '#ffffff',
+                    color: '#18c724',
+                    links: '#bd2cb3'
+                }
+            },
+            features: {
+                scrollbar: true,
+                loop: false,
+                live: false,
+                hashtags: true,
+                timestamp: true,
+                avatars: true,
+                behavior: 'all'
+            }
+        }).render().setUser('MapItPrices').start();
+    </script>
+</div>
+<div class="grid_12">
+    <div id="fb-root">
+    </div>
+    <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+    <fb:like href="http://www.mapitprices.com" send="true" width="450" show_faces="true"
+        font=""></fb:like>
+</div>
+</div> 

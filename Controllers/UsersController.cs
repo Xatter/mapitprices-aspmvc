@@ -89,7 +89,7 @@ namespace MapItPrices.Controllers
         {
 #if DEBUG
             FormsAuthentication.SetAuthCookie("TEST_USER", false);
-            provider.ValidateUser("TEST_USER",string.Empty);
+            provider.ValidateUser("TEST_USER", string.Empty);
 
             return RedirectToAction("Index", "Home");
 #else
@@ -164,11 +164,13 @@ namespace MapItPrices.Controllers
                     }
                     else
                     {
-                        FormsAuthentication.SetAuthCookie(response.ClaimedIdentifier, false);
-                        provider.ValidateUser(response.ClaimedIdentifier, null);
+                        if (provider.ValidateUser(response.ClaimedIdentifier, null))
+                        {
+                            FormsAuthentication.SetAuthCookie(response.ClaimedIdentifier, true);
+                        }
                     }
 
-                    FormsAuthentication.RedirectFromLoginPage(response.ClaimedIdentifier, false);
+                    FormsAuthentication.RedirectFromLoginPage(response.ClaimedIdentifier, true);
                     break;
                 case AuthenticationStatus.Canceled:
                     ModelState.AddModelError("loginIdentifier", "Canceled at provider");

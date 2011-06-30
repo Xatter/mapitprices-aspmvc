@@ -240,7 +240,6 @@
     <Content Include="Scripts\openid-jquery-uk.js" />
     <Content Include="Scripts\openid-jquery.js" />
     <Content Include="Elmah-SQLServer.sql" />
-    <Content Include="Views\Home\SayThanks.aspx" />
     <Content Include="Views\Item\Create.aspx" />
     <Content Include="Views\Item\Details.aspx" />
     <Content Include="Views\Item\ReportPrice.aspx" />
@@ -250,7 +249,6 @@
     <Content Include="Views\Users\Create.aspx" />
     <Content Include="Views\Users\Login.aspx" />
     <Content Include="Views\DynamicMap\Index.aspx" />
-    <Content Include="Views\Home\Index.aspx" />
     <Content Include="Content\colors.css" />
     <Content Include="Content\layout.css" />
     <Content Include="Views\Item\Delete.aspx" />
@@ -282,6 +280,8 @@
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\SayThanks.cshtml" />
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.xml" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.dll" />
