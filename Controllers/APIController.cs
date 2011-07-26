@@ -322,7 +322,6 @@ namespace MapItPrices.Controllers
             }
         }
 
-
         [NonAction]
         public void GeoCodeStore(int StoreID)
         {
@@ -367,6 +366,11 @@ namespace MapItPrices.Controllers
             var store = MapItDB.Stores.Single(s => s.ID == id);
             MapItDB.Stores.DeleteObject(store);
             MapItDB.SaveChanges();
+        }
+
+        public ActionResult AutocompleteStore(string val)
+        {
+            return new ObjectResult("Thing");
         }
     }
 }
