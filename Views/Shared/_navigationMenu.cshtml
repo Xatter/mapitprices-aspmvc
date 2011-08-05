@@ -1,0 +1,28 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <script language="javascript">
+        $(function () {
+            function switchText() {
+                if ($(this).val() == $(this).attr("title"))
+                    $(this).val('').removeClass("searchCueText");
+                else if ($.trim($(this).val()) == '')
+                    $(this).addClass("searchCueText").val($(this).attr("title"));
+            }
+            $("#search").val($("#search").attr("title")).addClass("searchCueText");
+            $("#search").focus(switchText).blur(switchText);
+
+        });
+    </script>
+
+    @: [ @Html.ActionLink("Report Price", "ReportPrice", "Item") ] [ @Html.ActionLink("New Store", "Create", "Store") ] [ @Html.ActionLink("New Item", "Create", "Item") ][ @Html.ActionLink("Log Off", "Logout", "Users") ]
+    <div class="grid_12">
+        @using (Html.BeginForm("Index", "Search"))
+        {
+            <input id="search" type="text" class="grid_11" title="Type Search..."/><button id="button" type="submit">Map It!</button>
+        }
+    </div>
+}
+else
+{ 
+    <text>Already have an account?[ @Html.ActionLink("Log on", "Login", "Users") ]</text>
+}

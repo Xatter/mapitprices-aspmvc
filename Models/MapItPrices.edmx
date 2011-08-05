@@ -419,11 +419,11 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="UPC" Type="String" DefaultValue="null" Nullable="true" />
           <Property Type="String" Name="Size" MaxLength="20" FixedLength="true" Unicode="true" Nullable="true" />
-          <NavigationProperty Name="StoreItems" Relationship="MapItPricesModel.FK_StoreItems_Items" FromRole="Item" ToRole="StoreItem" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Public" />
-          <NavigationProperty Name="User" Relationship="MapItPricesModel.UserItem" FromRole="Item" ToRole="User" />
+          <NavigationProperty Name="StoreItems" Relationship="MapItPricesModel.FK_StoreItems_Items" FromRole="Item" ToRole="StoreItem" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Internal" />
+          <NavigationProperty Name="User" Relationship="MapItPricesModel.UserItem" FromRole="Item" ToRole="User" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="String" Name="Brand" Nullable="true" />
-          <NavigationProperty Name="ShoppingLists" Relationship="MapItPricesModel.ItemShoppingList" FromRole="Item" ToRole="ShoppingList" />
+          <NavigationProperty Name="ShoppingLists" Relationship="MapItPricesModel.ItemShoppingList" FromRole="Item" ToRole="ShoppingList" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Type="DateTime" Name="Created" Nullable="false" a:StoreGeneratedPattern="Computed" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
         </EntityType>
@@ -452,10 +452,10 @@
           <Property Name="City" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
           <Property Name="State" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
           <Property Name="Zip" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="StoreItems" Relationship="MapItPricesModel.FK_StoreItems_Stores" FromRole="Store" ToRole="StoreItem" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Public" />
+          <NavigationProperty Name="StoreItems" Relationship="MapItPricesModel.FK_StoreItems_Stores" FromRole="Store" ToRole="StoreItem" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Public" />
           <Property Type="Double" Name="Latitude" Nullable="true" />
           <Property Type="Double" Name="Longitude" Nullable="true" />
-          <NavigationProperty Name="User" Relationship="MapItPricesModel.UserStore" FromRole="Store" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="MapItPricesModel.UserStore" FromRole="Store" ToRole="User" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="DateTime" Name="Created" Nullable="false" a:StoreGeneratedPattern="Computed" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           </EntityType>

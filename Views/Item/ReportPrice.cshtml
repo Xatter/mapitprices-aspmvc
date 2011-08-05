@@ -1,0 +1,94 @@
+﻿@model MapItPrices.Models.StoreItem
+@{
+    ViewBag.Title = "ReportPrice";
+}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var newAddressEditor = $("#NewAddress");
+
+        function log(message) {
+            $("<div/>").text(message).prependTo("#log");
+            $("#log").attr("scrollTop", 0);
+        }
+
+        var storeNameField = $("#Store_Name");
+
+        storeNameField.autocomplete({
+            source: "/API/SearchStores",
+            focus: function (event, ui) {
+                $("#Store_Name").val(ui.item.Name);
+                return false;
+            },
+            minLength: 1,
+            select: function (event, ui) {
+                storeNameField.val(ui.item.Name);
+                $("#Store_ID").val(ui.item.ID);
+                newAddressEditor.hide();
+                return false;
+            }
+        })
+        //            .blur(function () {
+        //                if ($("#Store_ID").val() == '') {
+        //                    $("#NewAddress").show();
+        //                }
+        //            })
+            .data("autocomplete")._renderItem = function (ul, item) {
+                return $("<li></li>")
+                .data("item.autocomplete", item)
+                .append("<a>" + item.Name + ", " + item.Address + " " + item.City + " " + item.State + "</a>")
+                .appendTo(ul);
+            };
+
+        $("#Item_Name").autocomplete({
+            source: "/API/SearchItems",
+            focus: function (event, ui) {
+                $("#Item_Name").val(ui.item.Name);
+                return false;
+            },
+            minLength: 1,
+            select: function (event, ui) {
+                $("#Item_Name").val(ui.item.Name + ", " + ui.item.Size);
+                $("#Item_ID").val(ui.item.ID);
+                return false;
+            }
+        })
+            .data("autocomplete")._renderItem = function (ul, item) {
+                return $("<li></li>")
+                .data("item.autocomplete", item)
+                .append("<a>" + item.Name + ", " + item.Size + " by " + item.Brand + "</a>")
+                .appendTo(ul);
+            };
+    });
+</script>
+<h2>
+    ReportPrice</h2>
+@using (Html.BeginForm())
+{ 
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Store.Name, "Store")
+            @Html.EditorFor(m => m.Store.Name)
+            @*            <div id="NewAddress">
+                @Html.EditorFor(model => model.Store)
+            </div>
+*@ @Html.HiddenFor(m => m.Store.ID)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Item.Name, "Item")
+            @Html.EditorFor(model => model.Item.Name)
+            @Html.HiddenFor(m => m.Item.ID)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Price)
+            @Html.EditorFor(model => model.Price)
+            @Html.ValidationMessageFor(model => model.Price)
+        </div>
+    </fieldset>
+    <input type="submit" />
+}
+<div>
+    <div id="log">
+    </div>
+</div>

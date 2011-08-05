@@ -15,13 +15,13 @@
 
         foreach (var item in Model.StoreItems)
         {
-            firstLong = item.Longitude;
-            firstLat = item.Latitude;
+            firstLong = item.Longitude ?? firstLat;
+            firstLat = item.Latitude ?? firstLong;
             
             map = map.AddPushpin(
                 new Pushpin(
-                    item.Latitude,
-                    item.Longitude,
+                    item.Latitude ?? firstLat,
+                    item.Longitude ?? firstLong,
                     item.StoreName, 
                     item.StoreName + '-' + String.Format("{0:c}",item.Price + " Updated: " + item.LastUpdated + "<br/>")));
         }

@@ -914,7 +914,7 @@ namespace MapItPrices.Models
         [EdmRelationshipNavigationPropertyAttribute("MapItPricesModel", "FK_StoreItems_Items", "StoreItem")]
         public EntityCollection<StoreItem> StoreItems
         {
-            get
+            internal get
             {
                 return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<StoreItem>("MapItPricesModel.FK_StoreItems_Items", "StoreItem");
             }
@@ -936,7 +936,7 @@ namespace MapItPrices.Models
         [EdmRelationshipNavigationPropertyAttribute("MapItPricesModel", "UserItem", "User")]
         public User User
         {
-            get
+            internal get
             {
                 return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("MapItPricesModel.UserItem", "User").Value;
             }
@@ -952,7 +952,7 @@ namespace MapItPrices.Models
         [DataMemberAttribute()]
         public EntityReference<User> UserReference
         {
-            get
+            internal get
             {
                 return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("MapItPricesModel.UserItem", "User");
             }
@@ -974,7 +974,7 @@ namespace MapItPrices.Models
         [EdmRelationshipNavigationPropertyAttribute("MapItPricesModel", "ItemShoppingList", "ShoppingList")]
         public EntityCollection<ShoppingList> ShoppingLists
         {
-            get
+            internal get
             {
                 return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ShoppingList>("MapItPricesModel.ItemShoppingList", "ShoppingList");
             }
@@ -1755,7 +1755,7 @@ namespace MapItPrices.Models
         [EdmRelationshipNavigationPropertyAttribute("MapItPricesModel", "FK_StoreItems_Stores", "StoreItem")]
         public EntityCollection<StoreItem> StoreItems
         {
-            get
+            internal get
             {
                 return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<StoreItem>("MapItPricesModel.FK_StoreItems_Stores", "StoreItem");
             }
@@ -1777,7 +1777,7 @@ namespace MapItPrices.Models
         [EdmRelationshipNavigationPropertyAttribute("MapItPricesModel", "UserStore", "User")]
         public User User
         {
-            get
+            internal get
             {
                 return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("MapItPricesModel.UserStore", "User").Value;
             }
@@ -1793,7 +1793,7 @@ namespace MapItPrices.Models
         [DataMemberAttribute()]
         public EntityReference<User> UserReference
         {
-            get
+            internal get
             {
                 return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("MapItPricesModel.UserStore", "User");
             }

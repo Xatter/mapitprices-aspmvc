@@ -1,0 +1,41 @@
+﻿@model MapItPrices.ViewModels.MapViewModel
+@using MvcMaps
+
+@{
+    ViewBag.Title = "Map - " + Model.Item.Name + " - " + Model.Item.Size + " by " + Model.Item.Brand;
+}
+<h2>@ViewBag.Title</h2>
+@{
+    var map = Ajax.GoogleMap().CssClass("GoogleMap grid_8");
+
+    double firstLat = 40.7143528;
+    double firstLong = -74.0059731;
+
+    foreach (var item in Model.StoreItems)
+    {
+        firstLong = item.Longitude ?? firstLong;
+        firstLat = item.Latitude ?? firstLat;
+
+        map = map.AddPushpin(
+            new Pushpin(
+                item.Latitude ?? firstLat,
+                item.Longitude ?? firstLong,
+                item.StoreName,
+                item.StoreName + '-' + String.Format("{0:c}", item.Price + " Updated: " + item.LastUpdated + "<br/>")));
+    }
+
+    map.Center(firstLat, firstLong).Zoom(14).Render();
+}
+
+<div id="ItemList" class="grid_2">
+    <table>
+    @foreach (var item in Model.StoreItems)
+    {
+        <tr>
+            <td>@item.StoreName</td>
+            <td>@string.Format("{0:c}", item.Price)</td>
+            <td>@item.LastUpdated</td>
+        </tr>
+    }
+    </table>
+</div>

@@ -15,7 +15,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <TargetFrameworkProfile />
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -122,7 +122,6 @@
     <Compile Include="Models\GeoResponse.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MapController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -154,6 +153,7 @@
     <Content Include="Content\2010-11-09_Logo_28.png" />
     <Content Include="Content\2010-11-11_Logo_03.png" />
     <Content Include="Content\2011-06-17_Logo_TEMP.png" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\MapItPrices Logo.png" />
     <Content Include="Content\openid.css" />
     <Content Include="Content\OpenID\images.large\aol.gif" />
@@ -236,14 +236,29 @@
     <Content Include="Content\Site.css" />
     <Content Include="MigrationScripts\AddCreated.sql" />
     <Content Include="Models\MapItPrices.edmx.sql" />
+    <Content Include="Content\css\south-street\images\ui-bg_glass_55_fcf0ba_1x400.png" />
+    <Content Include="Content\css\south-street\images\ui-bg_gloss-wave_100_ece8da_500x100.png" />
+    <Content Include="Content\css\south-street\images\ui-bg_highlight-hard_100_f5f3e5_1x100.png" />
+    <Content Include="Content\css\south-street\images\ui-bg_highlight-hard_100_fafaf4_1x100.png" />
+    <Content Include="Content\css\south-street\images\ui-bg_highlight-hard_15_459e00_1x100.png" />
+    <Content Include="Content\css\south-street\images\ui-bg_highlight-hard_95_cccccc_1x100.png" />
+    <Content Include="Content\css\south-street\images\ui-bg_highlight-soft_25_67b021_1x100.png" />
+    <Content Include="Content\css\south-street\images\ui-bg_highlight-soft_95_ffedad_1x100.png" />
+    <Content Include="Content\css\south-street\images\ui-bg_inset-soft_15_2b2922_1x100.png" />
+    <Content Include="Content\css\south-street\images\ui-icons_808080_256x240.png" />
+    <Content Include="Content\css\south-street\images\ui-icons_847e71_256x240.png" />
+    <Content Include="Content\css\south-street\images\ui-icons_8dc262_256x240.png" />
+    <Content Include="Content\css\south-street\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\css\south-street\images\ui-icons_eeeeee_256x240.png" />
+    <Content Include="Content\css\south-street\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\css\south-street\jquery-ui-1.8.14.custom.css" />
     <Content Include="Scripts\openid-jquery-en.js" />
     <Content Include="Scripts\openid-jquery-ru.js" />
     <Content Include="Scripts\openid-jquery-uk.js" />
     <Content Include="Scripts\openid-jquery.js" />
     <Content Include="Elmah-SQLServer.sql" />
-    <Content Include="Views\Item\Create.aspx" />
     <Content Include="Views\Item\Details.aspx" />
-    <Content Include="Views\Item\ReportPrice.aspx" />
+    <Content Include="Views\Map\Index.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
     <Content Include="Views\ShoppingList\Index.aspx" />
     <Content Include="Views\Users\Authenticate.aspx" />
@@ -255,9 +270,6 @@
     <Content Include="Views\Item\Delete.aspx" />
     <Content Include="Views\Item\Edit.aspx" />
     <Content Include="Views\Item\Index.aspx" />
-    <Content Include="Views\Map\Index.aspx" />
-    <Content Include="Views\Search\Index.aspx" />
-    <Content Include="Views\Store\Create.aspx" />
     <Content Include="Views\Store\Delete.aspx" />
     <Content Include="Views\Store\Edit.aspx" />
     <Content Include="Views\Store\Index.aspx" />
@@ -283,6 +295,11 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\SayThanks.cshtml" />
+    <Content Include="Views\Item\ReportPrice.cshtml" />
+    <Content Include="Views\Shared\_navigationMenu.cshtml" />
+    <Content Include="Views\Item\Create.cshtml" />
+    <Content Include="Views\Store\Create.cshtml" />
+    <Content Include="Views\Map\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.xml" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.dll" />
@@ -346,12 +363,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61418</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost:61418/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

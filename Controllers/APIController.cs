@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using MapItPrices.Models;
 using System.Net;
 using System.Runtime.Serialization.Json;
+using System.Collections.Generic;
 
 namespace MapItPrices.Controllers
 {
@@ -12,57 +13,70 @@ namespace MapItPrices.Controllers
     {
         User _androidUser;
 
-        public APIController() : base()
+        public APIController()
+            : base()
         {
             _androidUser = MapItDB.Users.SingleOrDefault(u => u.Username == "android");
         }
 
-        public APIController(IMapItEntities entityStore) : base(entityStore)
+        public APIController(IMapItEntities entityStore)
+            : base(entityStore)
         {
+        }
+
+        public ActionResult SearchStores(string term)
+        {
+            var data = from i in MapItDB.Stores
+                       where i.Name.ToUpper().Contains(term.ToUpper())
+                       select new
+                       {
+                           i.ID,
+                           i.Name,
+                           i.Address,
+                           i.City,
+                           i.State
+                       };
+
+            return new ObjectResult(data.AsEnumerable());
         }
 
         //
         // GET: /API/SearchItems?searchtext={searchtext}
         // 
-        [HttpGet]
-        public ActionResult SearchItems(string searchtext)
+        public ActionResult SearchItems(string term)
         {
-            try
+            // check if it's a UPC
+            if (IsStringCompletelyNumeric(term))
             {
-                // check if it's a UPC
-               if( IsStringCompletelyNumeric(searchtext))
-               {
-                    var items = from i in MapItDB.Items
-                                where i.UPC.Trim() == searchtext.Trim()
-                                select new
-                                {
-                                    ID = i.ID,
-                                    Name = i.Name,
-                                    UPC = i.UPC,
-                                    Size = i.Size
-                                };
+                var items = from i in MapItDB.Items
+                            where i.UPC.Trim() == term.Trim()
+                            select new
+                            {
+                                ID = i.ID,
+                                Name = i.Name,
+                                UPC = i.UPC,
+                                Size = i.Size
+                            };
 
-                    return new ObjectResult(new APICallResult(1, "Success.",items));
-                }
-                else
-                {
-                    var items = from i in MapItDB.Items
-                                where i.Name.Contains(searchtext)
-                                select new
-                                {
-                                    ID = i.ID,
-                                    Name = i.Name,
-                                    UPC = i.UPC,
-                                    Size = i.Size
-                                };
-
-                    return new ObjectResult(new APICallResult(1, "Success.",items));
-                }
-
+                return new ObjectResult(items);
             }
-            catch 
+            else
             {
-                return new ObjectResult(new APICallResult(0, "Failed."));
+                var upperTerm = term.ToUpperInvariant();
+
+                var items = from i in MapItDB.Items
+                            where i.Name.ToUpper().Contains(upperTerm) ||
+                            i.Brand.ToUpper().Contains(upperTerm)
+                            select new
+                            {
+                                ID = i.ID,
+                                Name = i.Name,
+                                Brand = i.Brand,
+                                UPC = i.UPC,
+                                Size = i.Size
+                            };
+
+                return new ObjectResult(items);
             }
         }
 
@@ -127,7 +141,7 @@ namespace MapItPrices.Controllers
 
                 return new ObjectResult(new APICallResult(1, "Success.", result));
             }
-            catch 
+            catch
             {
                 return new ObjectResult(new APICallResult(0, "Failed."));
             }
@@ -150,7 +164,7 @@ namespace MapItPrices.Controllers
                 MapItDB.Items.AddObject(i);
                 MapItDB.SaveChanges();
 
-                return new ObjectResult(new APICallResult(1, "Success",i));
+                return new ObjectResult(new APICallResult(1, "Success", i));
             }
             catch
             {
@@ -237,7 +251,7 @@ namespace MapItPrices.Controllers
                     MapItDB.StoreItems.AddObject(storeitem);
                 }
                 else
-                { 
+                {
                     itemprice.Price = (decimal)price;
                     itemprice.LastUpdated = DateTime.Now;
                 }
@@ -246,7 +260,7 @@ namespace MapItPrices.Controllers
 
                 return new ObjectResult(new APICallResult(1, "Success"));
             }
-            catch 
+            catch
             {
                 return new ObjectResult(new APICallResult(0, "Failure"));
             }
@@ -270,7 +284,7 @@ namespace MapItPrices.Controllers
             }
             catch
             {
-                
+
                 return new ObjectResult(new APICallResult(0, "Failed."));
             }
         }
@@ -299,7 +313,7 @@ namespace MapItPrices.Controllers
                 return new ObjectResult(new APICallResult(0, "Failed."));
             }
         }
-        
+
         public ActionResult GetStores(double lat, double lng)
         {
             try
@@ -368,9 +382,5 @@ namespace MapItPrices.Controllers
             MapItDB.SaveChanges();
         }
 
-        public ActionResult AutocompleteStore(string val)
-        {
-            return new ObjectResult("Thing");
-        }
     }
 }

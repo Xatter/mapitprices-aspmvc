@@ -87,16 +87,16 @@ namespace MapItPrices.Controllers
 
         public ActionResult Login(string returnUrl)
         {
-#if DEBUG
-            FormsAuthentication.SetAuthCookie("TEST_USER", false);
-            provider.ValidateUser("TEST_USER", string.Empty);
+//#if DEBUG
+//            FormsAuthentication.SetAuthCookie("TEST_USER", false);
+//            provider.ValidateUser("TEST_USER", string.Empty);
 
-            return RedirectToAction("Index", "Home");
-#else
+//            return RedirectToAction("Index", "Home");
+//#else
             ViewData["returnUrl"] = Url.Encode(returnUrl);
 
             return View();
-#endif
+//#endif
         }
 
         [HttpPost]

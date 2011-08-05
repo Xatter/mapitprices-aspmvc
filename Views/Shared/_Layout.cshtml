@@ -3,21 +3,21 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/layout.css")" rel="Stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/colors.css")" rel="Stylesheet" type="text/css" />
+    <link type="text/css" href="@Url.Content("~/Content/css/south-street/jquery-ui-1.8.14.custom.css")" rel="stylesheet" />
+    @RenderSection("CSS", false)
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
+    <link id="agtzfmNzc2ZpZGRsZXIMCxIEUGFnZRiF-woM" rel="stylesheet" type="text/css"
+        href="http://www.webputty.net/css/agtzfmNzc2ZpZGRsZXIMCxIEUGFnZRiF-woM" />
     <script type="text/javascript" src="http://www.webputty.net/js/agtzfmNzc2ZpZGRsZXIMCxIEUGFnZRiF-woM"></script>
-    <script type="text/javascript" src="http://www.webputty.net/js/agtzfmNzc2ZpZGRsZXIMCxIEUGFnZRiF-woM"></script>
-    <style type="text/css">
-        @RenderSection("Styles", false);
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
-    <link id="agtzfmNzc2ZpZGRsZXIMCxIEUGFnZRiF-woM" rel="stylesheet" type="text/css" href="http://www.webputty.net/css/agtzfmNzc2ZpZGRsZXIMCxIEUGFnZRiF-woM" />
 </head>
 <body class="page_contentStyle">
     <div id="header" class="container_12">
         <div class="grid_12">
             <a href="/">
                 <img src="../../Content/2011-06-17_Logo_TEMP.png" style="border: none" alt="Is this big enough? ... That's what she said" /></a>
+        </div>
+        <div class="grid_12">
+            @Html.Partial("_navigationMenu")
         </div>
     </div>
     <div id="content" class="container_12">

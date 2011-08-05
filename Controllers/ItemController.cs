@@ -174,22 +174,57 @@ namespace MapItPrices.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public ActionResult ReportPrice()
         {
-            var items = this.MapItDB.Items.ToList();
-            var stores = this.MapItDB.Stores.ToList();
-            var vm = new ReportPriceViewModel(items, stores);
-
-            return View(vm);
+            return View(new StoreItem());
         }
 
         [HttpPost]
         [Authorize]
         public ActionResult ReportPrice(FormCollection collection)
         {
-            StoreItem storeItem = new StoreItem();
+            if(string.IsNullOrEmpty(collection["Store.ID"]) ||
+                string.IsNullOrEmpty(collection["Item.ID"]))
+            {
+                //ViewData.ModelMetadata
+                return View(new StoreItem());
+            }
 
-            return RedirectToAction("Index");
+            int storeId;
+                if(!int.TryParse(collection["Store.ID"], out storeId))
+                {
+                    return View(new StoreItem());
+                }
+
+            int itemId;
+            if(!int.TryParse(collection["Item.ID"], out itemId))
+            {
+                    return View(new StoreItem());
+            }
+
+            decimal price;
+            if (!decimal.TryParse(collection["Price"], out price))
+            {
+                    return View(new StoreItem());
+            }
+
+            StoreItem storeItem = MapItDB.StoreItems.SingleOrDefault(i => i.ItemId == itemId && i.StoreId == storeId);
+
+            if (storeItem == null)
+            {
+                storeItem = new StoreItem();
+                MapItDB.StoreItems.AddObject(storeItem);
+            }
+
+            storeItem.ItemId = itemId;
+            storeItem.StoreId = storeId;
+            storeItem.Price = price;
+            storeItem.UserID = this.CurrentUser.ID;
+            storeItem.LastUpdated = DateTime.Now;
+
+            MapItDB.SaveChanges();
+            return RedirectToAction("Index", "Map", new { itemid = storeItem.ItemId });
         }
     }
 }
