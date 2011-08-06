@@ -2,23 +2,55 @@
 {
     <script language="javascript">
         $(function () {
+
             function switchText() {
-                if ($(this).val() == $(this).attr("title"))
+                if ($(this).val() == $(this).attr("title")) {
                     $(this).val('').removeClass("searchCueText");
-                else if ($.trim($(this).val()) == '')
+                }
+
+                else if ($.trim($(this).val()) === '') {
                     $(this).addClass("searchCueText").val($(this).attr("title"));
+                }
             }
-            $("#search").val($("#search").attr("title")).addClass("searchCueText");
-            $("#search").focus(switchText).blur(switchText);
 
-        });
-    </script>
+            var searchField = $("#search");
 
-    @: [ @Html.ActionLink("Report Price", "ReportPrice", "Item") ] [ @Html.ActionLink("New Store", "Create", "Store") ] [ @Html.ActionLink("New Item", "Create", "Item") ][ @Html.ActionLink("Log Off", "Logout", "Users") ]
+            searchField.val(searchField.attr("title")).addClass("searchCueText");
+            searchField.focus(switchText).blur(switchText);
+
+            searchField.autocomplete({
+                source: "/API/SearchItems",
+                focus: function (event, ui) {
+                    searchField.val(ui.item.Name);
+                    return false;
+                },
+                minLength: 1,
+                select: function (event, ui) {
+                    searchField.val(ui.item.Name + ", " + ui.item.Size);
+                    $("#Item_ID").val(ui.item.ID);
+                    return false;
+                }
+            })
+            .data("autocomplete")._renderItem = function (ul, item) {
+                return $("<li></li>")
+                    .data("item.autocomplete", item)
+                    .append("<a>" + item.Name + ", " + item.Size + " by " + item.Brand + "</a>")
+                    .appendTo(ul);
+            };
+
+            $("#mapitbutton").button();
+
+        });    </script>
+
+    @: [ @Html.ActionLink("Report Price", "ReportPrice", "Item") ] [ @Html.ActionLink("New Store", "Create", "Store")][@Html.ActionLink("New Item", "Create", "Item")][@Html.ActionLink("Log Off", "Logout", "Users")]
     <div class="grid_12">
         @using (Html.BeginForm("Index", "Search"))
         {
-            <input id="search" type="text" class="grid_11" title="Type Search..."/><button id="button" type="submit">Map It!</button>
+            <div class="ui-widget" class="grid_12">
+                <input id="search" type="text" class="grid_10" title="Type Search..." />
+                <button id="mapitbutton" type="submit">
+                    Map It!</button>
+            </div>
         }
     </div>
 }

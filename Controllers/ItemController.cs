@@ -177,49 +177,48 @@ namespace MapItPrices.Controllers
         [Authorize]
         public ActionResult ReportPrice()
         {
-            return View(new StoreItem());
+            return View(new ReportPriceViewModel());
         }
 
         [HttpPost]
         [Authorize]
-        public ActionResult ReportPrice(FormCollection collection)
+        public ActionResult ReportPrice(ReportPriceViewModel vm)
         {
-            if(string.IsNullOrEmpty(collection["Store.ID"]) ||
-                string.IsNullOrEmpty(collection["Item.ID"]))
+            if (vm.StoreItem.Item.ID == 0)
             {
-                //ViewData.ModelMetadata
-                return View(new StoreItem());
+                return View(vm);
             }
 
-            int storeId;
-                if(!int.TryParse(collection["Store.ID"], out storeId))
+            StoreItem storeItem = vm.StoreItem;
+
+            if (vm.is_new_store)
+            {
+                Store store = new Store();
+                store.Name = vm.StoreItem.Store.Name;
+                store.Address = vm.StoreItem.Store.Address;
+                store.City = vm.StoreItem.Store.City;
+                store.State = vm.StoreItem.Store.State;
+                store.Zip = vm.StoreItem.Store.Zip;
+                store.UserID = this.CurrentUser.ID;
+
+                MapItDB.Stores.AddObject(store);
+                MapItDB.SaveChanges();
+
+                vm.StoreItem.StoreId = store.ID;
+            }
+            else
+            {
+                storeItem = MapItDB.StoreItems.SingleOrDefault(i => i.ItemId == vm.StoreItem.ItemId && i.StoreId == storeItem.StoreId);
+                if (storeItem == null)
                 {
-                    return View(new StoreItem());
+                    storeItem = new StoreItem();
+                    MapItDB.StoreItems.AddObject(storeItem);
                 }
-
-            int itemId;
-            if(!int.TryParse(collection["Item.ID"], out itemId))
-            {
-                    return View(new StoreItem());
             }
 
-            decimal price;
-            if (!decimal.TryParse(collection["Price"], out price))
-            {
-                    return View(new StoreItem());
-            }
-
-            StoreItem storeItem = MapItDB.StoreItems.SingleOrDefault(i => i.ItemId == itemId && i.StoreId == storeId);
-
-            if (storeItem == null)
-            {
-                storeItem = new StoreItem();
-                MapItDB.StoreItems.AddObject(storeItem);
-            }
-
-            storeItem.ItemId = itemId;
-            storeItem.StoreId = storeId;
-            storeItem.Price = price;
+            storeItem.ItemId = vm.StoreItem.Item.ID;
+            storeItem.StoreId = vm.StoreItem.StoreId;
+            storeItem.Price = vm.StoreItem.Price;
             storeItem.UserID = this.CurrentUser.ID;
             storeItem.LastUpdated = DateTime.Now;
 

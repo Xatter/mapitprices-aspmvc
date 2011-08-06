@@ -1,4 +1,4 @@
-﻿@model MapItPrices.Models.StoreItem
+﻿@model MapItPrices.ViewModels.ReportPriceViewModel
 @{
     ViewBag.Title = "ReportPrice";
 }
@@ -12,7 +12,8 @@
             $("#log").attr("scrollTop", 0);
         }
 
-        var storeNameField = $("#Store_Name");
+        var storeNameField = $("#StoreName");
+        var storeIDField = $("#StoreItem_Store_ID");
 
         storeNameField.autocomplete({
             source: "/API/SearchStores",
@@ -23,16 +24,11 @@
             minLength: 1,
             select: function (event, ui) {
                 storeNameField.val(ui.item.Name);
-                $("#Store_ID").val(ui.item.ID);
+                storeIDField.val(ui.item.ID);
                 newAddressEditor.hide();
                 return false;
             }
         })
-        //            .blur(function () {
-        //                if ($("#Store_ID").val() == '') {
-        //                    $("#NewAddress").show();
-        //                }
-        //            })
             .data("autocomplete")._renderItem = function (ul, item) {
                 return $("<li></li>")
                 .data("item.autocomplete", item)
@@ -40,7 +36,7 @@
                 .appendTo(ul);
             };
 
-        $("#Item_Name").autocomplete({
+        $("#StoreItem_Item_Name").autocomplete({
             source: "/API/SearchItems",
             focus: function (event, ui) {
                 $("#Item_Name").val(ui.item.Name);
@@ -48,8 +44,8 @@
             },
             minLength: 1,
             select: function (event, ui) {
-                $("#Item_Name").val(ui.item.Name + ", " + ui.item.Size);
-                $("#Item_ID").val(ui.item.ID);
+                $("#StoreItem_Item_Name").val(ui.item.Name + ", " + ui.item.Size);
+                $("#StoreItem_Item_ID").val(ui.item.ID);
                 return false;
             }
         })
@@ -59,6 +55,37 @@
                 .append("<a>" + item.Name + ", " + item.Size + " by " + item.Brand + "</a>")
                 .appendTo(ul);
             };
+
+        $("#NewStore").hide();
+
+        $("#btn_newStore").button({
+            icons: {
+                primary: "ui-icon-circle-plus"
+            }
+        }).click(function () {
+            $("#btn_newStore").toggle();
+            $("#btn_Cancel").toggle();
+            storeNameField.toggle('fast', null);
+            $("#NewStore").toggle('slow', function () {
+
+                $("#is_new_store").val('true');
+            });
+        });
+
+        $("#btn_Cancel").button({
+            icons: {
+                primary: "ui-icon-circle-minus"
+            }
+        }).click(function () {
+            $("#btn_Cancel").toggle();
+            $("#btn_newStore").toggle();
+
+            $("#NewStore").toggle('fast', function () {
+                $("#is_new_store").val('false');
+            });
+
+            storeNameField.toggle('slow', null);
+        });
     });
 </script>
 <h2>
@@ -68,22 +95,24 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <div class="editor-label">
-            @Html.LabelFor(m => m.Store.Name, "Store")
-            @Html.EditorFor(m => m.Store.Name)
-            @*            <div id="NewAddress">
-                @Html.EditorFor(model => model.Store)
+            @Html.LabelFor(model => model.StoreItem.Item.Name, "Item")
+            @Html.EditorFor(model => model.StoreItem.Item.Name)
+            @Html.HiddenFor(m => m.StoreItem.Item.ID)
+        </div>
+        <div class="editor-label ui-widget">
+            @Html.LabelFor(m => m.StoreName, "Store")
+            @Html.EditorFor(m => m.StoreName)<a id="btn_newStore">New Store</a><a
+                id="btn_Cancel" style="display: none">Cancel</a>
+            <div id="NewStore">
+                @Html.HiddenFor(m => m.is_new_store)
+                @Html.EditorFor(model => model.StoreItem.Store)
             </div>
-*@ @Html.HiddenFor(m => m.Store.ID)
+            @Html.HiddenFor(m => m.StoreItem.Store.ID)
         </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.Item.Name, "Item")
-            @Html.EditorFor(model => model.Item.Name)
-            @Html.HiddenFor(m => m.Item.ID)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Price)
-            @Html.EditorFor(model => model.Price)
-            @Html.ValidationMessageFor(model => model.Price)
+            @Html.LabelFor(model => model.StoreItem.Price)
+            @Html.EditorFor(model => model.StoreItem.Price)
+            @Html.ValidationMessageFor(model => model.StoreItem.Price)
         </div>
     </fieldset>
     <input type="submit" />

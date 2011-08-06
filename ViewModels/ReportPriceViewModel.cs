@@ -8,13 +8,14 @@ namespace MapItPrices.ViewModels
 {
     public class ReportPriceViewModel
     {
-        public ReportPriceViewModel(IEnumerable<Item> items, IEnumerable<Store> stores)
-        {
-            this.Items = items;
-            this.Stores = stores;
-        }
+        public string StoreName { get; set; }
+        public bool is_new_store { get; set; }
+        public StoreItem StoreItem { get; set; }
 
-        public IEnumerable<Item> Items { get; set; }
-        public IEnumerable<Store> Stores { get; set; }
+        public ReportPriceViewModel()
+        {
+            this.is_new_store = false;
+            this.StoreItem = new StoreItem();
+        }
     }
 }
