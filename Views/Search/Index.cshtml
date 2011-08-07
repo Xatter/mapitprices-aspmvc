@@ -1,0 +1,80 @@
+﻿@model MapItPrices.ViewModels.SearchResult
+@{
+    ViewBag.Title = "Index";
+}
+<h2>
+    Search Results for <em>@Model.Query</em></h2>
+<script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0">
+</script>
+<script type="text/javascript">
+    function addMarker(latitude, longitude, title, description)
+    {
+    }
+
+    $(function () {
+        var map = new Microsoft.Maps.Map(document.getElementById('map_canvas'), {
+            showDashboard: false
+        });
+        map.setView({ zoom: 10, center: new Microsoft.Maps.Location(40.73, -73.98) })
+
+        map.entities.clear();
+
+        @foreach (var storeitem in Model.StoreItems)
+        { 
+        <text>
+            var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(@storeitem.Store.Latitude, @storeitem.Store.Longitude), {width: 200, text: '@storeitem.Store.Name' } );
+            map.entities.push(pushpin);
+        </text>
+        }
+    });
+</script>
+<div id="map_canvas" style="position: relative; width: 100%; height: 600px;">
+</div>
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Size
+        </th>
+        <th>
+            Brand
+        </th>
+    </tr>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Name
+            </td>
+            <td>@item.Size
+            </td>
+            <td>@item.Brand
+            </td>
+        </tr>
+    }
+</table>
+<table>
+    <tr>
+        <th>
+            Item Name
+        </th>
+        <th>
+            Store Name
+        </th>
+        <th>
+            Price
+        </th>
+    </tr>
+    @foreach (var item in Model.StoreItems)
+    { 
+        <tr>
+            <td>@item.Item.Name
+            </td>
+            <td>@item.Store.Name
+            </td>
+            <td>@item.Price
+            </td>
+        </tr>    
+    }
+</table>

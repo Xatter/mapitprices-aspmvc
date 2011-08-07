@@ -8,7 +8,15 @@ namespace MapItPrices.ViewModels
 {
     public class SearchResult
     {
-        public Store Store { get; set; }
-        public List<StoreItem> Items { get; set; }
+        public string Query { get; private set; }
+        public IEnumerable<Item> Items { get; private set; }
+        public IEnumerable<StoreItem> StoreItems { get; set; }
+
+        public SearchResult(string q, IEnumerable<Item> results)
+        {
+            this.Query = q;
+            this.Items = results;
+        }
+
     }
 }

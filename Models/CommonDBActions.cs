@@ -9,26 +9,19 @@ namespace MapItPrices.Models
 {
     public class CommonDBActions
     {
-        IMapItEntities MapItDB;
+        MapItPricesEntities MapItDB;
         User CurrentUser;
 
-        public CommonDBActions(IMapItEntities entities, User currentUser)
+        public CommonDBActions(MapItPricesEntities entities, User currentUser)
         {
             MapItDB = entities;
             CurrentUser = currentUser;
         }
 
-        public int CreateStore(Store storeToCreate)
+        public int CreateStore(Store store)
         {
             try
             {
-                Store store = new Store();
-
-                store.Name = storeToCreate.Name;
-                store.Address = storeToCreate.Address;
-                store.City = storeToCreate.City;
-                store.State = storeToCreate.State;
-                store.Zip = storeToCreate.Zip;
                 store.UserID = this.CurrentUser.ID;
 
                 GeoCodeStore(store);
@@ -41,18 +34,6 @@ namespace MapItPrices.Models
             {
                 return -1;
             }
-        }
-
-        public int CreateStore(System.Web.Mvc.FormCollection storeToCreate)
-        {
-            Store store = new Store();
-            store.Name = storeToCreate["Name"];
-            //store.Address = storeToCreate.Address;
-            //store.City = storeToCreate.City;
-            //store.State = storeToCreate.State;
-            //store.Zip = storeToCreate.Zip;
-
-            return CreateStore(store);
         }
 
         public void GeoCodeStore(int StoreID)
@@ -84,12 +65,12 @@ namespace MapItPrices.Models
                 var store = MapItDB.Stores.SingleOrDefault(s => s.ID == newStoreValues.ID);
                 if (store != null)
                 {
-                    store.Name    = newStoreValues.Name;
+                    store.Name = newStoreValues.Name;
                     store.Address = newStoreValues.Address;
-                    store.City    = newStoreValues.City;
-                    store.State   = newStoreValues.State;
-                    store.Zip     = newStoreValues.Zip;
-                    store.User    = this.CurrentUser;
+                    store.City = newStoreValues.City;
+                    store.State = newStoreValues.State;
+                    store.Zip = newStoreValues.Zip;
+                    store.User = this.CurrentUser;
 
                     MapItDB.SaveChanges();
                     return true;
@@ -103,5 +84,20 @@ namespace MapItPrices.Models
             }
         }
 
+
+        public int CreateItem(Item item)
+        {
+            try
+            {
+                item.User = this.CurrentUser;
+                MapItDB.Items.AddObject(item);
+                MapItDB.SaveChanges();
+                return item.ID;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
     }
 }

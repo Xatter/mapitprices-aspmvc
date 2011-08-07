@@ -14,18 +14,65 @@
 @{
     string name = ViewData.TemplateInfo.HtmlFieldPrefix;
     string id = name.Replace(".", "_");
+    string seperator = string.IsNullOrEmpty(name) ? "" : "_";
 
-    string nameField = id + "_Name";
-    string addressField = id + "_Address";
-    string cityField = id + "_City";
-    string stateField = id + "_State";
-    string zipField = id + "_Zip";
+    string nameField = id + seperator + "Name";
+    string addressField = id + seperator + "Address";
+    string cityField = id + seperator + "City";
+    string stateField = id + seperator + "State";
+    string zipField = id + seperator + "Zip";
 }
-<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+@*<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+*@
+<div id="NewStore" class="ui-widget">
+    <fieldset>
+        <legend>Add new store</legend>
+        @Html.HiddenFor(m => m.ID)
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Name, "New Store Name")
+            @Html.EditorFor(m => m.Name)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Address)
+            @Html.EditorFor(m => m.Address)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.City)
+            @Html.EditorFor(m => m.City)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.State)
+            @Html.EditorFor(m => m.State)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Zip)
+            @Html.EditorFor(m => m.Zip)
+        </div>
+    </fieldset>
+    <div id="SimilarStores" class="ui-widget">
+    </div>
+    <a id="create_store_button">Create It!</a>
+</div>
+<p>
+    <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;"
+        id="createStoreSucceeded">
+        <p>
+            <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+            <strong>Hey!</strong> I can't believe that worked! Good Job!</p>
+    </div>
+    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;" id="createStoreFailed">
+        <p>
+            <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+            <strong>Alert:</strong> Awwwww... Failed to create new Store. :(
+        </p>
+    </div>
+</p>
 <script type="text/javascript">
     $(function () {
+        $("#createStoreSucceeded").hide();
+        $("#createStoreFailed").hide();
+
         var nameField = $("#@nameField");
 
         nameField.autocomplete({
@@ -49,17 +96,17 @@
                  .appendTo(ul);
          };
 
-        $("#create_button").button()
+        var successMessage = $("#createStoreSucceded");
+        var failedMessage = $("#createStoreFailed");
+
+        $("#create_store_button").button()
             .click(function () {
-                //                var form = $(this).parents("form:first");
-                //                form.submit();
-
-                var store = { Name: $("#@nameField").val(), 
-                              Address: $("#@addressField").val(),
-                              City: $("#@cityField").val(),
-                              State: $("#@stateField").val(),
-                              Zip: $("#zipField").val() };
-
+                var store = { Name: $("#@nameField").val(),
+                    Address: $("#@addressField").val(),
+                    City: $("#@cityField").val(),
+                    State: $("#@stateField").val(),
+                    Zip: $("#@zipField").val()
+                };
 
                 $.ajax({
                     url: '/API/CreateStore',
@@ -67,45 +114,31 @@
                     data: JSON.stringify(store),
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
-                    complete: createStoreComplete
+                    complete: function (xhr, statusText) {
+                        var json_data = $.parseJSON(xhr.responseText);
+
+                        if (json_data.Success === true) {
+                            failedMessage.hide();
+                            successMessage.show('slow', function () {
+                                setTimeout(function () {
+                                    successMessage.fadeOut();
+                                }, 1000);
+                            });
+                        }
+                        else {
+                            $("#createStoreSucceeded").hide();
+                            $("#createStoreFailed").show('slow');
+                        }
+
+                        try {
+                            createStoreComplete(json_data);
+                        }
+                        catch (err) {
+                        }
+                    }
                 });
 
                 return false;
             });
     });
 </script>
-<div id="NewStore" class="ui-widget">
-    @using (Ajax.BeginForm("CreateStore", "API", new AjaxOptions { OnComplete = "createStoreComplete" }))
-    {
-        <fieldset>
-            <legend>Add new store</legend>
-            @Html.HiddenFor(m => m.ID)
-            <div class="editor-label">
-                @Html.LabelFor(m => m.Name, "New Store Name")
-                @Html.EditorFor(m => m.Name)
-            </div>
-            <div>
-                @Html.LabelFor(m => m.Address)
-                @Html.EditorFor(m => m.Address)
-            </div>
-            <div>
-                @Html.LabelFor(m => m.City)
-                @Html.EditorFor(m => m.City)
-            </div>
-            <div>
-                @Html.LabelFor(m => m.State)
-                @Html.EditorFor(m => m.State)
-            </div>
-            <div>
-                @Html.LabelFor(m => m.Zip)
-                @Html.EditorFor(m => m.Zip)
-            </div>
-            <div id="SimilarStores" class="ui-widget">
-            </div>
-            <span id="result"></span>
-            <p>
-                <a id="create_button">Create It!</a>
-            </p>
-        </fieldset>
-    }
-</div>

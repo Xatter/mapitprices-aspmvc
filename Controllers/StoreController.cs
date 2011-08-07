@@ -16,11 +16,6 @@ namespace MapItPrices.Controllers
         {
         }
 
-        public StoreController(IMapItEntities entities)
-            : base(entities)
-        {
-        }
-
         //
         // GET: /Store/
 

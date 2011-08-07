@@ -16,11 +16,6 @@ namespace MapItPrices.Controllers
         {
         }
 
-        public ItemController(IMapItEntities entities)
-            : base(entities)
-        {
-        }
-
         //
         // GET: /ItemManager/
 
@@ -127,42 +122,6 @@ namespace MapItPrices.Controllers
         }
 
         [Authorize]
-        public ActionResult UpdatePrice(int id)
-        {
-            var item = MapItDB.Items.SingleOrDefault(i => i.ID == id);
-            ItemPriceUpdateViewModel vm = new ItemPriceUpdateViewModel();
-            vm.Stores = MapItDB.Stores.AsEnumerable();
-            vm.StoreItem = new StoreItem();
-            vm.StoreItem.Item = item;
-            vm.StoreItem.ItemId = item.ID;
-            return View(vm);
-        }
-
-        [HttpPost]
-        [Authorize]
-        public ActionResult UpdatePrice(StoreItem storeItem)
-        {
-            var item = MapItDB.StoreItems.SingleOrDefault(si => si.StoreId == storeItem.StoreId && si.ItemId == storeItem.ItemId);
-
-            if (item == null)
-            {
-                storeItem.LastUpdated = DateTime.Now;
-                storeItem.UserID = this.CurrentUser.ID;
-                MapItDB.StoreItems.AddObject(storeItem);
-            }
-            else
-            {
-                item.UserID = this.CurrentUser.ID;
-                item.LastUpdated = DateTime.Now;
-                item.Price = storeItem.Price;
-            }
-
-            MapItDB.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
-
-        [Authorize]
         public ActionResult ReportPrice()
         {
             return View(new ReportPriceViewModel());
@@ -179,29 +138,11 @@ namespace MapItPrices.Controllers
 
             StoreItem storeItem = vm.StoreItem;
 
-            if (vm.is_new_store)
+            storeItem = MapItDB.StoreItems.SingleOrDefault(i => i.ItemId == vm.StoreItem.ItemId && i.StoreId == storeItem.StoreId);
+            if (storeItem == null)
             {
-                Store store = new Store();
-                store.Name = vm.StoreItem.Store.Name;
-                store.Address = vm.StoreItem.Store.Address;
-                store.City = vm.StoreItem.Store.City;
-                store.State = vm.StoreItem.Store.State;
-                store.Zip = vm.StoreItem.Store.Zip;
-                store.UserID = this.CurrentUser.ID;
-
-                MapItDB.Stores.AddObject(store);
-                MapItDB.SaveChanges();
-
-                vm.StoreItem.StoreId = store.ID;
-            }
-            else
-            {
-                storeItem = MapItDB.StoreItems.SingleOrDefault(i => i.ItemId == vm.StoreItem.ItemId && i.StoreId == storeItem.StoreId);
-                if (storeItem == null)
-                {
-                    storeItem = new StoreItem();
-                    MapItDB.StoreItems.AddObject(storeItem);
-                }
+                storeItem = new StoreItem();
+                MapItDB.StoreItems.AddObject(storeItem);
             }
 
             storeItem.ItemId = vm.StoreItem.Item.ID;

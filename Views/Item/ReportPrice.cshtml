@@ -3,48 +3,111 @@
     ViewBag.Title = "ReportPrice";
 }
 <script type="text/javascript">
-    function createStoreComplete(xhr, statusText) {
-        var json_data = $.parseJSON(xhr.responseText);
-        alert(xhr.responseText);
+    function createStoreComplete(data) {
+        var json_data = data;
 
-        var storeIDField = $("#StoreItem_Store_ID");
-        var newAddressEditor = $("#NewStore");
-        var storeNameField = $("#StoreName");
+        if (json_data.Success === true) {
+            var storeIDField = $("#StoreItem_Store_ID");
+            var newAddressEditor = $("#NewStore");
+            var storeNameField = $("#StoreName");
 
-        $("#btn_newStore").toggle();
-        $("#btn_Cancel").toggle();
-        storeNameField.toggle('slow');
-        newAddressEditor.toggle('fast');
+            $("#btn_newStore").toggle();
+            $("#btn_cancelNewStore").toggle();
+            storeNameField.toggle('slow');
+            newAddressEditor.toggle('fast');
 
-        storeIDField.val(json_data.ID);
-        storeNameField.val(json_data.Store.Name);
+            storeIDField.val(json_data.ID);
+            storeNameField.val(json_data.Store.Name);
+        }
+    }
+
+    function createItemComplete(data) {
+        if (data.Success === true) {
+            var itemIDField = $("#StoreItem_Item_ID");
+            var itemNameField = $("#ItemName");
+            var newItemEditor = $("#NewItem");
+
+            $("#btn_newItem").show();
+            $("#btn_cancelNewItem").hide();
+
+            itemNameField.show('slow');
+            newItemEditor.hide('fast');
+
+            itemIDField.val(data.ID);
+            itemNameField.val(data.Item.Name);
+        }
     }
 
     $(function () {
-        var newAddressEditor = $("#NewStore");
         var storeNameField = $("#StoreName");
         var storeIDField = $("#StoreItem_Store_ID");
+        var newAddressEditor = $("#NewStore");
+
+        var itemNameField = $("#ItemName");
+        var itemIDField = $("#StoreItem_Item_ID");
+        var newItemEditor = $("#NewItem");
+
+        newAddressEditor.hide();
+        newItemEditor.hide();
 
         function newStoreButtonClick() {
             $("#btn_newStore").hide();
-            $("#btn_Cancel").show();
+            $("#btn_cancelNewStore").show();
 
             storeNameField.hide('fast', null);
             newAddressEditor.show('slow', null);
         }
 
         function cancelButtonClicked() {
-            $("#btn_Cancel").hide();
+            $("#btn_cancelNewStore").hide();
             $("#btn_newStore").show();
 
             newAddressEditor.hide('fast', null);
             storeNameField.show('slow', null);
         }
 
+        $("#btn_newStore").button({
+            icons: {
+                primary: "ui-icon-circle-plus"
+            }
+        }).click(newStoreButtonClick);
+
+
+        $("#btn_cancelNewStore").button({
+            icons: {
+                primary: "ui-icon-circle-minus"
+            }
+        }).click(cancelButtonClicked);
+
+        $("#btn_newItem").button({
+            icons: {
+                primary: "ui-icon-circle-plus"
+            }
+        }).click(function () {
+            $("#btn_newItem").hide();
+            $("#btn_cancelNewItem").show();
+
+            itemNameField.hide('fast');
+            newItemEditor.show('slow');
+        });
+
+
+        $("#btn_cancelNewItem").button({
+            icons: {
+                primary: "ui-icon-circle-minus"
+            }
+        }).click(function () {
+            $("#btn_cancelNewItem").hide();
+            $("#btn_newItem").show();
+
+            itemNameField.show('slow');
+            newItemEditor.hide('fast');
+        });
+
         storeNameField.autocomplete({
             source: "/API/SearchStores",
             focus: function (event, ui) {
-                nameField.val(ui.item.Name);
+                storeNameField.val(ui.item.Name);
                 return false;
             },
             minLength: 1,
@@ -58,11 +121,11 @@
          .data("autocomplete")._renderItem = function (ul, item) {
              return $("<li></li>")
                  .data("item.autocomplete", item)
-                 .append("<a>" + item.Name + ", " + item.Address + " " + item.City + " " + item.State + "</a>")
+                 .append("<a>" + item.Name + "<br>" + item.Address + ", " + item.City + ", " + item.State + "</a>")
                  .appendTo(ul);
          };
 
-        $("#StoreItem_Item_Name").autocomplete({
+        itemNameField.autocomplete({
             source: "/API/SearchItems",
             focus: function (event, ui) {
                 $("#Item_Name").val(ui.item.Name);
@@ -70,7 +133,7 @@
             },
             minLength: 1,
             select: function (event, ui) {
-                $("#StoreItem_Item_Name").val(ui.item.Name + ", " + ui.item.Size);
+                itemNameField.val(ui.item.Name + ", " + ui.item.Size);
                 $("#StoreItem_Item_ID").val(ui.item.ID);
                 return false;
             }
@@ -81,20 +144,6 @@
                 .appendTo(ul);
         };
 
-        newAddressEditor.hide();
-
-        $("#btn_newStore").button({
-            icons: {
-                primary: "ui-icon-circle-plus"
-            }
-        }).click(newStoreButtonClick);
-
-
-        $("#btn_Cancel").button({
-            icons: {
-                primary: "ui-icon-circle-minus"
-            }
-        }).click(cancelButtonClicked);
     });
 
 </script>
@@ -104,15 +153,19 @@
 { 
     @Html.ValidationSummary(true)
     <fieldset>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.StoreItem.Item.Name, "Item")
-            @Html.EditorFor(model => model.StoreItem.Item.Name)
+        <div class="editor-label ui-widget">
+            @Html.LabelFor(model => model.ItemName, "Item")
+            @Html.EditorFor(model => model.ItemName)<a id="btn_newItem">New Item</a><a id="btn_cancelNewItem"
+                style="display: none">Cancel</a>
             @Html.HiddenFor(m => m.StoreItem.Item.ID)
+            @Html.EditorFor(model => model.StoreItem.Item)
         </div>
         <div class="editor-label ui-widget">
             @Html.LabelFor(m => m.StoreName, "Store")
-            @Html.EditorFor(m => m.StoreName)<a id="btn_newStore">New Store</a><a id="btn_Cancel" style="display: none">Cancel</a>
+            @Html.EditorFor(m => m.StoreName)<a id="btn_newStore">New Store</a><a id="btn_cancelNewStore"
+                style="display: none">Cancel</a>
             @Html.HiddenFor(m => m.StoreItem.Store.ID)
+            @Html.EditorFor(model => model.StoreItem.Store)
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.StoreItem.Price)
@@ -122,10 +175,6 @@
     </fieldset>
     <input type="submit" />
 }
-<div id="NewStore">
-    @Html.HiddenFor(m => m.is_new_store)
-    @Html.EditorFor(model => model.StoreItem.Store)
-</div>
 <div>
     <div id="log">
     </div>

@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Models\Attributes\EmailAttribute.cs" />
     <Compile Include="Models\Badge.cs">
       <DependentUpon>MapItPrices.tt</DependentUpon>
@@ -152,7 +153,6 @@
       <DependentUpon>MapItPrices.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ReportPriceViewModel.cs" />
-    <Compile Include="Controllers\ShoppingListController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\APIController.cs" />
     <Compile Include="Controllers\DynamicMapController.cs" />
@@ -178,11 +178,8 @@
     <Compile Include="Models\ObjectResult.cs" />
     <Compile Include="Models\RealDatabaseEntities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\ItemPriceUpdateViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\SearchResult.cs" />
-    <Compile Include="ViewModels\SearchResultViewModel.cs" />
     <Compile Include="ViewModels\StoreItemViewModel.cs" />
     <Compile Include="ViewModels\StoreMapViewModel.cs" />
     <Compile Include="ViewModels\StoreViewModel.cs" />
@@ -358,6 +355,8 @@
       <LastGenOutput>MapItPrices.cs</LastGenOutput>
     </None>
     <Content Include="Views\Store\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Item.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.xml" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.dll" />

@@ -13,7 +13,7 @@
                 }
             }
 
-            var searchField = $("#search");
+            var searchField = $("#q");
 
             searchField.val(searchField.attr("title")).addClass("searchCueText");
             searchField.focus(switchText).blur(switchText);
@@ -42,14 +42,13 @@
 
         });    </script>
 
-    @: [ @Html.ActionLink("Report Price", "ReportPrice", "Item") ] [ @Html.ActionLink("New Store", "Create", "Store")][@Html.ActionLink("New Item", "Create", "Item")][@Html.ActionLink("Log Off", "Logout", "Users")]
+    @: [ @Html.ActionLink("Report Price", "ReportPrice", "Item") ] [ @Html.ActionLink("New Store", "Create", "Store") ][ @Html.ActionLink("New Item", "Create", "Item") ][ @Html.ActionLink("Log Off", "Logout", "Users") ]
     <div class="grid_12">
-        @using (Html.BeginForm("Index", "Search"))
+        @using (Html.BeginForm("Index", "Search", FormMethod.Get))
         {
             <div class="ui-widget" class="grid_12">
-                <input id="search" type="text" class="grid_10" title="Type Search..." />
-                <button id="mapitbutton" type="submit">
-                    Map It!</button>
+                @Html.TextBox("q",string.Empty,new { title="Type Search...", @class="grid_11" })
+                <button id="mapitbutton" type="submit">Map It!</button>
             </div>
         }
     </div>

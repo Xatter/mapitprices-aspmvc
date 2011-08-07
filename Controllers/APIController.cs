@@ -22,11 +22,6 @@ namespace MapItPrices.Controllers
             _db = new CommonDBActions(this.MapItDB, _androidUser);
         }
 
-        public APIController(IMapItEntities entityStore)
-            : base(entityStore)
-        {
-        }
-
         public ActionResult SearchStores(string term)
         {
             var data = from i in MapItDB.Stores
@@ -154,25 +149,16 @@ namespace MapItPrices.Controllers
         // POST: /API/CreateItem/{id}
         // 
         [HttpPost]
-        public ActionResult CreateItem(FormCollection collection)
+        public JsonResult CreateItem(Item item)
         {
-            try
+            CommonDBActions _db = new CommonDBActions(this.MapItDB, this.CurrentUser);
+            var id = _db.CreateItem(item);
+            return Json(new
             {
-                Item i = new Item();
-                i.Name = collection["Name"];
-                i.UPC = collection["UPC"];
-                i.Size = collection["Size"];
-
-                // when unit test ready, swap this code
-                MapItDB.Items.AddObject(i);
-                MapItDB.SaveChanges();
-
-                return new ObjectResult(new APICallResult(1, "Success", i));
-            }
-            catch
-            {
-                return new ObjectResult(new APICallResult(0, "Failure"));
-            }
+                Success = id != -1,
+                ID = id,
+                Item = item
+            });
         }
 
         public ActionResult GetItemPrices(int id)

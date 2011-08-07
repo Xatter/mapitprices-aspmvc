@@ -9,28 +9,17 @@ namespace MapItPrices.Controllers
 {
     public abstract class BaseController : Controller
     {
-        public IMapItEntities MapItDB { get; private set; }
+        public MapItPricesEntities MapItDB { get; private set; }
         User _injectedUser;
 
         public BaseController()
         {
-            MapItDB = new RealDatabaseEntities(new MapItPricesEntities());
-        }
-
-        public BaseController(IMapItEntities entities)
-        {
-            MapItDB = entities;
+            MapItDB = new MapItPricesEntities();
         }
 
         public BaseController(User injectedUser) : this()
         {
             _injectedUser = injectedUser;
-        }
-
-        public BaseController(IMapItEntities entities, User injectedUser)
-        {
-            _injectedUser = injectedUser;
-            MapItDB = entities;
         }
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
