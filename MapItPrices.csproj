@@ -119,6 +119,7 @@
     <Compile Include="Models\BetaSignup.cs">
       <DependentUpon>MapItPrices.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CommonDBActions.cs" />
     <Compile Include="Models\Item.cs">
       <DependentUpon>MapItPrices.tt</DependentUpon>
     </Compile>
@@ -271,7 +272,7 @@
     <Content Include="Content\OpenID\images\openid-providers-uk.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="MigrationScripts\AddCreated.sql" />
+    <Content Include="MigrationScripts\01-AddCreated.sql" />
     <Content Include="Models\MapItPrices.edmx.sql" />
     <Content Include="Content\css\south-street\images\ui-bg_glass_55_fcf0ba_1x400.png" />
     <Content Include="Content\css\south-street\images\ui-bg_gloss-wave_100_ece8da_500x100.png" />
@@ -289,6 +290,26 @@
     <Content Include="Content\css\south-street\images\ui-icons_eeeeee_256x240.png" />
     <Content Include="Content\css\south-street\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\css\south-street\jquery-ui-1.8.14.custom.css" />
+    <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.5.1.js" />
+    <Content Include="Scripts\jquery-1.5.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.11.js" />
+    <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\modernizr-1.7.js" />
+    <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\openid-jquery-en.js" />
     <Content Include="Scripts\openid-jquery-ru.js" />
     <Content Include="Scripts\openid-jquery-uk.js" />
@@ -308,7 +329,6 @@
     <Content Include="Views\Item\Edit.aspx" />
     <Content Include="Views\Item\Index.aspx" />
     <Content Include="Views\Store\Delete.aspx" />
-    <Content Include="Views\Store\Edit.aspx" />
     <Content Include="Views\Store\Index.aspx" />
     <Content Include="Views\Users\RequestBetaCode.aspx" />
     <Content Include="Web.config">
@@ -320,15 +340,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\MicrosoftAjax.js" />
-    <Content Include="Scripts\MicrosoftAjax.debug.js" />
-    <Content Include="Scripts\MicrosoftMvcAjax.js" />
-    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
-    <Content Include="Scripts\MicrosoftMvcValidation.js" />
-    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\SayThanks.cshtml" />
@@ -346,6 +357,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MapItPrices.cs</LastGenOutput>
     </None>
+    <Content Include="Views\Store\Edit.cshtml" />
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.xml" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.dll" />

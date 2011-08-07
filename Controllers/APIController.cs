@@ -6,17 +6,20 @@ using MapItPrices.Models;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Collections.Generic;
+using System.Web.Helpers;
 
 namespace MapItPrices.Controllers
 {
     public class APIController : BaseController
     {
         User _androidUser;
+        CommonDBActions _db;
 
         public APIController()
             : base()
         {
             _androidUser = MapItDB.Users.SingleOrDefault(u => u.Username == "android");
+            _db = new CommonDBActions(this.MapItDB, _androidUser);
         }
 
         public APIController(IMapItEntities entityStore)
@@ -290,28 +293,14 @@ namespace MapItPrices.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateStore(FormCollection collection)
+        public JsonResult CreateStore(Store storeToCreate)
         {
-            try
-            {
-                Store store = new Store();
-
-                store.Name = collection["Name"];
-                store.Address = collection["Address"];
-                store.City = collection["City"];
-                store.State = collection["State"];
-                store.Zip = collection["Zip"];
-
-                GeoCodeStore(store);
-                MapItDB.Stores.AddObject(store);
-                MapItDB.SaveChanges();
-
-                return new ObjectResult(new APICallResult(1, "Success."));
-            }
-            catch
-            {
-                return new ObjectResult(new APICallResult(0, "Failed."));
-            }
+            int id = _db.CreateStore(storeToCreate);
+            return Json(new
+                {
+                    Success= id != -1,
+                    ID = id
+                });
         }
 
         public ActionResult GetStores(double lat, double lng)
@@ -335,52 +324,5 @@ namespace MapItPrices.Controllers
                 return new ObjectResult(new APICallResult(0, "Failed."));
             }
         }
-
-        [NonAction]
-        public void GeoCodeStore(int StoreID)
-        {
-            GeoCodeStore(MapItDB.Stores.Single(s => s.ID == StoreID));
-        }
-
-        [NonAction]
-        public static void GeoCodeStore(Store store)
-        {
-            string fullAddress = store.Address + ", " + store.City + ", " + store.State;
-
-            string url = string.Format(
-                "http://maps.google.com/maps/api/geocode/json?address={0}&region=dk&sensor=false",
-                HttpUtility.HtmlEncode(fullAddress));
-
-            var request = (HttpWebRequest)HttpWebRequest.Create(url);
-            request.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip,deflate");
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(GeoResponse));
-            var res = (GeoResponse)serializer.ReadObject(request.GetResponse().GetResponseStream());
-            store.Latitude = res.Results[0].Geometry.Location.Lat;
-            store.Longitude = res.Results[0].Geometry.Location.Lng;
-        }
-
-        internal void EditStore(int id, FormCollection collection)
-        {
-            var store = MapItDB.Stores.SingleOrDefault(s => s.ID == id);
-            if (store != null)
-            {
-                store.Name = collection["Name"];
-                store.Address = collection["Address"];
-                store.City = collection["City"];
-                store.State = collection["State"];
-                store.Zip = collection["Zip"];
-
-                MapItDB.SaveChanges();
-            }
-        }
-
-        internal void DeleteStore(int id, FormCollection collection)
-        {
-            var store = MapItDB.Stores.Single(s => s.ID == id);
-            MapItDB.Stores.DeleteObject(store);
-            MapItDB.SaveChanges();
-        }
-
     }
 }

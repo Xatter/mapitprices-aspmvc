@@ -54,7 +54,7 @@ namespace MapItPrices.Controllers
 
             foreach (var store in stores)
             {
-                APIController.GeoCodeStore(store);
+                CommonDBActions.GeoCodeStore(store);
             }
 
             this.MapItDB.SaveChanges();

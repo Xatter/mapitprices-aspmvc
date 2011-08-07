@@ -1,0 +1,90 @@
+﻿@model MapItPrices.Models.Store
+@{
+    ViewBag.Title = "New Store";
+}
+<style>
+    .ui-autocomplete
+    {
+        max-height: 300px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 20px;
+    }
+</style>
+@{
+    string name = ViewData.TemplateInfo.HtmlFieldPrefix;
+    string id = name.Replace(".", "_");
+    string nameField = id + "_Name";
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        var nameField = $("#@nameField");
+
+        nameField.autocomplete({
+            source: "/API/SearchStores",
+            focus: function (event, ui) {
+                nameField.val(ui.item.Name);
+                return false;
+            },
+            minLength: 1,
+            select: function (event, ui) {
+                storeNameField.val(ui.item.Name);
+                storeIDField.val(ui.item.ID);
+                newAddressEditor.hide();
+                return false;
+            }
+        })
+         .data("autocomplete")._renderItem = function (ul, item) {
+             return $("<li></li>")
+                 .data("item.autocomplete", item)
+                 .append("<a>" + item.Name + ", " + item.Address + " " + item.City + " " + item.State + "</a>")
+                 .appendTo(ul);
+         };
+
+        $("#create_button").button()
+            .click(function () {
+                $("#NewStoreAjaxForm").submit();
+            });
+    });
+</script>
+<div id="NewStore" class="ui-widget">
+    @using (Ajax.BeginForm("CreateStore", "API", new AjaxOptions { UpdateTargetId = id + "_ID", OnComplete = "createStoreComplete" }, new {ID="NewStoreAjaxForm" }))
+    {
+        <fieldset>
+            <legend>Add new store</legend>
+            @Html.HiddenFor(m => m.ID)
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Name, "New Store Name")
+                @Html.EditorFor(m => m.Name)
+            </div>
+            <div>
+                @Html.LabelFor(m => m.Address)
+                @Html.EditorFor(m => m.Address)
+            </div>
+            <div>
+                @Html.LabelFor(m => m.City)
+                @Html.EditorFor(m => m.City)
+            </div>
+            <div>
+                @Html.LabelFor(m => m.State)
+                @Html.EditorFor(m => m.State)
+            </div>
+            <div>
+                @Html.LabelFor(m => m.Zip)
+                @Html.EditorFor(m => m.Zip)
+            </div>
+            <div id="SimilarStores" class="ui-widget">
+            </div>
+            <span id="result"></span>
+            <p>
+                <a id="create_button" href="#">Create It!</a>
+            </p>
+        </fieldset>
+    }
+</div>

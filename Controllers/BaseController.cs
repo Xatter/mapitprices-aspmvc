@@ -63,10 +63,13 @@ namespace MapItPrices.Controllers
             {
                 if (_injectedUser == null)
                 {
-                    var openid = this.MapItDB.OpenIDs.SingleOrDefault(o => o.ClaimedIdentifier == User.Identity.Name);
-                    if (openid != null)
+                    if (User != null)
                     {
-                        return openid.User;
+                        var openid = this.MapItDB.OpenIDs.SingleOrDefault(o => o.ClaimedIdentifier == User.Identity.Name);
+                        if (openid != null)
+                        {
+                            return openid.User;
+                        }
                     }
 
                     return null;

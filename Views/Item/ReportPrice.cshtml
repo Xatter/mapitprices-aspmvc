@@ -2,18 +2,28 @@
 @{
     ViewBag.Title = "ReportPrice";
 }
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
 <script type="text/javascript">
+    function createStoreComplete(xhr, statusText) {
+        var json_data = $.parseJSON(xhr.responseText);
+
+        var storeIDField = $("#StoreItem_Store_ID");
+        var newAddressEditor = $("#NewStore");
+        var storeNameField = $("#StoreName");
+
+        $("#btn_newStore").toggle();
+        $("#btn_Cancel").toggle();
+        storeNameField.toggle('slow');
+        newAddressEditor.toggle('fast');
+    }
+
+    function createStoreFailed(xhr) {
+    }
+
     $(function () {
-        var newAddressEditor = $("#NewAddress");
-
-        function log(message) {
-            $("<div/>").text(message).prependTo("#log");
-            $("#log").attr("scrollTop", 0);
-        }
-
+        var newAddressEditor = $("#NewStore");
         var storeNameField = $("#StoreName");
         var storeIDField = $("#StoreItem_Store_ID");
+
 
         storeNameField.autocomplete({
             source: "/API/SearchStores",
@@ -29,12 +39,12 @@
                 return false;
             }
         })
-            .data("autocomplete")._renderItem = function (ul, item) {
-                return $("<li></li>")
+        .data("autocomplete")._renderItem = function (ul, item) {
+            return $("<li></li>")
                 .data("item.autocomplete", item)
                 .append("<a>" + item.Name + ", " + item.Address + " " + item.City + " " + item.State + "</a>")
                 .appendTo(ul);
-            };
+        };
 
         $("#StoreItem_Item_Name").autocomplete({
             source: "/API/SearchItems",
@@ -49,12 +59,12 @@
                 return false;
             }
         })
-            .data("autocomplete")._renderItem = function (ul, item) {
-                return $("<li></li>")
+        .data("autocomplete")._renderItem = function (ul, item) {
+            return $("<li></li>")
                 .data("item.autocomplete", item)
                 .append("<a>" + item.Name + ", " + item.Size + " by " + item.Brand + "</a>")
                 .appendTo(ul);
-            };
+        };
 
         $("#NewStore").hide();
 
@@ -67,7 +77,6 @@
             $("#btn_Cancel").toggle();
             storeNameField.toggle('fast', null);
             $("#NewStore").toggle('slow', function () {
-
                 $("#is_new_store").val('true');
             });
         });
@@ -101,12 +110,7 @@
         </div>
         <div class="editor-label ui-widget">
             @Html.LabelFor(m => m.StoreName, "Store")
-            @Html.EditorFor(m => m.StoreName)<a id="btn_newStore">New Store</a><a
-                id="btn_Cancel" style="display: none">Cancel</a>
-            <div id="NewStore">
-                @Html.HiddenFor(m => m.is_new_store)
-                @Html.EditorFor(model => model.StoreItem.Store)
-            </div>
+            @Html.EditorFor(m => m.StoreName)<a id="btn_newStore">New Store</a><a id="btn_Cancel" style="display: none">Cancel</a>
             @Html.HiddenFor(m => m.StoreItem.Store.ID)
         </div>
         <div class="editor-label">
@@ -117,6 +121,10 @@
     </fieldset>
     <input type="submit" />
 }
+<div id="NewStore">
+    @Html.HiddenFor(m => m.is_new_store)
+    @Html.EditorFor(model => model.StoreItem.Store)
+</div>
 <div>
     <div id="log">
     </div>

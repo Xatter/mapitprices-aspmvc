@@ -88,31 +88,20 @@ namespace MapItPrices.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Item updatedItem)
         {
-            var item = MapItDB.Items.Single(i => i.ID == id);
-            var newItemValues = ItemFromFormCollection(collection);
+            var item = MapItDB.Items.SingleOrDefault(i => i.ID == updatedItem.ID);
 
-            item.UPC = newItemValues.UPC;
-            item.Size = newItemValues.Size;
-            item.Name = newItemValues.Name;
-            item.Brand = newItemValues.Brand;
-
-            MapItDB.SaveChanges();
+            if (item != null)
+            {
+                item.UPC = updatedItem.UPC;
+                item.Size = updatedItem.Size;
+                item.Name = updatedItem.Name;
+                item.Brand = updatedItem.Brand;
+                MapItDB.SaveChanges();
+            }
 
             return RedirectToAction("Index");
-        }
-
-        private Item ItemFromFormCollection(FormCollection collection)
-        {
-            var item = new Item();
-            item.Name = collection["Name"];
-            item.UPC = collection["UPC"];
-            item.Size = collection["Size"];
-            item.Brand = collection["Brand"];
-            item.User = this.CurrentUser;
-
-            return item;
         }
 
         //
@@ -129,10 +118,9 @@ namespace MapItPrices.Controllers
 
         [HttpPost]
         [MapItAuthorize(Roles = "Administrator")]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Item updatedItem)
         {
-            var item = ItemFromFormCollection(collection);
-            item.ID = id;
+            var item = MapItDB.Items.Single(i => i.ID == updatedItem.ID);
             MapItDB.Items.DeleteObject(item);
 
             return RedirectToAction("Index");
@@ -224,6 +212,13 @@ namespace MapItPrices.Controllers
 
             MapItDB.SaveChanges();
             return RedirectToAction("Index", "Map", new { itemid = storeItem.ItemId });
+        }
+
+        public string CreateStore(Store storeToCreate)
+        {
+            var _db = new CommonDBActions(this.MapItDB, this.CurrentUser);
+            var id = _db.CreateStore(storeToCreate);
+            return id.ToString();
         }
     }
 }

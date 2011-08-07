@@ -51,30 +51,12 @@ namespace MapItPrices.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Store newStore)
         {
-            Store store = StoreFromFormCollection(collection);
-
-            GeoCodeStore(store);
-
-            MapItDB.Stores.AddObject(store);
-            MapItDB.SaveChanges();
+            var _db = new CommonDBActions(this.MapItDB, this.CurrentUser);
+            _db.CreateStore(newStore);
 
             return RedirectToAction("Index", "Store");
-        }
-
-        private Store StoreFromFormCollection(FormCollection collection)
-        {
-            Store store = new Store();
-
-            store.Name = collection["Name"];
-            store.Address = collection["Address"];
-            store.City = collection["City"];
-            store.State = collection["State"];
-            store.Zip = collection["Zip"];
-            store.User = this.CurrentUser;
-
-            return store;
         }
 
         //
@@ -92,22 +74,10 @@ namespace MapItPrices.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Store updatedStore)
         {
-            var store = MapItDB.Stores.SingleOrDefault(s => s.ID == id);
-            if (store != null)
-            {
-                var newStoreValues = StoreFromFormCollection(collection);
-
-                store.Name = newStoreValues.Name;
-                store.Address = newStoreValues.Address;
-                store.City = newStoreValues.City;
-                store.State = newStoreValues.State;
-                store.Zip = newStoreValues.Zip;
-                store.User = this.CurrentUser;
-
-                MapItDB.SaveChanges();
-            }
+            var _db = new CommonDBActions(this.MapItDB, this.CurrentUser);
+            _db.EditStore(updatedStore);
             return RedirectToAction("Index");
         }
 
@@ -126,31 +96,11 @@ namespace MapItPrices.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Store storeToDelete)
         {
-            var store = StoreFromFormCollection(collection);
-            store.ID = id;
-
-            MapItDB.Stores.DeleteObject(store);
+            MapItDB.Stores.DeleteObject(storeToDelete);
+            MapItDB.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        [NonAction]
-        public static void GeoCodeStore(Store store)
-        {
-            string fullAddress = store.Address + ", " + store.City + ", " + store.State;
-
-            string url = string.Format(
-                "http://maps.google.com/maps/api/geocode/json?address={0}&region=dk&sensor=false",
-                HttpUtility.HtmlEncode(fullAddress));
-
-            var request = (HttpWebRequest)HttpWebRequest.Create(url);
-            request.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip,deflate");
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(GeoResponse));
-            var res = (GeoResponse)serializer.ReadObject(request.GetResponse().GetResponseStream());
-            store.Latitude = res.Results[0].Geometry.Location.Lat;
-            store.Longitude = res.Results[0].Geometry.Location.Lng;
         }
     }
 }
