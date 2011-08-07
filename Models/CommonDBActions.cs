@@ -43,6 +43,18 @@ namespace MapItPrices.Models
             }
         }
 
+        public int CreateStore(System.Web.Mvc.FormCollection storeToCreate)
+        {
+            Store store = new Store();
+            store.Name = storeToCreate["Name"];
+            //store.Address = storeToCreate.Address;
+            //store.City = storeToCreate.City;
+            //store.State = storeToCreate.State;
+            //store.Zip = storeToCreate.Zip;
+
+            return CreateStore(store);
+        }
+
         public void GeoCodeStore(int StoreID)
         {
             GeoCodeStore(MapItDB.Stores.Single(s => s.ID == StoreID));
@@ -90,5 +102,6 @@ namespace MapItPrices.Models
                 return false;
             }
         }
+
     }
 }

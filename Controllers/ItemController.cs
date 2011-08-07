@@ -213,12 +213,5 @@ namespace MapItPrices.Controllers
             MapItDB.SaveChanges();
             return RedirectToAction("Index", "Map", new { itemid = storeItem.ItemId });
         }
-
-        public string CreateStore(Store storeToCreate)
-        {
-            var _db = new CommonDBActions(this.MapItDB, this.CurrentUser);
-            var id = _db.CreateStore(storeToCreate);
-            return id.ToString();
-        }
     }
 }

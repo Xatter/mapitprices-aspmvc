@@ -5,6 +5,7 @@
 <script type="text/javascript">
     function createStoreComplete(xhr, statusText) {
         var json_data = $.parseJSON(xhr.responseText);
+        alert(xhr.responseText);
 
         var storeIDField = $("#StoreItem_Store_ID");
         var newAddressEditor = $("#NewStore");
@@ -14,9 +15,9 @@
         $("#btn_Cancel").toggle();
         storeNameField.toggle('slow');
         newAddressEditor.toggle('fast');
-    }
 
-    function createStoreFailed(xhr) {
+        storeIDField.val(json_data.ID);
+        storeNameField.val(json_data.Store.Name);
     }
 
     $(function () {
@@ -24,11 +25,26 @@
         var storeNameField = $("#StoreName");
         var storeIDField = $("#StoreItem_Store_ID");
 
+        function newStoreButtonClick() {
+            $("#btn_newStore").hide();
+            $("#btn_Cancel").show();
+
+            storeNameField.hide('fast', null);
+            newAddressEditor.show('slow', null);
+        }
+
+        function cancelButtonClicked() {
+            $("#btn_Cancel").hide();
+            $("#btn_newStore").show();
+
+            newAddressEditor.hide('fast', null);
+            storeNameField.show('slow', null);
+        }
 
         storeNameField.autocomplete({
             source: "/API/SearchStores",
             focus: function (event, ui) {
-                $("#Store_Name").val(ui.item.Name);
+                nameField.val(ui.item.Name);
                 return false;
             },
             minLength: 1,
@@ -39,12 +55,12 @@
                 return false;
             }
         })
-        .data("autocomplete")._renderItem = function (ul, item) {
-            return $("<li></li>")
-                .data("item.autocomplete", item)
-                .append("<a>" + item.Name + ", " + item.Address + " " + item.City + " " + item.State + "</a>")
-                .appendTo(ul);
-        };
+         .data("autocomplete")._renderItem = function (ul, item) {
+             return $("<li></li>")
+                 .data("item.autocomplete", item)
+                 .append("<a>" + item.Name + ", " + item.Address + " " + item.City + " " + item.State + "</a>")
+                 .appendTo(ul);
+         };
 
         $("#StoreItem_Item_Name").autocomplete({
             source: "/API/SearchItems",
@@ -58,44 +74,29 @@
                 $("#StoreItem_Item_ID").val(ui.item.ID);
                 return false;
             }
-        })
-        .data("autocomplete")._renderItem = function (ul, item) {
+        }).data("autocomplete")._renderItem = function (ul, item) {
             return $("<li></li>")
                 .data("item.autocomplete", item)
                 .append("<a>" + item.Name + ", " + item.Size + " by " + item.Brand + "</a>")
                 .appendTo(ul);
         };
 
-        $("#NewStore").hide();
+        newAddressEditor.hide();
 
         $("#btn_newStore").button({
             icons: {
                 primary: "ui-icon-circle-plus"
             }
-        }).click(function () {
-            $("#btn_newStore").toggle();
-            $("#btn_Cancel").toggle();
-            storeNameField.toggle('fast', null);
-            $("#NewStore").toggle('slow', function () {
-                $("#is_new_store").val('true');
-            });
-        });
+        }).click(newStoreButtonClick);
+
 
         $("#btn_Cancel").button({
             icons: {
                 primary: "ui-icon-circle-minus"
             }
-        }).click(function () {
-            $("#btn_Cancel").toggle();
-            $("#btn_newStore").toggle();
-
-            $("#NewStore").toggle('fast', function () {
-                $("#is_new_store").val('false');
-            });
-
-            storeNameField.toggle('slow', null);
-        });
+        }).click(cancelButtonClicked);
     });
+
 </script>
 <h2>
     ReportPrice</h2>

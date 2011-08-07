@@ -299,7 +299,8 @@ namespace MapItPrices.Controllers
             return Json(new
                 {
                     Success= id != -1,
-                    ID = id
+                    ID = id,
+                    Store = storeToCreate
                 });
         }
 
