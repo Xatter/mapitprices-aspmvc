@@ -4,77 +4,96 @@
 }
 <h2>
     Search Results for <em>@Model.Query</em></h2>
-<script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0">
-</script>
-<script type="text/javascript">
-    function addMarker(latitude, longitude, title, description)
-    {
-    }
-
-    $(function () {
-        var map = new Microsoft.Maps.Map(document.getElementById('map_canvas'), {
-            showDashboard: false
-        });
-        map.setView({ zoom: 10, center: new Microsoft.Maps.Location(40.73, -73.98) })
-
-        map.entities.clear();
-
-        @foreach (var storeitem in Model.StoreItems)
-        { 
-        <text>
-            var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(@storeitem.Store.Latitude, @storeitem.Store.Longitude), {width: 200, text: '@storeitem.Store.Name' } );
-            map.entities.push(pushpin);
-        </text>
-        }
-    });
-</script>
-<div id="map_canvas" style="position: relative; width: 100%; height: 600px;">
-</div>
-<table>
+<table class="grid_4">
     <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Size
-        </th>
-        <th>
-            Brand
-        </th>
-    </tr>
-    @foreach (var item in Model.Items)
-    {
-        <tr>
-            <td>@item.Name
-            </td>
-            <td>@item.Size
-            </td>
-            <td>@item.Brand
-            </td>
-        </tr>
-    }
-</table>
-<table>
-    <tr>
+    <th></th>
         <th>
             Item Name
         </th>
         <th>
             Store Name
         </th>
+        <th>Size</th>
         <th>
             Price
         </th>
     </tr>
+    @{ int recordCount = 1; }
     @foreach (var item in Model.StoreItems)
-    { 
+    {
         <tr>
+            <td>@recordCount</td>
             <td>@item.Item.Name
             </td>
             <td>@item.Store.Name
             </td>
-            <td>@item.Price
+            <td>@item.Item.Size</td>
+            <td>@string.Format("{0:c}", item.Price)
             </td>
         </tr>    
+        recordCount++;
     }
 </table>
+<script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+<script type="text/javascript">
+
+    $(function () {
+        function pushpinClick(e)
+        {
+            for(var i = 0;i < pushpins.length; i++)
+            {
+                if(pushpins[i].Pushpin === e.target)
+                {
+                    var pushpinData = pushpins[i];
+                    break;
+                }
+            }
+
+            var loc = e.target.getLocation();
+            map.setView({center: loc});
+    
+            var defaultInfobox = new Microsoft.Maps.Infobox(loc, {
+                title: pushpinData.StoreName,
+                description: pushpinData.ItemName + ", " + pushpinData.Size +  " - " + pushpinData.Price
+            });
+            map.entities.push(defaultInfobox);
+        }
+
+        var map = new Microsoft.Maps.Map(document.getElementById('map_canvas'), {
+            credentials: 'Al9ulWutfcB08NpQu_IKD2JmNlgG7f4za-PAyMmaluRh_RDhqiB8qx8qYHvZaH9B',
+            showDashboard: false,
+            enableClickableLogo: false,
+            enableSearchLogo: false
+        });
+
+        map.setView({ zoom: 12, center: new Microsoft.Maps.Location(40.73, -73.98) })
+        map.entities.clear();
+
+        var pushpins = [];
+
+        @{ recordCount = 1; }
+        @foreach (var storeitem in Model.StoreItems)
+        { 
+        <text>
+            var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(@storeitem.Store.Latitude, @storeitem.Store.Longitude), {text: '@recordCount' });
+            Microsoft.Maps.Events.addHandler(pushpin, 'click', pushpinClick);
+            var infoBox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(@storeitem.Store.Latitude, @storeitem.Store.Longitude), {
+                title: '@storeitem.Store.Name'
+            });
+
+            pushpins.push({
+                Pushpin: pushpin,
+                StoreName: '@storeitem.Store.Name',
+                Price: '@string.Format("{0:c}",storeitem.Price)',
+                ItemName: '@storeitem.Item.Name',
+                Size: '@storeitem.Item.Size'
+                });
+
+            map.entities.push(pushpin);
+        </text>
+            recordCount++;
+        }
+    });
+</script>
+<div id="map_canvas" class="grid_8" style="position: relative; height: 600px;">
+</div>

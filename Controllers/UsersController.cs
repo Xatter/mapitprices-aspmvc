@@ -19,8 +19,6 @@ namespace MapItPrices.Controllers
         MembershipProvider provider;
         RoleProvider roleProvider;
 
-        private string _returnURL;
-
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             if (provider == null) { provider = new MapItMembershipProvider(); }
@@ -123,11 +121,11 @@ namespace MapItPrices.Controllers
                         request.AddCallbackArguments("returnUrl", returnUrl);
 
                     request.AddExtension(new ClaimsRequest
-                    {
-                        BirthDate = DemandLevel.NoRequest,
-                        Email = DemandLevel.NoRequest,
-                        FullName = DemandLevel.NoRequest
-                    });
+                        {
+                            BirthDate = DemandLevel.NoRequest,
+                            Email = DemandLevel.NoRequest,
+                            FullName = DemandLevel.NoRequest
+                        });
 
                     return request.RedirectingResponse.AsActionResult();
                 }
@@ -170,7 +168,14 @@ namespace MapItPrices.Controllers
                         }
                     }
 
-                    FormsAuthentication.RedirectFromLoginPage(response.ClaimedIdentifier, true);
+                    if (Request.Params["ReturnUrl"] != null)
+                    {
+                        FormsAuthentication.RedirectFromLoginPage(response.ClaimedIdentifier, true);
+                    }
+                    else
+                    {
+                        Response.Redirect("/");
+                    }
                     break;
                 case AuthenticationStatus.Canceled:
                     ModelState.AddModelError("loginIdentifier", "Canceled at provider");
