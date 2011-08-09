@@ -52,6 +52,12 @@ namespace MapItPrices.Controllers
 
                 var thing = storeItems.AsEnumerable().ToList();
                 result.StoreItems = storeItems.AsEnumerable();
+
+                if (storeItems.Count() > 0)
+                {
+                    result.GroupedByStore = from s in storeItems
+                                            group s by s.Store;
+                }
             }
 
             return View(result);

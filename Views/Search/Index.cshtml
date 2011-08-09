@@ -1,39 +1,46 @@
 ﻿@model MapItPrices.ViewModels.SearchResult
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "MapItPrices! - Search Results";
 }
-<h2>
-    Search Results for <em>@Model.Query</em></h2>
-<table class="grid_4">
+<h2>Search Results for <em>@Model.Query</em></h2>
+@if (Model.GroupedByStore == null)
+{ 
+    <em>No Results Found</em>
+}
+else
+{ 
+    <div class="grid_4">
+    @{  int recordCount = 1; }
+    @foreach (var thing in Model.GroupedByStore)
+    { 
+        <h4>@recordCount @thing.Key.Name</h4>
+<table>
     <tr>
-    <th></th>
+        <th>
+        </th>
         <th>
             Item Name
         </th>
         <th>
-            Store Name
+            Size
         </th>
-        <th>Size</th>
         <th>
             Price
         </th>
     </tr>
-    @{ int recordCount = 1; }
-    @foreach (var item in Model.StoreItems)
-    {
+        @foreach (var storeitem in thing)
+        { 
         <tr>
-            <td>@recordCount</td>
-            <td>@item.Item.Name
-            </td>
-            <td>@item.Store.Name
-            </td>
-            <td>@item.Item.Size</td>
-            <td>@string.Format("{0:c}", item.Price)
-            </td>
+            <td>@recordCount </td>
+            <td>@storeitem.Item.Name </td>
+            <td>@storeitem.Item.Size </td>
+            <td>@string.Format("{0:c}", storeitem.Price) </td>
         </tr>    
+        }
+</table>
         recordCount++;
     }
-</table>
+    </div>
 <script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
 <script type="text/javascript">
 
@@ -51,10 +58,17 @@
 
             var loc = e.target.getLocation();
             map.setView({center: loc});
-    
+
+
+            var itemOutput = '';
+            for(var i = 0;i<pushpinData.Items.length;i++) {
+                var item = pushpinData.Items[i];
+                itemOutput += item.ItemName + ", " + item.Size + " - " + item.Price;
+            }
+
             var defaultInfobox = new Microsoft.Maps.Infobox(loc, {
                 title: pushpinData.StoreName,
-                description: pushpinData.ItemName + ", " + pushpinData.Size +  " - " + pushpinData.Price
+                description: itemOutput
             });
             map.entities.push(defaultInfobox);
         }
@@ -72,28 +86,34 @@
         var pushpins = [];
 
         @{ recordCount = 1; }
-        @foreach (var storeitem in Model.StoreItems)
+        @foreach (var thing in Model.GroupedByStore)
         { 
         <text>
-            var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(@storeitem.Store.Latitude, @storeitem.Store.Longitude), {text: '@recordCount' });
+            var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(@thing.Key.Latitude, @thing.Key.Longitude), {text: '@recordCount' });
             Microsoft.Maps.Events.addHandler(pushpin, 'click', pushpinClick);
-            var infoBox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(@storeitem.Store.Latitude, @storeitem.Store.Longitude), {
-                title: '@storeitem.Store.Name'
-            });
+
+            var infoBox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(@thing.Key.Latitude, @thing.Key.Longitude), {title: '@thing.Key.Name'});
 
             pushpins.push({
                 Pushpin: pushpin,
-                StoreName: '@storeitem.Store.Name',
-                Price: '@string.Format("{0:c}",storeitem.Price)',
-                ItemName: '@storeitem.Item.Name',
-                Size: '@storeitem.Item.Size'
+                StoreName: '@thing.Key.Name',
+                Items:[
+                @foreach (var item in thing)
+                {
+                @:{ Price: '@string.Format("{0:c}",item.Price)',
+                @:  ItemName: '@item.Item.Name',
+                @:  Size: '@item.Item.Size'},
+                }
+                ]
                 });
 
             map.entities.push(pushpin);
+            
         </text>
-            recordCount++;
+                recordCount++;
         }
-    });
+        });
 </script>
 <div id="map_canvas" class="grid_8" style="position: relative; height: 600px;">
 </div>
+}

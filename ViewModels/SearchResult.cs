@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MapItPrices.Models;
+using MapItPrices.Controllers;
 
 namespace MapItPrices.ViewModels
 {
@@ -18,5 +19,6 @@ namespace MapItPrices.ViewModels
             this.Items = results;
         }
 
+        public IQueryable<IGrouping<Store, StoreItem>> GroupedByStore { get; set; }
     }
 }
