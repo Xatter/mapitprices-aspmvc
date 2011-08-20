@@ -22,15 +22,14 @@ namespace MapItPrices.Models
         {
             try
             {
-                store.UserID = this.CurrentUser.ID;
-
+                store.User = this.CurrentUser;
                 GeoCodeStore(store);
-                MapItDB.Stores.AddObject(store);
+                MapItDB.Stores.Add(store);
                 MapItDB.SaveChanges();
 
                 return store.ID;
             }
-            catch
+            catch (Exception e)
             {
                 return -1;
             }
@@ -90,7 +89,7 @@ namespace MapItPrices.Models
             try
             {
                 item.User = this.CurrentUser;
-                MapItDB.Items.AddObject(item);
+                MapItDB.Items.Add(item);
                 MapItDB.SaveChanges();
                 return item.ID;
             }

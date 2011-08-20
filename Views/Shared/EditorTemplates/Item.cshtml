@@ -45,6 +45,10 @@
             @Html.EditorFor(model => model.Brand)
             @Html.ValidationMessageFor(model => model.Brand)
         </div>
+        <div class="editor-field">
+            <input type="text" id="Categories" />
+            <input type="hidden" id="Category_Ids" />
+        </div>
     </fieldset>
     <a id="create_item_button">Create It!</a>
 </div>

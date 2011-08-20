@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using System.Data.Entity;
 
 namespace MapItPrices.Models
 {
     public class MapItMembershipProvider : MembershipProvider
     {
-        IMapItEntities mapitDB;
+        MapItPricesEntities mapitDB;
         public MapItMembershipProvider()
         {
-            mapitDB = new RealDatabaseEntities(new MapItPricesEntities());
+            mapitDB = new MapItPricesEntities();
         }
 
         public override void Initialize(string name, System.Collections.Specialized.NameValueCollection config)

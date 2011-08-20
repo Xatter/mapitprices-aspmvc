@@ -1,0 +1,12 @@
+﻿USE [SQL2008R2_778484_mapitprices];
+GO
+CREATE FULLTEXT CATALOG MapItPricesFullTextCatalog;
+GO
+
+CREATE UNIQUE INDEX item_idx ON Items(ID);
+GO
+
+CREATE FULLTEXT INDEX ON Items (Name, Brand)
+KEY INDEX item_idx on MapItPricesFullTextCatalog
+WITH CHANGE_TRACKING AUTO;
+GO

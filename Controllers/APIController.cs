@@ -212,7 +212,7 @@ namespace MapItPrices.Controllers
             try
             {
                 var item = MapItDB.Items.Single(i => i.ID == id);
-                MapItDB.Items.DeleteObject(item);
+                MapItDB.Items.Remove(item);
                 MapItDB.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -237,7 +237,7 @@ namespace MapItPrices.Controllers
                     storeitem.Price = (decimal)price;
                     storeitem.LastUpdated = DateTime.Now;
 
-                    MapItDB.StoreItems.AddObject(storeitem);
+                    MapItDB.StoreItems.Add(storeitem);
                 }
                 else
                 {

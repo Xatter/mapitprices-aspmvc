@@ -47,11 +47,16 @@ namespace MapItPrices.Controllers
         {
             try
             {
-                MapItDB.OpenIDs.AddObject(openid);
+                openid.User.Created = DateTime.Now;
+                openid.Created = DateTime.Now;
+                MapItDB.Users.Add(openid.User);
+                MapItDB.SaveChanges();
+
+                MapItDB.OpenIDs.Add(openid);
                 MapItDB.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }

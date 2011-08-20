@@ -11,7 +11,7 @@ namespace MapItPrices.Controllers
 {
     public class DynamicMapController : BaseController
     {
-        IMapItEntities mapitDB = new RealDatabaseEntities(new MapItPricesEntities());
+        MapItPricesEntities mapitDB = new MapItPricesEntities();
 
         //
         // GET: /DynamicMap/

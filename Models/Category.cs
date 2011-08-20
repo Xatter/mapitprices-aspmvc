@@ -12,10 +12,16 @@ namespace MapItPrices.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BetaInviteCodes
+    public partial class Category
     {
-        public string InviteCode { get; set; }
-        public bool IsUsed { get; set; }
-        public string User_ID { get; set; }
+        public Category()
+        {
+            this.Items = new HashSet<Item>();
+        }
+    
+        public int Id { get; set; }
+        public string Name { get; set; }
+    
+        public virtual ICollection<Item> Items { internal get; set; }
     }
 }

@@ -56,7 +56,7 @@ namespace MapItPrices.Controllers
             try
             {
                 item.User = this.CurrentUser;
-                this.MapItDB.Items.AddObject(item);
+                this.MapItDB.Items.Add(item);
                 this.MapItDB.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -116,7 +116,7 @@ namespace MapItPrices.Controllers
         public ActionResult Delete(Item updatedItem)
         {
             var item = MapItDB.Items.Single(i => i.ID == updatedItem.ID);
-            MapItDB.Items.DeleteObject(item);
+            MapItDB.Items.Remove(item);
 
             return RedirectToAction("Index");
         }
@@ -142,7 +142,7 @@ namespace MapItPrices.Controllers
             if (storeItem == null)
             {
                 storeItem = new StoreItem();
-                MapItDB.StoreItems.AddObject(storeItem);
+                MapItDB.StoreItems.Add(storeItem);
             }
 
             storeItem.ItemId = vm.StoreItem.Item.ID;

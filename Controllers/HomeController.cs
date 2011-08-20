@@ -32,7 +32,7 @@ namespace MapItPrices.Controllers
             {
                 BetaSignup signup = new BetaSignup();
                 signup.Email = email;
-                MapItDB.BetaSignups.AddObject(signup);
+                MapItDB.BetaSignups.Add(signup);
                 MapItDB.SaveChanges();
             }
 
@@ -48,6 +48,13 @@ namespace MapItPrices.Controllers
         public ActionResult WhoSignedUp()
         {
             return View(MapItDB.BetaSignups.OrderBy(b => b.Id).AsEnumerable());
+        }
+
+        [Authorize]
+        [MapItAuthorize(Roles = "Administrator")]
+        public ActionResult BetaCodes()
+        {
+            return View(MapItDB.BetaInviteCodes);
         }
     }
 }

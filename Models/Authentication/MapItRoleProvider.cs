@@ -8,10 +8,10 @@ namespace MapItPrices.Models
 {
     public sealed class MapItRoleProvider : RoleProvider
     {
-        IMapItEntities mapitDB;
+        MapItPricesEntities mapitDB;
         public MapItRoleProvider()
         {
-            mapitDB = new RealDatabaseEntities(new MapItPricesEntities());
+            mapitDB = new MapItPricesEntities();
         }
 
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)

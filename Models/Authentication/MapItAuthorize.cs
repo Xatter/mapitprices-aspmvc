@@ -9,11 +9,11 @@ namespace MapItPrices.Models
 {
     public class MapItAuthorize : AuthorizeAttribute
     {
-        IMapItEntities mapitDB;
+        MapItPricesEntities mapitDB;
 
         public MapItAuthorize()
         {
-            mapitDB = new RealDatabaseEntities(new MapItPricesEntities());
+            mapitDB = new MapItPricesEntities();
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)

@@ -69,8 +69,8 @@
     <Reference Include="Elmah">
       <HintPath>Lib\Elmah.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.4.1.10715.0\lib\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data">
@@ -108,7 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BeerController.cs" />
     <Compile Include="Controllers\GroupedStoreItem.cs" />
+    <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Models\Attributes\EmailAttribute.cs" />
     <Compile Include="Models\Badge.cs">
@@ -119,6 +121,9 @@
       <DependentUpon>MapItPrices.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BetaSignup.cs">
+      <DependentUpon>MapItPrices.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Category.cs">
       <DependentUpon>MapItPrices.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CommonDBActions.cs" />
@@ -153,6 +158,11 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>MapItPrices.tt</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\ReportPriceViewModel.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\APIController.cs" />
@@ -167,7 +177,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\APICallResult.cs" />
-    <Compile Include="Models\IMapItEntities.cs" />
     <Compile Include="Models\Authentication\MapItAuthorize.cs" />
     <Compile Include="Models\Authentication\MapItMembershipProvider.cs" />
     <Compile Include="Models\MapItPrices.Designer.cs">
@@ -177,7 +186,6 @@
     </Compile>
     <Compile Include="Models\Authentication\MapItRoleProvider.cs" />
     <Compile Include="Models\ObjectResult.cs" />
-    <Compile Include="Models\RealDatabaseEntities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\SearchResult.cs" />
@@ -271,6 +279,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="MigrationScripts\01-AddCreated.sql" />
+    <Content Include="MigrationScripts\ModifyCreated.sql" />
+    <Content Include="MigrationScripts\FULLTEXTSearch.sql" />
     <Content Include="Models\MapItPrices.edmx.sql" />
     <Content Include="Content\css\south-street\images\ui-bg_glass_55_fcf0ba_1x400.png" />
     <Content Include="Content\css\south-street\images\ui-bg_gloss-wave_100_ece8da_500x100.png" />
@@ -348,6 +358,9 @@
     <Content Include="Views\Store\Create.cshtml" />
     <Content Include="Views\Map\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Store.cshtml" />
+    <Content Include="Views\Store\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Item.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
     <None Include="Models\MapItPrices.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MapItPrices.Context.cs</LastGenOutput>
@@ -356,9 +369,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MapItPrices.cs</LastGenOutput>
     </None>
-    <Content Include="Views\Store\Edit.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Item.cshtml" />
-    <Content Include="Views\Search\Index.cshtml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.xml" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.dll" />
@@ -425,8 +439,8 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>61418</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:61418/</IISUrl>

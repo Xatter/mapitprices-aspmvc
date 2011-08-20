@@ -13,6 +13,11 @@ namespace MapItPrices.ViewModels
         public IEnumerable<Item> Items { get; private set; }
         public IEnumerable<StoreItem> StoreItems { get; set; }
 
+        public SearchResult(string q)
+        {
+            this.Query = q;
+        }
+
         public SearchResult(string q, IEnumerable<Item> results)
         {
             this.Query = q;

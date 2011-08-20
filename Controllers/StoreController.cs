@@ -93,7 +93,7 @@ namespace MapItPrices.Controllers
         [Authorize]
         public ActionResult Delete(Store storeToDelete)
         {
-            MapItDB.Stores.DeleteObject(storeToDelete);
+            MapItDB.Stores.Remove(storeToDelete);
             MapItDB.SaveChanges();
             return RedirectToAction("Index");
         }
