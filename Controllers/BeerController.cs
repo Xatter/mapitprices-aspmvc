@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MapItPrices.Models;
+using MapItPrices.ViewModels;
 
 namespace MapItPrices.Controllers
 {
@@ -13,34 +15,53 @@ namespace MapItPrices.Controllers
         {
             double lat, lng;
 
-            var stores = from s in MapItDB.Stores
-                         select s;
+            if (!double.TryParse(collection["Lat"], out lat))
+            {
+                return Json(new { });
+            }
 
-            return Json(new
-                {
-                    Stores = stores
-                });
+            if (!double.TryParse(collection["Lng"], out lng))
+            {
+                return Json(new { });
+            }
+
+            var stores = from s in MapItDB.Stores
+                         select new BeerStoreResult
+                         {
+                             ID = s.ID,
+                             Name = s.Name,
+                             Latitude = s.Latitude,
+                             Longitude = s.Longitude,
+                             Distance = 0.0
+                         };
+
+            List<BeerStoreResult> storestoreturn = new List<BeerStoreResult>();
+            foreach (var store in stores)
+            {
+                store.Distance = Haversine.Distance(lat, lng, store.Latitude, store.Longitude);
+                storestoreturn.Add(store);
+            }
+
+            return Json(storestoreturn.OrderBy(s => s.Distance));
         }
 
 
         [HttpPost]
         public JsonResult GetItems(FormCollection collection)
         {
-            var category = MapItDB.Categories.SingleOrDefault(c => c.Name == "Beer");
-
             var items = from item in MapItDB.StoreItems
-                        where item.Item.Categories.Contains(category)
+                        where item.Item.Categories.Any(c => c.Name == "Beer")
                         select new
                         {
                             ID = item.Item.ID,
-                            Name = item.Item.Name,
-                            Size = item.Item.Size,
-                            Brand = item.Item.Brand,
+                            Name = item.Item.Name.Trim(),
+                            Size = item.Item.Size.Trim(),
+                            Brand = item.Item.Brand.Trim(),
+                            StoreID = item.StoreId,
                             Price = item.Price
                         };
 
-            return Json(items);
+            return Json(items.OrderBy(i => i.Price));
         }
-
     }
 }
