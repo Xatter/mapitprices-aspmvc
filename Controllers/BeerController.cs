@@ -63,5 +63,21 @@ namespace MapItPrices.Controllers
 
             return Json(items.OrderBy(i => i.Price));
         }
+
+        [HttpPost]
+        public JsonResult GetAllItems()
+        {
+            var items = from item in MapItDB.Items
+                        where item.Categories.Any(c => c.Name == "Beer")
+                        select new
+                        {
+                            ID = item.ID,
+                            Name = item.Name,
+                            Size = item.Size,
+                            Brand = item.Brand
+                        };
+
+            return Json(items);
+        }
     }
 }
