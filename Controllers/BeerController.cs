@@ -47,7 +47,7 @@ namespace MapItPrices.Controllers
 
 
         [HttpPost]
-        public JsonResult GetItems(FormCollection collection)
+        public JsonResult GetItemPrices(FormCollection collection)
         {
             var items = from item in MapItDB.StoreItems
                         where item.Item.Categories.Any(c => c.Name == "Beer")
@@ -65,6 +65,31 @@ namespace MapItPrices.Controllers
         }
 
         [HttpPost]
+        public JsonResult GetAllItemsAtStore(FormCollection collection)
+        {
+            int storeid;
+            if (!int.TryParse(collection["StoreID"], out storeid))
+            {
+                return Json(new { });
+            }
+
+            var items = from item in MapItDB.StoreItems
+                        where item.Item.Categories.Any(c => c.Name == "Beer") &&
+                            item.StoreId == storeid
+                        select new
+                        {
+                            ID = item.Item.ID,
+                            Name = item.Item.Name.Trim(),
+                            Size = item.Item.Size.Trim(),
+                            Brand = item.Item.Brand.Trim(),
+                            StoreID = item.StoreId,
+                            Price = item.Price
+                        };
+
+            return Json(items);
+        }
+
+        [HttpPost]
         public JsonResult GetAllItems()
         {
             var items = from item in MapItDB.Items
@@ -78,6 +103,48 @@ namespace MapItPrices.Controllers
                         };
 
             return Json(items);
+        }
+
+        [HttpPost]
+        public JsonResult ReportPrice(FormCollection collection)
+        {
+            int itemid;
+            if (!int.TryParse(collection["itemid"], out itemid))
+            {
+            return Json(new object { });
+            }
+
+            int storeid;
+            if(!int.TryParse(collection["storeid"], out storeid))
+            {
+            return Json(new object { });
+            }
+
+            decimal price;
+            if(!decimal.TryParse(collection["price"], out price))
+            {
+            return Json(new object { });
+            }
+
+            var storeitem = MapItDB.StoreItems.SingleOrDefault(s => s.ItemId == itemid && s.StoreId == storeid);
+            if (storeitem == null)
+            {
+                storeitem = new StoreItem();
+                storeitem.ItemId = itemid;
+                storeitem.StoreId = storeid;
+                storeitem.Price = price;
+                storeitem.LastUpdated = DateTime.Now;
+                MapItDB.StoreItems.Add(storeitem);
+            }
+            else
+            {
+                storeitem.Price = price;
+                storeitem.LastUpdated = DateTime.Now;
+            }
+
+            MapItDB.SaveChanges();
+
+            return Json(new object { });
         }
     }
 }
