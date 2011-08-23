@@ -138,7 +138,7 @@ namespace MapItPrices.Controllers
 
             StoreItem storeItem = vm.StoreItem;
 
-            storeItem = MapItDB.StoreItems.SingleOrDefault(i => i.ItemId == vm.StoreItem.ItemId && i.StoreId == storeItem.StoreId);
+            storeItem = MapItDB.StoreItems.SingleOrDefault(i => i.ItemId == vm.StoreItem.Item.ID && i.StoreId == storeItem.Store.ID);
             if (storeItem == null)
             {
                 storeItem = new StoreItem();
@@ -146,7 +146,7 @@ namespace MapItPrices.Controllers
             }
 
             storeItem.ItemId = vm.StoreItem.Item.ID;
-            storeItem.StoreId = vm.StoreItem.StoreId;
+            storeItem.StoreId = vm.StoreItem.Store.ID;
             storeItem.Price = vm.StoreItem.Price;
             storeItem.UserID = this.CurrentUser.ID;
             storeItem.LastUpdated = DateTime.Now;

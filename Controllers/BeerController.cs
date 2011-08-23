@@ -74,17 +74,17 @@ namespace MapItPrices.Controllers
             }
 
             var items = from item in MapItDB.StoreItems
-                         where item.StoreId == storeID &&
-                         item.Item.Categories.Any(c => c.Name == "Beer")
-                         select new
-                         {
+                        where item.StoreId == storeid &&
+                        item.Item.Categories.Any(c => c.Name == "Beer")
+                        select new
+                        {
                              ID = item.Item.ID,
                              Name = item.Item.Name.Trim(),
                              Size = item.Item.Size.Trim(),
                              Brand = item.Item.Brand.Trim(),
                              StoreID = item.StoreId,
                              Price = item.Price
-                         };
+                        };
 
             return Json(items);
         }
