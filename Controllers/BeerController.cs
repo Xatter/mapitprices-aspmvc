@@ -10,6 +10,13 @@ namespace MapItPrices.Controllers
 {
     public class BeerController : BaseController
     {
+        User _androidUser;
+
+        public BeerController()
+        {
+            _androidUser = MapItDB.Users.SingleOrDefault(u => u.Username == "android");
+        }
+
         [HttpPost]
         public JsonResult GetStores(FormCollection collection)
         {
@@ -136,10 +143,12 @@ namespace MapItPrices.Controllers
                 storeitem.StoreId = storeid;
                 storeitem.Price = price;
                 storeitem.LastUpdated = DateTime.Now;
+                storeitem.User = _androidUser;
                 MapItDB.StoreItems.Add(storeitem);
             }
             else
             {
+                storeitem.User = _androidUser;
                 storeitem.Price = price;
                 storeitem.LastUpdated = DateTime.Now;
             }
@@ -168,11 +177,13 @@ namespace MapItPrices.Controllers
             store.Name = storeName.Trim();
             store.Longitude = lng;
             store.Latitude = lat;
+            store.User = _androidUser;
 
             store.Address = address.Trim();
             store.City = city.Trim();
             store.State = state.Trim();
             store.Zip = zip.Trim();
+
 
             MapItDB.Stores.Add(store);
             MapItDB.SaveChanges();
@@ -200,6 +211,7 @@ namespace MapItPrices.Controllers
             item.Size = size.Trim();
             item.UPC = upc.Trim();
             item.Categories.Add(beerCategory);
+            item.User = _androidUser;
 
             MapItDB.Items.Add(item);
             MapItDB.SaveChanges();
