@@ -82,6 +82,7 @@ namespace MapItPrices.Controllers
                              Name = item.Item.Name.Trim(),
                              Size = item.Item.Size.Trim(),
                              Brand = item.Item.Brand.Trim(),
+                             UPC = item.Item.UPC.Trim(),
                              StoreID = item.StoreId,
                              Price = item.Price
                         };
@@ -97,9 +98,10 @@ namespace MapItPrices.Controllers
                         select new
                         {
                             ID = item.ID,
-                            Name = item.Name,
-                            Size = item.Size,
-                            Brand = item.Brand
+                            Name = item.Name.Trim(),
+                            Size = item.Size.Trim(),
+                            Brand = item.Brand.Trim(),
+                            UPC = item.UPC.Trim()
                         };
 
             return Json(items);
@@ -144,7 +146,64 @@ namespace MapItPrices.Controllers
 
             MapItDB.SaveChanges();
 
-            return Json(new object { });
+            return Json(storeitem);
+        }
+
+
+        [HttpPost]
+        public JsonResult CreateStore(FormCollection collection)
+        {
+            // Required
+            string storeName = collection["name"];
+            double lat = double.Parse(collection["lat"]);
+            double lng = double.Parse(collection["lng"]);
+            
+            //optional
+            string address = collection["address"];
+            string city = collection["city"];
+            string state = collection["state"];
+            string zip = collection["zip"];
+
+            Store store = new Store();
+            store.Name = storeName.Trim();
+            store.Longitude = lng;
+            store.Latitude = lat;
+
+            store.Address = address.Trim();
+            store.City = city.Trim();
+            store.State = state.Trim();
+            store.Zip = zip.Trim();
+
+            MapItDB.Stores.Add(store);
+            MapItDB.SaveChanges();
+            return Json(store);
+        }
+
+
+        [HttpPost]
+        public JsonResult CreateItem(FormCollection collection)
+        {
+            string name = collection["name"];
+            if(string.IsNullOrEmpty(name))
+            {
+                return Json(new {});
+            }
+            var beerCategory = MapItDB.Categories.SingleOrDefault(c => c.Name=="Beer");
+
+            string brand = collection["brand"];
+            string size = collection["size"];
+            string upc = collection["upc"];
+
+            Item item = new Item();
+            item.Name = name.Trim();
+            item.Brand = brand.Trim();
+            item.Size = size.Trim();
+            item.UPC = upc.Trim();
+            item.Categories.Add(beerCategory);
+
+            MapItDB.Items.Add(item);
+            MapItDB.SaveChanges();
+            return Json(item);
         }
     }
 }
