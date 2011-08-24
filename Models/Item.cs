@@ -30,6 +30,7 @@ namespace MapItPrices.Models
         public string Brand { get; set; }
         public System.DateTime Created { get; set; }
         public System.DateTime LastUpdated { get; set; }
+        public Nullable<int> Quantity { get; set; }
     
         public virtual ICollection<StoreItem> StoreItems { internal get; set; }
         public virtual User User { internal get; set; }

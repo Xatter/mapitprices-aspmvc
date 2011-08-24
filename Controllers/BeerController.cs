@@ -65,7 +65,8 @@ namespace MapItPrices.Controllers
                             Size = item.Item.Size.Trim(),
                             Brand = item.Item.Brand.Trim(),
                             StoreID = item.StoreId,
-                            Price = item.Price
+                            Price = item.Price,
+                            Quantity = item.Quantity
                         };
 
             return Json(items.OrderBy(i => i.Price));
@@ -85,13 +86,14 @@ namespace MapItPrices.Controllers
                         item.Item.Categories.Any(c => c.Name == "Beer")
                         select new
                         {
-                             ID = item.Item.ID,
-                             Name = item.Item.Name.Trim(),
-                             Size = item.Item.Size.Trim(),
-                             Brand = item.Item.Brand.Trim(),
-                             UPC = item.Item.UPC.Trim(),
-                             StoreID = item.StoreId,
-                             Price = item.Price
+                            ID = item.Item.ID,
+                            Name = item.Item.Name.Trim(),
+                            Size = item.Item.Size.Trim(),
+                            Brand = item.Item.Brand.Trim(),
+                            UPC = item.Item.UPC.Trim(),
+                            StoreID = item.StoreId,
+                            Price = item.Price,
+                            Quantity = item.Quantity
                         };
 
             return Json(items);
@@ -120,19 +122,25 @@ namespace MapItPrices.Controllers
             int itemid;
             if (!int.TryParse(collection["itemid"], out itemid))
             {
-            return Json(new object { });
+                return Json(new object { });
             }
 
             int storeid;
-            if(!int.TryParse(collection["storeid"], out storeid))
+            if (!int.TryParse(collection["storeid"], out storeid))
             {
-            return Json(new object { });
+                return Json(new object { });
             }
 
             decimal price;
-            if(!decimal.TryParse(collection["price"], out price))
+            if (!decimal.TryParse(collection["price"], out price))
             {
-            return Json(new object { });
+                return Json(new object { });
+            }
+
+            int quantity;
+            if (!int.TryParse(collection["quantity"], out quantity))
+            {
+                quantity = 1;
             }
 
             var storeitem = MapItDB.StoreItems.SingleOrDefault(s => s.ItemId == itemid && s.StoreId == storeid);
@@ -143,6 +151,7 @@ namespace MapItPrices.Controllers
                 storeitem.StoreId = storeid;
                 storeitem.Price = price;
                 storeitem.LastUpdated = DateTime.Now;
+                storeitem.Quantity = quantity;
                 storeitem.User = _androidUser;
                 MapItDB.StoreItems.Add(storeitem);
             }
@@ -150,6 +159,7 @@ namespace MapItPrices.Controllers
             {
                 storeitem.User = _androidUser;
                 storeitem.Price = price;
+                storeitem.Quantity = quantity;
                 storeitem.LastUpdated = DateTime.Now;
             }
 
@@ -166,7 +176,7 @@ namespace MapItPrices.Controllers
             string storeName = collection["name"];
             double lat = double.Parse(collection["lat"]);
             double lng = double.Parse(collection["lng"]);
-            
+
             //optional
             string address = collection["address"];
             string city = collection["city"];
@@ -194,16 +204,16 @@ namespace MapItPrices.Controllers
         [HttpPost]
         public JsonResult CreateItem(FormCollection collection)
         {
-            string name = collection["name"];
-            if(string.IsNullOrEmpty(name))
+            string name = collection["Name"];
+            if (string.IsNullOrEmpty(name))
             {
-                return Json(new {});
+                return Json(new { });
             }
-            var beerCategory = MapItDB.Categories.SingleOrDefault(c => c.Name=="Beer");
+            var beerCategory = MapItDB.Categories.SingleOrDefault(c => c.Name == "Beer");
 
-            string brand = collection["brand"];
-            string size = collection["size"];
-            string upc = collection["upc"];
+            string brand = collection["Brand"];
+            string size = collection["Size"];
+            string upc = collection["UPC"];
 
             Item item = new Item();
             item.Name = name.Trim();

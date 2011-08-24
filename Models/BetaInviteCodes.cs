@@ -16,6 +16,5 @@ namespace MapItPrices.Models
     {
         public string InviteCode { get; set; }
         public bool IsUsed { get; set; }
-        public string User_ID { get; set; }
     }
 }

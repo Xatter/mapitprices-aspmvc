@@ -20,6 +20,7 @@ namespace MapItPrices.Models
         public System.DateTime LastUpdated { get; set; }
         public int UserID { get; set; }
         public System.DateTime Created { get; set; }
+        public Nullable<int> Quantity { get; set; }
     
         public virtual Item Item { get; set; }
         public virtual Store Store { get; set; }
