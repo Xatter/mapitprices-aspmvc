@@ -2,10 +2,9 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 08/15/2011 10:48:02
+-- Date Created: 08/24/2011 21:52:41
 -- Generated from EDMX file: T:\Codes\C#\mapitprices\Models\MapItPrices.edmx
 -- --------------------------------------------------
-create database [SQL2008R2_778484_mapitprices];
 
 SET QUOTED_IDENTIFIER OFF;
 GO
@@ -18,38 +17,17 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_StoreItems_Items]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_StoreItems_Items];
-GO
-IF OBJECT_ID(N'[dbo].[FK_StoreItems_Stores]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_StoreItems_Stores];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserOpenID]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[OpenIDs] DROP CONSTRAINT [FK_UserOpenID];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserStoreItem]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_UserStoreItem];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserItem]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Items] DROP CONSTRAINT [FK_UserItem];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserStore]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Stores] DROP CONSTRAINT [FK_UserStore];
-GO
 IF OBJECT_ID(N'[dbo].[FK_BadgeUser_Badge]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[BadgeUser] DROP CONSTRAINT [FK_BadgeUser_Badge];
 GO
 IF OBJECT_ID(N'[dbo].[FK_BadgeUser_User]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[BadgeUser] DROP CONSTRAINT [FK_BadgeUser_User];
 GO
-IF OBJECT_ID(N'[dbo].[FK_UserRole_User]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserRole] DROP CONSTRAINT [FK_UserRole_User];
+IF OBJECT_ID(N'[dbo].[FK_CategoryItem_Category]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CategoryItem] DROP CONSTRAINT [FK_CategoryItem_Category];
 GO
-IF OBJECT_ID(N'[dbo].[FK_UserRole_Role]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserRole] DROP CONSTRAINT [FK_UserRole_Role];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserShoppingList]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ShoppingLists] DROP CONSTRAINT [FK_UserShoppingList];
+IF OBJECT_ID(N'[dbo].[FK_CategoryItem_Item]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CategoryItem] DROP CONSTRAINT [FK_CategoryItem_Item];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ItemShoppingList_Item]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ItemShoppingList] DROP CONSTRAINT [FK_ItemShoppingList_Item];
@@ -57,31 +35,64 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ItemShoppingList_ShoppingList]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ItemShoppingList] DROP CONSTRAINT [FK_ItemShoppingList_ShoppingList];
 GO
+IF OBJECT_ID(N'[dbo].[FK_StoreItems_Items]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_StoreItems_Items];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreItems_Stores]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_StoreItems_Stores];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Items] DROP CONSTRAINT [FK_UserItem];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserOpenID]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OpenIDs] DROP CONSTRAINT [FK_UserOpenID];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserRole_Role]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRole] DROP CONSTRAINT [FK_UserRole_Role];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserRole_User]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRole] DROP CONSTRAINT [FK_UserRole_User];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserShoppingList]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ShoppingLists] DROP CONSTRAINT [FK_UserShoppingList];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserStore]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Stores] DROP CONSTRAINT [FK_UserStore];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserStoreItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_UserStoreItem];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Items]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Items];
-GO
-IF OBJECT_ID(N'[dbo].[StoreItems]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StoreItems];
-GO
-IF OBJECT_ID(N'[dbo].[Stores]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Stores];
-GO
-IF OBJECT_ID(N'[dbo].[OpenIDs]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[OpenIDs];
-GO
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
-GO
 IF OBJECT_ID(N'[dbo].[Badges]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Badges];
 GO
+IF OBJECT_ID(N'[dbo].[BadgeUser]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BadgeUser];
+GO
 IF OBJECT_ID(N'[dbo].[BetaInviteCodes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[BetaInviteCodes];
+GO
+IF OBJECT_ID(N'[MapItPricesModelStoreContainer].[BetaSignups]', 'U') IS NOT NULL
+    DROP TABLE [MapItPricesModelStoreContainer].[BetaSignups];
+GO
+IF OBJECT_ID(N'[dbo].[Categories]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Categories];
+GO
+IF OBJECT_ID(N'[dbo].[CategoryItem]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CategoryItem];
+GO
+IF OBJECT_ID(N'[dbo].[Items]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Items];
+GO
+IF OBJECT_ID(N'[dbo].[ItemShoppingList]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ItemShoppingList];
+GO
+IF OBJECT_ID(N'[dbo].[OpenIDs]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OpenIDs];
 GO
 IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Roles];
@@ -89,17 +100,17 @@ GO
 IF OBJECT_ID(N'[dbo].[ShoppingLists]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ShoppingLists];
 GO
-IF OBJECT_ID(N'[dbo].[BetaSignups]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BetaSignups];
+IF OBJECT_ID(N'[dbo].[StoreItems]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreItems];
 GO
-IF OBJECT_ID(N'[dbo].[BadgeUser]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BadgeUser];
+IF OBJECT_ID(N'[dbo].[Stores]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Stores];
 GO
 IF OBJECT_ID(N'[dbo].[UserRole]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserRole];
 GO
-IF OBJECT_ID(N'[dbo].[ItemShoppingList]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ItemShoppingList];
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
 GO
 
 -- --------------------------------------------------
@@ -114,8 +125,8 @@ CREATE TABLE [dbo].[Items] (
     [Size] nchar(20)  NULL,
     [UserID] int  NOT NULL,
     [Brand] nvarchar(max)  NULL,
-    [Created] datetime2  NOT NULL,
-    [LastUpdated] datetime2  NOT NULL
+    [Created] datetime  NOT NULL,
+    [LastUpdated] datetime  NOT NULL
 );
 GO
 
@@ -124,9 +135,10 @@ CREATE TABLE [dbo].[StoreItems] (
     [ItemId] int  NOT NULL,
     [StoreId] int  NOT NULL,
     [Price] decimal(18,2)  NOT NULL,
-    [LastUpdated] datetime2  NOT NULL,
+    [LastUpdated] datetime  NOT NULL,
     [UserID] int  NOT NULL,
-    [Created] datetime2  NOT NULL
+    [Created] datetime  NOT NULL,
+    [Quantity] int  NULL
 );
 GO
 
@@ -141,7 +153,7 @@ CREATE TABLE [dbo].[Stores] (
     [Latitude] float  NULL,
     [Longitude] float  NULL,
     [UserID] int  NOT NULL,
-    [Created] datetime2  NOT NULL
+    [Created] datetime  NOT NULL
 );
 GO
 
@@ -149,7 +161,7 @@ GO
 CREATE TABLE [dbo].[OpenIDs] (
     [ClaimedIdentifier] nvarchar(200)  NOT NULL,
     [UserID] int  NOT NULL,
-    [Created] datetime2  NOT NULL
+    [Created] datetime  NOT NULL
 );
 GO
 
@@ -159,8 +171,8 @@ CREATE TABLE [dbo].[Users] (
     [RealName] nvarchar(max)  NOT NULL,
     [Email] nvarchar(max)  NOT NULL,
     [ID] int IDENTITY(1,1) NOT NULL,
-    [Created] datetime2  NOT NULL,
-    [LastUpdated] datetime2  NOT NULL
+    [Created] datetime  NOT NULL,
+    [LastUpdated] datetime  NOT NULL
 );
 GO
 
@@ -175,8 +187,7 @@ GO
 -- Creating table 'BetaInviteCodes'
 CREATE TABLE [dbo].[BetaInviteCodes] (
     [InviteCode] nvarchar(20)  NOT NULL,
-    [IsUsed] bit  NOT NULL,
-    [User_ID] nvarchar(max)  NULL
+    [IsUsed] bit  NOT NULL
 );
 GO
 
@@ -192,8 +203,8 @@ CREATE TABLE [dbo].[ShoppingLists] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [UserID] int  NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [Created] datetime2  NOT NULL,
-    [LastUpdated] datetime2  NOT NULL
+    [Created] datetime  NOT NULL,
+    [LastUpdated] datetime  NOT NULL
 );
 GO
 
@@ -201,7 +212,7 @@ GO
 CREATE TABLE [dbo].[BetaSignups] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Email] nvarchar(max)  NOT NULL,
-    [Created] datetime2  NOT NULL
+    [Created] datetime  NOT NULL
 );
 GO
 
@@ -235,7 +246,7 @@ GO
 
 -- Creating table 'CategoryItem'
 CREATE TABLE [dbo].[CategoryItem] (
-    [Category_Id] int  NOT NULL,
+    [Categories_Id] int  NOT NULL,
     [Items_ID] int  NOT NULL
 );
 GO
@@ -328,10 +339,10 @@ ADD CONSTRAINT [PK_ItemShoppingList]
     PRIMARY KEY NONCLUSTERED ([Items_ID], [ShoppingLists_Id] ASC);
 GO
 
--- Creating primary key on [Category_Id], [Items_ID] in table 'CategoryItem'
+-- Creating primary key on [Categories_Id], [Items_ID] in table 'CategoryItem'
 ALTER TABLE [dbo].[CategoryItem]
 ADD CONSTRAINT [PK_CategoryItem]
-    PRIMARY KEY NONCLUSTERED ([Category_Id], [Items_ID] ASC);
+    PRIMARY KEY NONCLUSTERED ([Categories_Id], [Items_ID] ASC);
 GO
 
 -- --------------------------------------------------
@@ -500,10 +511,10 @@ ON [dbo].[ItemShoppingList]
     ([ShoppingLists_Id]);
 GO
 
--- Creating foreign key on [Category_Id] in table 'CategoryItem'
+-- Creating foreign key on [Categories_Id] in table 'CategoryItem'
 ALTER TABLE [dbo].[CategoryItem]
 ADD CONSTRAINT [FK_CategoryItem_Category]
-    FOREIGN KEY ([Category_Id])
+    FOREIGN KEY ([Categories_Id])
     REFERENCES [dbo].[Categories]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;

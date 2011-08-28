@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MapItPrices.Models;
 using MapItPrices.ViewModels;
+using MapItPrices.Models.Attributes;
 
 namespace MapItPrices.Controllers
 {
@@ -17,7 +18,7 @@ namespace MapItPrices.Controllers
             _androidUser = MapItDB.Users.SingleOrDefault(u => u.Username == "android");
         }
 
-        [HttpPost]
+        [HttpPost][Compress]
         public JsonResult GetStores(FormCollection collection)
         {
             double lat, lng;
@@ -37,9 +38,13 @@ namespace MapItPrices.Controllers
                          {
                              ID = s.ID,
                              Name = s.Name,
-                             Latitude = s.Latitude,
-                             Longitude = s.Longitude,
-                             Distance = 0.0
+                             Latitude = s.Latitude ?? -1,
+                             Longitude = s.Longitude ?? -1,
+                             Distance = 0.0,
+                             Address = new
+                             {
+                                 Street = s.Address,
+                             }
                          };
 
             List<BeerStoreResult> storestoreturn = new List<BeerStoreResult>();
@@ -53,7 +58,7 @@ namespace MapItPrices.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost][Compress]
         public JsonResult GetItemPrices(FormCollection collection)
         {
             var items = from item in MapItDB.StoreItems
@@ -72,7 +77,7 @@ namespace MapItPrices.Controllers
             return Json(items.OrderBy(i => i.Price));
         }
 
-        [HttpPost]
+        [HttpPost][Compress]
         public JsonResult GetAllItemsAtStore(FormCollection collection)
         {
             int storeid;
@@ -96,10 +101,10 @@ namespace MapItPrices.Controllers
                             Quantity = item.Quantity
                         };
 
-            return Json(items);
+            return Json(items.OrderBy(i => i.Name));
         }
 
-        [HttpPost]
+        [HttpPost][Compress]
         public JsonResult GetAllItems()
         {
             var items = from item in MapItDB.Items
@@ -113,10 +118,10 @@ namespace MapItPrices.Controllers
                             UPC = item.UPC.Trim()
                         };
 
-            return Json(items);
+            return Json(items.OrderBy(i => i.Name));
         }
 
-        [HttpPost]
+        [HttpPost][Compress]
         public JsonResult ReportPrice(FormCollection collection)
         {
             int itemid;
@@ -169,19 +174,19 @@ namespace MapItPrices.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost][Compress]
         public JsonResult CreateStore(FormCollection collection)
         {
             // Required
-            string storeName = collection["name"];
-            double lat = double.Parse(collection["lat"]);
-            double lng = double.Parse(collection["lng"]);
+            string storeName = collection["Name"];
+            double lat = double.Parse(collection["Latitude"]);
+            double lng = double.Parse(collection["Longitude"]);
 
             //optional
-            string address = collection["address"];
-            string city = collection["city"];
-            string state = collection["state"];
-            string zip = collection["zip"];
+            string address = collection["Address.Street"];
+            string city = collection["Address.City"];
+            string state = collection["Address.State"];
+            string zip = collection["Address.Zip"];
 
             Store store = new Store();
             store.Name = storeName.Trim();
@@ -189,10 +194,10 @@ namespace MapItPrices.Controllers
             store.Latitude = lat;
             store.User = _androidUser;
 
-            store.Address = address.Trim();
-            store.City = city.Trim();
-            store.State = state.Trim();
-            store.Zip = zip.Trim();
+            store.Address = address;
+            store.City = city;
+            store.State = state;
+            store.Zip = zip;
 
 
             MapItDB.Stores.Add(store);
@@ -201,7 +206,7 @@ namespace MapItPrices.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost][Compress]
         public JsonResult CreateItem(FormCollection collection)
         {
             string name = collection["Name"];
@@ -226,6 +231,46 @@ namespace MapItPrices.Controllers
             MapItDB.Items.Add(item);
             MapItDB.SaveChanges();
             return Json(item);
+        }
+
+        [HttpPost][Compress]
+        public JsonResult GetStore(FormCollection collection)
+        {
+            int storeid;
+            if (!int.TryParse(collection["storeid"], out storeid))
+            {
+                return Json(new object { });
+            }
+
+            var store = MapItDB.Stores.SingleOrDefault(s => s.ID == storeid);
+            if (store.Latitude == null && store.Longitude == null)
+            {
+                CommonDBActions.GeoCodeStore(store);
+                MapItDB.SaveChanges();
+            }
+
+            return Json(new
+            {
+                ID = store.ID,
+                Name = store.Name,
+                Address = new { Street = store.Address },
+                Longitude = store.Longitude,
+                Latitude = store.Latitude
+            });
+        }
+
+        private void GeoCodeStoresWithoutGPS(int itemid)
+        {
+            var stores = from i in this.MapItDB.StoreItems
+                         where i.ItemId == itemid && i.Store.Latitude == null && i.Store.Longitude == null
+                         select i.Store;
+
+            foreach (var store in stores)
+            {
+                CommonDBActions.GeoCodeStore(store);
+            }
+
+            this.MapItDB.SaveChanges();
         }
     }
 }
