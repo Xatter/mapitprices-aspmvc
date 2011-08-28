@@ -126,6 +126,7 @@
     <Compile Include="Controllers\GroupedStoreItem.cs" />
     <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Models\Attributes\CompressAttribute.cs" />
     <Compile Include="Models\Attributes\EmailAttribute.cs" />
     <Compile Include="Models\Badge.cs">
       <DependentUpon>MapItPrices.tt</DependentUpon>
