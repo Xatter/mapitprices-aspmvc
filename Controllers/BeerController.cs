@@ -19,6 +19,37 @@ namespace MapItPrices.Controllers
         }
 
         [HttpPost][Compress]
+        public JsonResult Login(FormCollection collection)
+        {
+            string username = collection["username"];
+            string password = collection["password"];
+
+            return Json(true);
+        }
+
+        [HttpPost][Compress]
+        public JsonResult GetItemPricesByUPC(FormCollection collection)
+        {
+            string upc = collection["upc"];
+
+            var items = from i in MapItDB.StoreItems
+                        where i.Item.UPC == upc
+                        select new
+                        {
+                            ID = i.Item.ID,
+                            Name = i.Item.Name,
+                            Size = i.Item.Size,
+                            Brand = i.Item.Brand,
+                            StoreID = i.Store.ID,
+                            Price = i.Price,
+                            Quantity = i.Quantity
+                        };
+
+            return Json(items);
+
+        }
+
+        [HttpPost][Compress]
         public JsonResult GetStores(FormCollection collection)
         {
             double lat, lng;
