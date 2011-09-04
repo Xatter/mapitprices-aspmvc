@@ -25,12 +25,12 @@ namespace MapItPrices.Models
             this.ShoppingLists = new HashSet<ShoppingList>();
         }
     
-        public string Username { get; set; }
-        public string RealName { get; set; }
         public string Email { get; set; }
         public int ID { get; set; }
         public System.DateTime Created { get; set; }
         public System.DateTime LastUpdated { get; set; }
+        public string Password { get; set; }
+        public string SessionToken { get; set; }
     
         public virtual ICollection<OpenID> OpenIDs { get; set; }
         public virtual ICollection<StoreItem> StoreItems { get; set; }

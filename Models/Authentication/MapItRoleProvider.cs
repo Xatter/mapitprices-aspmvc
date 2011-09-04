@@ -51,9 +51,9 @@ namespace MapItPrices.Models
             throw new NotImplementedException();
         }
 
-        public override string[] GetRolesForUser(string username)
+        public override string[] GetRolesForUser(string email)
         {
-            var roles = mapitDB.Users.SingleOrDefault(u => u.Username == username).Roles.Select(r => r.Name);
+            var roles = mapitDB.Users.SingleOrDefault(u => u.Email == email).Roles.Select(r => r.Name);
             return roles.ToArray();
         }
 

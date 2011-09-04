@@ -136,12 +136,12 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="RealName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Created" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SessionToken" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Badges">
     <Key>
@@ -557,9 +557,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="OpenIDs" Relationship="MapItPricesModel.UserOpenID" FromRole="User" ToRole="OpenID" />
-          <Property Type="String" Name="RealName" Nullable="false" />
           <Property Type="String" Name="Email" Nullable="false" />
           <Property Type="Int32" Name="ID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <NavigationProperty Name="StoreItems" Relationship="MapItPricesModel.UserStoreItem" FromRole="User" ToRole="StoreItem" />
@@ -570,6 +568,8 @@
           <NavigationProperty Name="ShoppingLists" Relationship="MapItPricesModel.UserShoppingList" FromRole="User" ToRole="ShoppingList" />
           <Property Type="DateTime" Name="Created" Nullable="false" a:StoreGeneratedPattern="Computed" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
+          <Property Type="String" Name="Password" Nullable="false" />
+          <Property Type="String" Name="SessionToken" Nullable="false" />
         </EntityType>
         <Association Name="UserOpenID">
           <End Type="MapItPricesModel.User" Role="User" Multiplicity="1" />
@@ -761,11 +761,11 @@
       <EntityTypeMapping TypeName="IsTypeOf(MapItPricesModel.User)">
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="RealName" ColumnName="RealName" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Created" ColumnName="Created" />
           <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="SessionToken" ColumnName="SessionToken" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -890,8 +890,8 @@
         <EntityTypeShape EntityType="MapItPricesModel.OpenID" Width="1.5" PointX="16.75" PointY="3.375" Height="1.7879850260416665" />
         <EntityTypeShape EntityType="MapItPricesModel.User" Width="1.5" PointX="13.875" PointY="1" Height="3.5186979166666665" />
         <AssociationConnector Association="MapItPricesModel.UserOpenID" ManuallyRouted="false">
-          <ConnectorPoint PointX="15.375" PointY="3.9468489583333333" />
-          <ConnectorPoint PointX="16.75" PointY="3.9468489583333333" />
+          <ConnectorPoint PointX="15.375" PointY="3.9468489583333337" />
+          <ConnectorPoint PointX="16.75" PointY="3.9468489583333337" />
         </AssociationConnector>
         <AssociationConnector Association="MapItPricesModel.UserStoreItem">
           <ConnectorPoint PointX="13.875" PointY="3.15625" />
@@ -908,20 +908,20 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="MapItPricesModel.Badge" Width="1.5" PointX="16.625" PointY="0.75" Height="1.7879850260416665" />
         <AssociationConnector Association="MapItPricesModel.BadgeUser">
-          <ConnectorPoint PointX="16.625" PointY="1.7689925130208333" />
-          <ConnectorPoint PointX="15.375" PointY="1.7689925130208333" />
+          <ConnectorPoint PointX="16.625" PointY="1.7689925130208335" />
+          <ConnectorPoint PointX="15.375" PointY="1.7689925130208335" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MapItPricesModel.BetaInviteCodes" Width="1.5" PointX="20.25" PointY="0.875" Height="1.4033821614583331" />
-        <EntityTypeShape EntityType="MapItPricesModel.Role" Width="1.5" PointX="13.5" PointY="5.125" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="MapItPricesModel.Role" Width="1.5" PointX="13.5" PointY="5.375" Height="1.5956835937499996" />
         <AssociationConnector Association="MapItPricesModel.UserRole">
           <ConnectorPoint PointX="14.4375" PointY="4.5186979166666665" />
-          <ConnectorPoint PointX="14.4375" PointY="5.125" />
+          <ConnectorPoint PointX="14.4375" PointY="5.375" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MapItPricesModel.ShoppingList" Width="1.5" PointX="8.5" PointY="6.375" Height="2.3648893229166656" />
         <AssociationConnector Association="MapItPricesModel.UserShoppingList">
           <ConnectorPoint PointX="15.21875" PointY="4.5186979166666665" />
-          <ConnectorPoint PointX="15.21875" PointY="7.8143929036458326" />
-          <ConnectorPoint PointX="10" PointY="7.8143929036458326" />
+          <ConnectorPoint PointX="15.21875" PointY="7.8865364583333326" />
+          <ConnectorPoint PointX="10" PointY="7.8865364583333326" />
         </AssociationConnector>
         <AssociationConnector Association="MapItPricesModel.ItemShoppingList">
           <ConnectorPoint PointX="6.5" PointY="6.576396484375" />

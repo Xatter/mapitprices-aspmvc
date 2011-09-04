@@ -12,14 +12,14 @@ namespace MapItPrices.Controllers
 {
     public class APIController : BaseController
     {
-        User _androidUser;
+        User _currentUser;
         CommonDBActions _db;
 
         public APIController()
             : base()
         {
-            _androidUser = MapItDB.Users.SingleOrDefault(u => u.Username == "android");
-            _db = new CommonDBActions(this.MapItDB, _androidUser);
+            _currentUser = MapItDB.Users.SingleOrDefault(u => u.Email == "jim@mapitprices.com");
+            _db = new CommonDBActions(this.MapItDB, _currentUser);
         }
 
         public ActionResult SearchStores(string term)

@@ -38,7 +38,7 @@ namespace MapItPrices.Models
                 
                 foreach (var userAttribute in usersSplit)
                 {
-                    if (userAttribute == openid.User.Username)
+                    if (userAttribute == openid.User.Email)
                         return true;
                 }
 
@@ -53,6 +53,12 @@ namespace MapItPrices.Models
             }
 
             return false;
+        }
+
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+            filterContext.Result = new RedirectResult("/Users/Login");
+            base.HandleUnauthorizedRequest(filterContext);
         }
     }
 }

@@ -126,6 +126,7 @@
     <Compile Include="Controllers\GroupedStoreItem.cs" />
     <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Models\Attributes\BeerAuthenticatorAttribute.cs" />
     <Compile Include="Models\Attributes\CompressAttribute.cs" />
     <Compile Include="Models\Attributes\EmailAttribute.cs" />
     <Compile Include="Models\Badge.cs">
@@ -142,6 +143,7 @@
       <DependentUpon>MapItPrices.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CommonDBActions.cs" />
+    <Compile Include="Models\Crypto.cs" />
     <Compile Include="Models\Haversine.cs" />
     <Compile Include="Models\Item.cs">
       <DependentUpon>MapItPrices.tt</DependentUpon>
@@ -296,7 +298,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="MigrationScripts\01-AddCreated.sql" />
-    <Content Include="MigrationScripts\ModifyCreated.sql" />
     <Content Include="MigrationScripts\FULLTEXTSearch.sql" />
     <Content Include="Models\MapItPrices.edmx.sql" />
     <Content Include="Content\css\south-street\images\ui-bg_glass_55_fcf0ba_1x400.png" />

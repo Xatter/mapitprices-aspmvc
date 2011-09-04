@@ -37,7 +37,7 @@ namespace MapItPrices.Controllers
                 var openid = MapItDB.OpenIDs.SingleOrDefault(o => o.ClaimedIdentifier == User.Identity.Name);
                 if (openid != null)
                 {
-                    ViewData["RealName"] = openid.User.RealName;
+                    ViewData["RealName"] = openid.User.Email;
                 }
                 else
                 {

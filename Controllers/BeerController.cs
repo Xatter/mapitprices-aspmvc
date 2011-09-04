@@ -11,23 +11,83 @@ namespace MapItPrices.Controllers
 {
     public class BeerController : BaseController
     {
-        User _androidUser;
+        User _currentUser;
 
         public BeerController()
         {
-            _androidUser = MapItDB.Users.SingleOrDefault(u => u.Username == "android");
+            // some default user
+            _currentUser = MapItDB.Users.SingleOrDefault(u => u.Email == "jim@mapitprices.com");
         }
 
-        [HttpPost][Compress]
+        [HttpPost]
+        [Compress]
         public JsonResult Login(FormCollection collection)
         {
-            string username = collection["username"];
-            string password = collection["password"];
+            string sessionToken = collection["SessionToken"];
+            User user = null;
 
-            return Json(true);
+            if (!string.IsNullOrEmpty(sessionToken))
+            {
+                user = MapItDB.Users.SingleOrDefault(u => u.SessionToken == sessionToken);
+            }
+            else
+            {
+                string username = collection["email"];
+                string password = collection["password"];
+
+                user = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == username.ToUpper());
+
+                if (user == null)
+                    return Json(null);
+
+                if (user.Password != password)
+                {
+                    return Json(null);
+                }
+
+                //Save new session id
+                user.SessionToken = Session.SessionID;
+                MapItDB.SaveChanges();
+            }
+
+            return Json(new
+            {
+                ID = user.ID,
+                Email = user.Email,
+                SessionToken = user.SessionToken
+            });
         }
 
-        [HttpPost][Compress]
+
+        [HttpPost]
+        [Compress]
+        public JsonResult CreateUser(FormCollection collection)
+        {
+            string username = collection["email"];
+            string password = collection["password"];
+
+            var usercheck = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == username.ToUpper());
+
+            if (usercheck == null)
+            {
+                User newUser = new User();
+                newUser.Email = username;
+                newUser.Password = password;
+
+                MapItDB.Users.Add(newUser);
+                newUser.SessionToken = Session.SessionID;
+                MapItDB.SaveChanges();
+
+                return Json(newUser);
+            }
+            else
+            {
+                return Json(null);
+            }
+        }
+
+        [HttpPost]
+        [Compress]
         public JsonResult GetItemPricesByUPC(FormCollection collection)
         {
             string upc = collection["upc"];
@@ -49,7 +109,8 @@ namespace MapItPrices.Controllers
 
         }
 
-        [HttpPost][Compress]
+        [HttpPost]
+        [Compress]
         public JsonResult GetStores(FormCollection collection)
         {
             double lat, lng;
@@ -89,7 +150,8 @@ namespace MapItPrices.Controllers
         }
 
 
-        [HttpPost][Compress]
+        [HttpPost]
+        [Compress]
         public JsonResult GetItemPrices(FormCollection collection)
         {
             var items = from item in MapItDB.StoreItems
@@ -108,7 +170,8 @@ namespace MapItPrices.Controllers
             return Json(items.OrderBy(i => i.Price));
         }
 
-        [HttpPost][Compress]
+        [HttpPost]
+        [Compress]
         public JsonResult GetAllItemsAtStore(FormCollection collection)
         {
             int storeid;
@@ -135,7 +198,8 @@ namespace MapItPrices.Controllers
             return Json(items.OrderBy(i => i.Name));
         }
 
-        [HttpPost][Compress]
+        [HttpPost]
+        [Compress]
         public JsonResult GetAllItems()
         {
             var items = from item in MapItDB.Items
@@ -152,9 +216,12 @@ namespace MapItPrices.Controllers
             return Json(items.OrderBy(i => i.Name));
         }
 
-        [HttpPost][Compress]
+        [HttpPost]
+        [Compress]
         public JsonResult ReportPrice(FormCollection collection)
         {
+            checkAndSetCurrentUser(); // TODO: This should be an AuthorizationAttribute somehow
+
             int itemid;
             if (!int.TryParse(collection["itemid"], out itemid))
             {
@@ -188,12 +255,12 @@ namespace MapItPrices.Controllers
                 storeitem.Price = price;
                 storeitem.LastUpdated = DateTime.Now;
                 storeitem.Quantity = quantity;
-                storeitem.User = _androidUser;
+                storeitem.User = _currentUser;
                 MapItDB.StoreItems.Add(storeitem);
             }
             else
             {
-                storeitem.User = _androidUser;
+                storeitem.User = _currentUser;
                 storeitem.Price = price;
                 storeitem.Quantity = quantity;
                 storeitem.LastUpdated = DateTime.Now;
@@ -201,13 +268,36 @@ namespace MapItPrices.Controllers
 
             MapItDB.SaveChanges();
 
-            return Json(storeitem);
+            return Json(new
+            {
+                ItemId = storeitem.ItemId,
+                StoreId = storeitem.StoreId,
+                Price = storeitem.Price,
+                Quantity = storeitem.Quantity,
+                User = new
+                {
+                    ID = storeitem.User.ID
+                },
+                LastUpdated = storeitem.LastUpdated
+            });
+        }
+
+        private void checkAndSetCurrentUser()
+        {
+            String sessionToken = this.Request.Headers["SessionToken"];
+            if (!string.IsNullOrEmpty(sessionToken))
+            {
+                _currentUser = MapItDB.Users.SingleOrDefault(u => u.SessionToken == sessionToken);
+            }
         }
 
 
-        [HttpPost][Compress]
+        [HttpPost]
+        [Compress]
         public JsonResult CreateStore(FormCollection collection)
         {
+            checkAndSetCurrentUser(); // TODO: This should be an AuthorizationAttribute somehow
+
             // Required
             string storeName = collection["Name"];
             double lat = double.Parse(collection["Latitude"]);
@@ -223,7 +313,7 @@ namespace MapItPrices.Controllers
             store.Name = storeName.Trim();
             store.Longitude = lng;
             store.Latitude = lat;
-            store.User = _androidUser;
+            store.User = _currentUser;
 
             store.Address = address;
             store.City = city;
@@ -237,9 +327,12 @@ namespace MapItPrices.Controllers
         }
 
 
-        [HttpPost][Compress]
+        [HttpPost]
+        [Compress]
         public JsonResult CreateItem(FormCollection collection)
         {
+            checkAndSetCurrentUser(); // TODO: This should be an AuthorizationAttribute somehow
+
             string name = collection["Name"];
             if (string.IsNullOrEmpty(name))
             {
@@ -257,14 +350,15 @@ namespace MapItPrices.Controllers
             item.Size = size.Trim();
             item.UPC = upc.Trim();
             item.Categories.Add(beerCategory);
-            item.User = _androidUser;
+            item.User = _currentUser;
 
             MapItDB.Items.Add(item);
             MapItDB.SaveChanges();
             return Json(item);
         }
 
-        [HttpPost][Compress]
+        [HttpPost]
+        [Compress]
         public JsonResult GetStore(FormCollection collection)
         {
             int storeid;
