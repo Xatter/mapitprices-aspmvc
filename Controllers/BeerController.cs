@@ -95,7 +95,23 @@ namespace MapItPrices.Controllers
                 {
                     ID = newUser.ID,
                     Username = newUser.Username,
-                    Email = newUser.Email
+                    Email = newUser.Email,
+                    SessionToken = newUser.SessionToken
+                });
+            }
+            else if (usercheck.OpenIDs != null)
+            {
+                // If email already exists and it has an OpenID then just update the password field
+                usercheck.Password = password;
+                usercheck.SessionToken = Session.SessionID;
+                MapItDB.SaveChanges();
+
+                return Json(new
+                {
+                    ID = usercheck.ID,
+                    Username = usercheck.Username,
+                    Email = usercheck.Email,
+                    SessionToken = usercheck.SessionToken
                 });
             }
             else
@@ -320,6 +336,12 @@ namespace MapItPrices.Controllers
             if (!decimal.TryParse(collection["price"], out price))
             {
                 return Json(new object { });
+            }
+
+            if (price <= 0)
+            {
+                // We don't want negative, or 0 prices
+                return Json(new {});
             }
 
             int quantity;
