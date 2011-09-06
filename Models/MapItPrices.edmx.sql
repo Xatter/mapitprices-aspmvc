@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 09/03/2011 23:48:01
+-- Date Created: 09/05/2011 13:23:33
 -- Generated from EDMX file: T:\Codes\C#\mapitprices\Models\MapItPrices.edmx
 -- --------------------------------------------------
 
@@ -172,7 +172,8 @@ CREATE TABLE [dbo].[Users] (
     [Created] datetime  NOT NULL,
     [LastUpdated] datetime  NOT NULL,
     [Password] nvarchar(max)  NOT NULL,
-    [SessionToken] nvarchar(max)  NOT NULL
+    [SessionToken] nvarchar(max)  NOT NULL,
+    [Username] nvarchar(max)  NOT NULL
 );
 GO
 

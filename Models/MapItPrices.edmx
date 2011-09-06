@@ -142,6 +142,7 @@
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
     <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
     <Property Name="SessionToken" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Badges">
     <Key>
@@ -570,6 +571,7 @@
           <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
           <Property Type="String" Name="Password" Nullable="false" />
           <Property Type="String" Name="SessionToken" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="false" />
         </EntityType>
         <Association Name="UserOpenID">
           <End Type="MapItPricesModel.User" Role="User" Multiplicity="1" />
@@ -766,6 +768,7 @@
           <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="SessionToken" ColumnName="SessionToken" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -888,10 +891,10 @@
           <ConnectorPoint PointX="10" PointY="4.6583968098958328" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MapItPricesModel.OpenID" Width="1.5" PointX="16.75" PointY="3.375" Height="1.7879850260416665" />
-        <EntityTypeShape EntityType="MapItPricesModel.User" Width="1.5" PointX="13.875" PointY="1" Height="3.5186979166666665" />
+        <EntityTypeShape EntityType="MapItPricesModel.User" Width="1.5" PointX="13.875" PointY="1" Height="3.7109993489583326" />
         <AssociationConnector Association="MapItPricesModel.UserOpenID" ManuallyRouted="false">
-          <ConnectorPoint PointX="15.375" PointY="3.9468489583333337" />
-          <ConnectorPoint PointX="16.75" PointY="3.9468489583333337" />
+          <ConnectorPoint PointX="15.375" PointY="4.0429996744791667" />
+          <ConnectorPoint PointX="16.75" PointY="4.0429996744791667" />
         </AssociationConnector>
         <AssociationConnector Association="MapItPricesModel.UserStoreItem">
           <ConnectorPoint PointX="13.875" PointY="3.15625" />
@@ -903,23 +906,23 @@
           <ConnectorPoint PointX="6.5" PointY="3.25" />
         </AssociationConnector>
         <AssociationConnector Association="MapItPricesModel.UserStore">
-          <ConnectorPoint PointX="13.875" PointY="4.0093489583333337" />
-          <ConnectorPoint PointX="12.375" PointY="4.0093489583333337" />
+          <ConnectorPoint PointX="13.875" PointY="4.1054996744791659" />
+          <ConnectorPoint PointX="12.375" PointY="4.1054996744791659" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MapItPricesModel.Badge" Width="1.5" PointX="16.625" PointY="0.75" Height="1.7879850260416665" />
         <AssociationConnector Association="MapItPricesModel.BadgeUser">
-          <ConnectorPoint PointX="16.625" PointY="1.7689925130208335" />
-          <ConnectorPoint PointX="15.375" PointY="1.7689925130208335" />
+          <ConnectorPoint PointX="16.625" PointY="1.7689925130208337" />
+          <ConnectorPoint PointX="15.375" PointY="1.7689925130208337" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MapItPricesModel.BetaInviteCodes" Width="1.5" PointX="20.25" PointY="0.875" Height="1.4033821614583331" />
         <EntityTypeShape EntityType="MapItPricesModel.Role" Width="1.5" PointX="13.5" PointY="5.375" Height="1.5956835937499996" />
         <AssociationConnector Association="MapItPricesModel.UserRole">
-          <ConnectorPoint PointX="14.4375" PointY="4.5186979166666665" />
+          <ConnectorPoint PointX="14.4375" PointY="4.7109993489583326" />
           <ConnectorPoint PointX="14.4375" PointY="5.375" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MapItPricesModel.ShoppingList" Width="1.5" PointX="8.5" PointY="6.375" Height="2.3648893229166656" />
         <AssociationConnector Association="MapItPricesModel.UserShoppingList">
-          <ConnectorPoint PointX="15.21875" PointY="4.5186979166666665" />
+          <ConnectorPoint PointX="15.21875" PointY="4.7109993489583326" />
           <ConnectorPoint PointX="15.21875" PointY="7.8865364583333326" />
           <ConnectorPoint PointX="10" PointY="7.8865364583333326" />
         </AssociationConnector>

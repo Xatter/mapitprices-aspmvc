@@ -50,39 +50,57 @@ namespace MapItPrices.Controllers
                 MapItDB.SaveChanges();
             }
 
+            //*sigh* I can't just return user whether it's null or not, because if it's not EF will throw
+            // a circular reference error, so I need this check
+
+            if (user == null)
+                return Json(new { });
+
             return Json(new
             {
                 ID = user.ID,
                 Email = user.Email,
+                Username = user.Username,
                 SessionToken = user.SessionToken
             });
         }
 
 
         [HttpPost]
-        [Compress]
         public JsonResult CreateUser(FormCollection collection)
         {
-            string username = collection["email"];
-            string password = collection["password"];
+            string email = collection["email"];
+            if (!string.IsNullOrEmpty(email))
+            {
+                email = email.Trim().ToUpper();
+            }
 
-            var usercheck = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == username.ToUpper());
+            string password = collection["password"];
+            string username = collection["username"];
+
+            var usercheck = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == email);
 
             if (usercheck == null)
             {
                 User newUser = new User();
-                newUser.Email = username;
+                newUser.Email = email;
                 newUser.Password = password;
+                newUser.Username = username;
 
                 MapItDB.Users.Add(newUser);
                 newUser.SessionToken = Session.SessionID;
                 MapItDB.SaveChanges();
 
-                return Json(newUser);
+                return Json(new
+                {
+                    ID = newUser.ID,
+                    Username = newUser.Username,
+                    Email = newUser.Email
+                });
             }
             else
             {
-                return Json(null);
+                return Json(new { });
             }
         }
 
@@ -93,7 +111,7 @@ namespace MapItPrices.Controllers
             string upc = collection["upc"];
 
             var items = from i in MapItDB.StoreItems
-                        where i.Item.UPC == upc
+                        where i.Item.UPC == upc && i.Item.Categories.Any(c => c.Name == "Beer")
                         select new
                         {
                             ID = i.Item.ID,
@@ -102,7 +120,8 @@ namespace MapItPrices.Controllers
                             Brand = i.Item.Brand,
                             StoreID = i.Store.ID,
                             Price = i.Price,
-                            Quantity = i.Quantity
+                            Quantity = i.Quantity,
+                            LastUpdated = i.LastUpdated
                         };
 
             return Json(items);
@@ -111,7 +130,7 @@ namespace MapItPrices.Controllers
 
         [HttpPost]
         [Compress]
-        public JsonResult GetStores(FormCollection collection)
+        public JsonResult GetNearbyStores(FormCollection collection)
         {
             double lat, lng;
 
@@ -149,6 +168,51 @@ namespace MapItPrices.Controllers
             return Json(storestoreturn.OrderBy(s => s.Distance));
         }
 
+        [HttpPost]
+        [Compress]
+        public JsonResult GetStores(FormCollection collection)
+        {
+            double lat, lng;
+
+            if (!double.TryParse(collection["Lat"], out lat))
+            {
+                return Json(new { });
+            }
+
+            if (!double.TryParse(collection["Lng"], out lng))
+            {
+                return Json(new { });
+            }
+
+            var stores = from s in MapItDB.StoreItems
+                         where s.Item.Categories.Any(c => c.Name == "Beer")
+                         group s by s.Store into storegroup
+                         select new BeerStoreResult
+                         {
+                             ID = storegroup.Key.ID,
+                             Name = storegroup.Key.Name,
+                             Latitude = storegroup.Key.Latitude ?? -1,
+                             Longitude = storegroup.Key.Longitude ?? -1,
+                             Distance = 0.0,
+                             Address = new
+                             {
+                                 Street = storegroup.Key.Address,
+                                 City = storegroup.Key.City,
+                                 State = storegroup.Key.State,
+                                 Zip = storegroup.Key.Zip
+                             }
+                         };
+
+            List<BeerStoreResult> storestoreturn = new List<BeerStoreResult>();
+            foreach (var store in stores)
+            {
+                store.Distance = Haversine.Distance(lat, lng, store.Latitude, store.Longitude);
+                storestoreturn.Add(store);
+            }
+
+            return Json(storestoreturn.OrderBy(s => s.Distance));
+        }
+
 
         [HttpPost]
         [Compress]
@@ -164,7 +228,14 @@ namespace MapItPrices.Controllers
                             Brand = item.Item.Brand.Trim(),
                             StoreID = item.StoreId,
                             Price = item.Price,
-                            Quantity = item.Quantity
+                            Quantity = item.Quantity,
+                            LastUpdated = item.LastUpdated,
+                            User = new
+                            {
+                                ID = item.User.ID,
+                                Username = item.User.Username
+                            }
+
                         };
 
             return Json(items.OrderBy(i => i.Price));
@@ -192,7 +263,13 @@ namespace MapItPrices.Controllers
                             UPC = item.Item.UPC.Trim(),
                             StoreID = item.StoreId,
                             Price = item.Price,
-                            Quantity = item.Quantity
+                            Quantity = item.Quantity,
+                            LastUpdated = item.LastUpdated,
+                            User = new
+                            {
+                                ID = item.User.ID,
+                                Username = item.User.Username
+                            }
                         };
 
             return Json(items.OrderBy(i => i.Name));
@@ -210,7 +287,12 @@ namespace MapItPrices.Controllers
                             Name = item.Name.Trim(),
                             Size = item.Size.Trim(),
                             Brand = item.Brand.Trim(),
-                            UPC = item.UPC.Trim()
+                            UPC = item.UPC.Trim(),
+                            User = new
+                            {
+                                ID = item.User.ID,
+                                Username = item.User.Username
+                            }
                         };
 
             return Json(items.OrderBy(i => i.Name));
@@ -276,7 +358,8 @@ namespace MapItPrices.Controllers
                 Quantity = storeitem.Quantity,
                 User = new
                 {
-                    ID = storeitem.User.ID
+                    ID = storeitem.User.ID,
+                    Username = storeitem.User.Username
                 },
                 LastUpdated = storeitem.LastUpdated
             });
@@ -323,7 +406,22 @@ namespace MapItPrices.Controllers
 
             MapItDB.Stores.Add(store);
             MapItDB.SaveChanges();
-            return Json(store);
+            return Json(new { 
+                Name = store.Name,
+                Address = new {
+                    Street = store.Address,
+                    City = store.City,
+                    State = store.State,
+                    Zip = store.Zip
+                },
+                Longitude = store.Longitude,
+                Latitude = store.Latitude,
+                User = new {
+                    ID = store.User.ID,
+                    Username = store.User.Username
+                },
+                Created = store.Created
+            });
         }
 
 
@@ -354,7 +452,19 @@ namespace MapItPrices.Controllers
 
             MapItDB.Items.Add(item);
             MapItDB.SaveChanges();
-            return Json(item);
+            return Json(new
+            {
+                ID = item.ID,
+                Name = item.Name,
+                Size = item.Size,
+                UPC = item.UPC,
+                LastUpdated = item.LastUpdated,
+                User = new
+                {
+                    ID = item.User.ID,
+                    Username = item.User.Username
+                }
+            });
         }
 
         [HttpPost]
