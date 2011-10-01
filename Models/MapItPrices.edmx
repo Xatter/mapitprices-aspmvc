@@ -122,6 +122,7 @@
     <Property Name="Longitude" Type="float" Nullable="true" />
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="Created" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="FoursquareVenueID" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="OpenIDs">
     <Key>
@@ -515,6 +516,7 @@
           <NavigationProperty Name="User" Relationship="MapItPricesModel.UserStore" FromRole="Store" ToRole="User" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="DateTime" Name="Created" Nullable="false" a:StoreGeneratedPattern="Computed" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="FoursquareVenueID" Nullable="false" />
           </EntityType>
         <Association Name="FK_StoreItems_Items">
           <End Type="MapItPricesModel.Item" Role="Item" Multiplicity="1" >
@@ -747,6 +749,7 @@
           <ScalarProperty Name="Longitude" ColumnName="Longitude" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="FoursquareVenueID" ColumnName="FoursquareVenueID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -881,7 +884,7 @@
       <Diagram Name="MapItPrices" ZoomLevel="101">
         <EntityTypeShape EntityType="MapItPricesModel.Item" Width="1.5" PointX="5.75" PointY="3.25" Height="3.3263964843749996" IsExpanded="true" />
         <EntityTypeShape EntityType="MapItPricesModel.StoreItem" Width="1.5" PointX="8.5" PointY="2.875" Height="2.9417936197916656" IsExpanded="true" />
-        <EntityTypeShape EntityType="MapItPricesModel.Store" Width="1.5" PointX="10.875" PointY="3.5" Height="3.3263964843749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapItPricesModel.Store" Width="2.125" PointX="10.875" PointY="3.5" Height="3.5186979166666656" IsExpanded="true" />
         <AssociationConnector Association="MapItPricesModel.FK_StoreItems_Items">
           <ConnectorPoint PointX="7.25" PointY="4.5333968098958328" />
           <ConnectorPoint PointX="8.5" PointY="4.5333968098958328" />
@@ -907,7 +910,7 @@
         </AssociationConnector>
         <AssociationConnector Association="MapItPricesModel.UserStore">
           <ConnectorPoint PointX="13.875" PointY="4.1054996744791659" />
-          <ConnectorPoint PointX="12.375" PointY="4.1054996744791659" />
+          <ConnectorPoint PointX="13" PointY="4.1054996744791659" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MapItPricesModel.Badge" Width="1.5" PointX="16.625" PointY="0.75" Height="1.7879850260416665" />
         <AssociationConnector Association="MapItPricesModel.BadgeUser">

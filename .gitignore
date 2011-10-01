@@ -1,5 +1,9 @@
 bin/
 obj/
+MvcMaps/
 *.suo
 *.cache
+*.dll
+*.pdb
 MapItPrices.publish.xml
+

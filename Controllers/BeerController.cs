@@ -6,6 +6,10 @@ using System.Web.Mvc;
 using MapItPrices.Models;
 using MapItPrices.ViewModels;
 using MapItPrices.Models.Attributes;
+using MapItPrices.Models.Foursquare;
+using MapItPrices.Models.BeerModels;
+using MapItPrices.Models.BeerModels.Requests;
+using MapItPrices.Models.BeerModels.Responses;
 
 namespace MapItPrices.Controllers
 {
@@ -17,6 +21,79 @@ namespace MapItPrices.Controllers
         {
             // some default user
             _currentUser = MapItDB.Users.SingleOrDefault(u => u.Email == "jim@mapitprices.com");
+        }
+
+        [HttpPost]
+        [Compress]
+        public JsonResult FoursquareLogin(LoginModel login)
+        {
+            User user = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == login.email.ToUpper());
+
+            MapItResponse response = new MapItResponse();
+
+            if (user != null)
+            {
+                response.Response.user = new BeerUser(user);
+            }
+            else
+            {
+                User newUser = new User();
+                newUser.Email = login.email;
+                newUser.Username = login.username;
+                newUser.SessionToken = Session.SessionID;
+                MapItDB.Users.Add(newUser);
+                MapItDB.SaveChanges();
+
+                response.Response.user = new BeerUser(newUser);
+            }
+
+            return Json(response);
+        }
+
+        [HttpPost]
+        [Compress]
+        public JsonResult Login2(LoginModel login)
+        {
+            User user = null;
+            MapItResponse response = new MapItResponse();
+
+            // SessionToken login
+            if (!string.IsNullOrEmpty(login.SessionToken))
+            {
+                user = MapItDB.Users.SingleOrDefault(u => u.SessionToken == login.SessionToken);
+                if (user == null)
+                {
+                    response.Meta.Code = "401";
+                    response.Meta.ErrorMessage = "Expired Session, please re-login";
+                }
+            }
+            else
+            {
+                // Username/Password login
+                user = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == login.email.ToUpper());
+
+                if (user == null)
+                {
+                    response.Meta.Code = "401";
+                    response.Meta.ErrorMessage = "Invalid Username/Password. Please try again.";
+                    return Json(response);
+                }
+
+                if (user.Password != login.password)
+                {
+                    response.Meta.Code = "401";
+                    response.Meta.ErrorMessage = "Invalid Username/Password. Please try again.";
+                    return Json(response);
+                }
+
+                //Save new session id
+                user.SessionToken = Session.SessionID;
+                MapItDB.SaveChanges();
+            }
+
+            response.Response.user = new BeerUser(user);
+
+            return Json(response);
         }
 
         [HttpPost]
@@ -38,11 +115,11 @@ namespace MapItPrices.Controllers
                 user = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == username.ToUpper());
 
                 if (user == null)
-                    return Json(null);
+                    return Json(new { });
 
                 if (user.Password != password)
                 {
-                    return Json(null);
+                    return Json(new { });
                 }
 
                 //Save new session id
@@ -56,17 +133,11 @@ namespace MapItPrices.Controllers
             if (user == null)
                 return Json(new { });
 
-            return Json(new
-            {
-                ID = user.ID,
-                Email = user.Email,
-                Username = user.Username,
-                SessionToken = user.SessionToken
-            });
+            return Json(new BeerUser(user));
         }
 
-
         [HttpPost]
+        [Compress]
         public JsonResult CreateUser(FormCollection collection)
         {
             string email = collection["email"];
@@ -106,13 +177,7 @@ namespace MapItPrices.Controllers
                 usercheck.SessionToken = Session.SessionID;
                 MapItDB.SaveChanges();
 
-                return Json(new
-                {
-                    ID = usercheck.ID,
-                    Username = usercheck.Username,
-                    Email = usercheck.Email,
-                    SessionToken = usercheck.SessionToken
-                });
+                return Json(new BeerUser(usercheck));
             }
             else
             {
@@ -160,19 +225,8 @@ namespace MapItPrices.Controllers
                 return Json(new { });
             }
 
-            var stores = from s in MapItDB.Stores
-                         select new BeerStoreResult
-                         {
-                             ID = s.ID,
-                             Name = s.Name,
-                             Latitude = s.Latitude ?? -1,
-                             Longitude = s.Longitude ?? -1,
-                             Distance = 0.0,
-                             Address = new
-                             {
-                                 Street = s.Address,
-                             }
-                         };
+            var stores = from s in MapItDB.Stores.AsEnumerable()
+                         select new BeerStoreResult(s);
 
             List<BeerStoreResult> storestoreturn = new List<BeerStoreResult>();
             foreach (var store in stores)
@@ -200,24 +254,10 @@ namespace MapItPrices.Controllers
                 return Json(new { });
             }
 
-            var stores = from s in MapItDB.StoreItems
+            var stores = from s in MapItDB.StoreItems.AsEnumerable()
                          where s.Item.Categories.Any(c => c.Name == "Beer")
                          group s by s.Store into storegroup
-                         select new BeerStoreResult
-                         {
-                             ID = storegroup.Key.ID,
-                             Name = storegroup.Key.Name,
-                             Latitude = storegroup.Key.Latitude ?? -1,
-                             Longitude = storegroup.Key.Longitude ?? -1,
-                             Distance = 0.0,
-                             Address = new
-                             {
-                                 Street = storegroup.Key.Address,
-                                 City = storegroup.Key.City,
-                                 State = storegroup.Key.State,
-                                 Zip = storegroup.Key.Zip
-                             }
-                         };
+                         select new BeerStoreResult(storegroup.Key);
 
             List<BeerStoreResult> storestoreturn = new List<BeerStoreResult>();
             foreach (var store in stores)
@@ -251,7 +291,6 @@ namespace MapItPrices.Controllers
                                 ID = item.User.ID,
                                 Username = item.User.Username
                             }
-
                         };
 
             return Json(items.OrderBy(i => i.Price));
@@ -293,6 +332,27 @@ namespace MapItPrices.Controllers
 
         [HttpPost]
         [Compress]
+        public JsonResult GetAllItemsAtStore2(StoreItemsRequest request)
+        {
+            int storeid = request.item.StoreId;
+
+            if (storeid == 0)
+            {
+                // that's a problem.
+            }
+
+            var users = MapItDB.Users;
+            var items = from item in MapItDB.StoreItems.AsEnumerable()
+                        where item.StoreId == storeid &&
+                        item.Item.Categories.Any(c => c.Name == "Beer")
+                        join user in users on item.UserID equals user.ID
+                        select new BeerItem(item, user);
+
+            return Json(items.OrderBy(i => i.Name));
+        }
+
+        [HttpPost]
+        [Compress]
         public JsonResult GetAllItems()
         {
             var items = from item in MapItDB.Items
@@ -312,6 +372,94 @@ namespace MapItPrices.Controllers
                         };
 
             return Json(items.OrderBy(i => i.Name));
+        }
+
+        [HttpPost]
+        [Compress]
+        public JsonResult GetAllItems2()
+        {
+            var users = MapItDB.Users;
+
+            // Using Linq to Objects here instead of Linq to Entities
+            // as seen by the .AsEnumerable() call
+            // This means we have to manually join the items to the users
+            // list in order to get the complete information, and I believe
+            // it means the join is happening in memory.  Probably not a big deal
+            // until the dataset becomes much larger, then I'll have to look at this again.
+            var items = from item in MapItDB.Items.AsEnumerable()
+                        where item.Categories.Any(c => c.Name == "Beer")
+                        join user in users on item.UserID equals user.ID
+                        select new BeerItem(item, user);
+
+            return Json(items.OrderBy(i => i.Name));
+        }
+
+
+        [HttpPost]
+        [Compress]
+        public JsonResult ReportPrice2(ReportPriceRequest request)
+        {
+            checkAndSetCurrentUser(); // TODO: This should be an AuthorizationAttribute somehow
+
+            MapItResponse response = new MapItResponse();
+
+            if (request.item.ItemId == 0)
+            {
+
+            }
+
+            if (string.IsNullOrEmpty(request.store.id))
+            {
+
+            }
+
+            if (!(request.newprice > 0))
+            {
+
+            }
+
+            int quantity = request.item.Quantity ?? 0;
+            if (quantity == 0)
+                quantity = 1;
+
+            Store store = MapItDB.Stores.SingleOrDefault(s => s.FoursquareVenueID == request.store.id);
+            if (store == null)
+            {
+                store = new Store();
+                store.Name = request.store.name;
+                store.FoursquareVenueID = request.store.id;
+                store.Address = request.store.location.address;
+                store.City = request.store.location.city;
+                store.State = request.store.location.state;
+                store.Latitude = request.store.location.lat;
+                store.Longitude = request.store.location.lng;
+                store.User = _currentUser;
+
+                MapItDB.Stores.Add(store);
+            }
+
+            StoreItem newPrice = MapItDB.StoreItems.SingleOrDefault(s => s.ItemId == request.item.ItemId && s.StoreId == store.ID);
+
+            if (newPrice == null)
+            {
+                newPrice = new StoreItem();
+                MapItDB.StoreItems.Add(newPrice);
+            }
+
+            newPrice.ItemId = request.item.ItemId;
+            newPrice.Store = store;
+            newPrice.User = _currentUser;
+            newPrice.Price = (decimal)request.newprice;
+            newPrice.Quantity = quantity;
+            newPrice.LastUpdated = DateTime.Now;
+
+            MapItDB.SaveChanges();
+
+            response.Response.item = new BeerItem(newPrice, newPrice.User);
+            response.Meta.Code = Meta.CREATED;
+
+
+            return Json(response);
         }
 
         [HttpPost]
@@ -341,7 +489,7 @@ namespace MapItPrices.Controllers
             if (price <= 0)
             {
                 // We don't want negative, or 0 prices
-                return Json(new {});
+                return Json(new { });
             }
 
             int quantity;
@@ -372,19 +520,7 @@ namespace MapItPrices.Controllers
 
             MapItDB.SaveChanges();
 
-            return Json(new
-            {
-                ItemId = storeitem.ItemId,
-                StoreId = storeitem.StoreId,
-                Price = storeitem.Price,
-                Quantity = storeitem.Quantity,
-                User = new
-                {
-                    ID = storeitem.User.ID,
-                    Username = storeitem.User.Username
-                },
-                LastUpdated = storeitem.LastUpdated
-            });
+            return Json(new BeerItem(storeitem, storeitem.User));
         }
 
         private void checkAndSetCurrentUser()
@@ -428,9 +564,11 @@ namespace MapItPrices.Controllers
 
             MapItDB.Stores.Add(store);
             MapItDB.SaveChanges();
-            return Json(new { 
+            return Json(new
+            {
                 Name = store.Name,
-                Address = new {
+                Address = new
+                {
                     Street = store.Address,
                     City = store.City,
                     State = store.State,
@@ -438,7 +576,8 @@ namespace MapItPrices.Controllers
                 },
                 Longitude = store.Longitude,
                 Latitude = store.Latitude,
-                User = new {
+                User = new
+                {
                     ID = store.User.ID,
                     Username = store.User.Username
                 },
@@ -514,6 +653,19 @@ namespace MapItPrices.Controllers
                 Longitude = store.Longitude,
                 Latitude = store.Latitude
             });
+        }
+
+        public JsonResult GetStore2(StoreRequest request)
+        {
+            MapItResponse response = new MapItResponse();
+
+            var store = MapItDB.Stores.SingleOrDefault(s => s.ID == request.StoreId);
+            if (store != null)
+            {
+                response.Response.store = new BeerStoreResult(store);
+            }
+
+            return Json(response);
         }
 
         private void GeoCodeStoresWithoutGPS(int itemid)

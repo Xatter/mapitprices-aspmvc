@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 09/05/2011 13:23:33
+-- Date Created: 09/29/2011 16:48:18
 -- Generated from EDMX file: T:\Codes\C#\mapitprices\Models\MapItPrices.edmx
 -- --------------------------------------------------
 
@@ -153,7 +153,8 @@ CREATE TABLE [dbo].[Stores] (
     [Latitude] float  NULL,
     [Longitude] float  NULL,
     [UserID] int  NOT NULL,
-    [Created] datetime  NOT NULL
+    [Created] datetime  NOT NULL,
+    [FoursquareVenueID] nvarchar(max)  NOT NULL
 );
 GO
 

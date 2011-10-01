@@ -29,6 +29,7 @@ namespace MapItPrices.Models
         public Nullable<double> Longitude { get; set; }
         public int UserID { get; set; }
         public System.DateTime Created { get; set; }
+        public string FoursquareVenueID { get; set; }
     
         public virtual ICollection<StoreItem> StoreItems { internal get; set; }
         public virtual User User { internal get; set; }

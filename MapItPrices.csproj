@@ -123,6 +123,18 @@
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BeerController.cs" />
+    <Compile Include="Models\BeerModels\Requests\StoreItemsRequest.cs" />
+    <Compile Include="Models\BeerModels\BeerItem.cs" />
+    <Compile Include="Models\BeerModels\NormalizedUser.cs" />
+    <Compile Include="Models\BeerModels\Requests\StoreRequest.cs" />
+    <Compile Include="Models\Foursquare\Venue.cs" />
+    <Compile Include="Models\BeerModels\Requests\ReportPriceRequest.cs" />
+    <Compile Include="Models\BeerModels\Responses\MapItResponse.cs" />
+    <Compile Include="Models\BeerModels\Requests\BaseRequest.cs" />
+    <Compile Include="Models\BeerModels\Requests\LoginModel.cs" />
+    <Compile Include="Models\BeerModels\Responses\Meta.cs" />
+    <Compile Include="Models\BeerModels\Responses\Response.cs" />
+    <Compile Include="Models\Foursquare\FoursquareUser.cs" />
     <Compile Include="Controllers\GroupedStoreItem.cs" />
     <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -144,6 +156,8 @@
     </Compile>
     <Compile Include="Models\CommonDBActions.cs" />
     <Compile Include="Models\Crypto.cs" />
+    <Compile Include="Models\Foursquare\Location.cs" />
+    <Compile Include="Models\Foursquare\VenueCategory.cs" />
     <Compile Include="Models\Haversine.cs" />
     <Compile Include="Models\Item.cs">
       <DependentUpon>MapItPrices.tt</DependentUpon>
