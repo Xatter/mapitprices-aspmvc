@@ -44,6 +44,23 @@ namespace MapItPrices.Models
         {
             string fullAddress = store.Address + ", " + store.City + ", " + store.State;
 
+            var res = GeocodeWebCall(fullAddress);
+
+            store.Latitude = res.Results[0].Geometry.Location.Lat;
+            store.Longitude = res.Results[0].Geometry.Location.Lng;
+        }
+
+        internal static void GeoCodeStore(BeerModels.BeerStore store)
+        {
+            string fullAddress = store.Address.Street + ", " + store.Address.City + ", " + store.Address.State;
+
+            var res = GeocodeWebCall(fullAddress);
+            store.Latitude = res.Results[0].Geometry.Location.Lat;
+            store.Longitude = res.Results[0].Geometry.Location.Lng;
+        }
+
+        private static GeoResponse GeocodeWebCall(string fullAddress)
+        {
             string url = string.Format(
                 "http://maps.google.com/maps/api/geocode/json?address={0}&region=dk&sensor=false",
                 HttpUtility.HtmlEncode(fullAddress));
@@ -53,8 +70,7 @@ namespace MapItPrices.Models
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(GeoResponse));
             var res = (GeoResponse)serializer.ReadObject(request.GetResponse().GetResponseStream());
-            store.Latitude = res.Results[0].Geometry.Location.Lat;
-            store.Longitude = res.Results[0].Geometry.Location.Lng;
+            return res;
         }
 
         public bool EditStore(Store newStoreValues)
@@ -98,5 +114,7 @@ namespace MapItPrices.Models
                 return -1;
             }
         }
+
+
     }
 }

@@ -25,7 +25,7 @@ namespace MapItPrices.Controllers
 
         [HttpPost]
         [Compress]
-        public JsonResult FoursquareLogin(LoginModel login)
+        public JsonResult FoursquareLogin(LoginRequest login)
         {
             User user = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == login.email.ToUpper());
 
@@ -52,7 +52,7 @@ namespace MapItPrices.Controllers
 
         [HttpPost]
         [Compress]
-        public JsonResult Login2(LoginModel login)
+        public JsonResult Login2(LoginRequest login)
         {
             User user = null;
             MapItResponse response = new MapItResponse();
@@ -221,17 +221,23 @@ namespace MapItPrices.Controllers
             }
 
             var stores = from s in MapItDB.Stores.AsEnumerable()
-                         select new BeerStoreResult(s);
+                         select new BeerStore(s);
 
-            List<BeerStoreResult> storestoreturn = new List<BeerStoreResult>();
+            List<BeerStore> storestoreturn = new List<BeerStore>();
             foreach (var store in stores)
             {
+                if (store.Latitude == null || store.Longitude == null)
+                {
+                    GeoCodeStoresWithoutGPS(store);
+                }
                 store.Distance = Haversine.Distance(lat, lng, store.Latitude, store.Longitude);
                 storestoreturn.Add(store);
             }
 
             return Json(storestoreturn.OrderBy(s => s.Distance));
         }
+
+
 
         [HttpPost]
         [Compress]
@@ -252,16 +258,51 @@ namespace MapItPrices.Controllers
             var stores = from s in MapItDB.StoreItems.AsEnumerable()
                          where s.Item.Categories.Any(c => c.Name == "Beer")
                          group s by s.Store into storegroup
-                         select new BeerStoreResult(storegroup.Key);
+                         select new BeerStore(storegroup.Key);
 
-            List<BeerStoreResult> storestoreturn = new List<BeerStoreResult>();
+            List<BeerStore> storestoreturn = new List<BeerStore>();
             foreach (var store in stores)
             {
+                if (store.Latitude == null || store.Longitude == null)
+                {
+                    GeoCodeStoresWithoutGPS(store);
+                }
+
                 store.Distance = Haversine.Distance(lat, lng, store.Latitude, store.Longitude);
+                store.Distance *= 1000; // Kilometers to Meters
                 storestoreturn.Add(store);
             }
 
             return Json(storestoreturn.OrderBy(s => s.Distance));
+        }
+
+        [HttpPost]
+        [Compress]
+        public JsonResult GetNearbyStores(LocationBasedRequest request)
+        {
+            MapItResponse response = new MapItResponse();
+
+            MapItPrices.Models.Ellipsoid.BoundingBox box = Ellipsoid.FindBoundingBox(request.Latitude, request.Longitude, 9.0);
+
+            var stores = from s in MapItDB.StoreItems.AsEnumerable()
+                         where s.Item.Categories.Any(c => c.Name == "Beer") &&
+                         s.Store.Latitude > box.LatMin &&
+                         s.Store.Latitude < box.LatMax &&
+                         s.Store.Longitude > box.LngMin &&
+                         s.Store.Longitude < box.LngMax
+                         group s by s.Store into storegroup
+                         select new BeerStore(storegroup.Key);
+
+            List<BeerStore> storestoreturn = new List<BeerStore>();
+            foreach (var store in stores)
+            {
+                store.Distance = Haversine.Distance(request.Latitude, request.Longitude, store.Latitude, store.Longitude);
+                store.Distance *= 1000; // Kilometers to Meters
+                storestoreturn.Add(store);
+            }
+
+            response.Response.stores = storestoreturn.OrderBy(s => s.Distance).ToArray();
+            return Json(response);
         }
 
 
@@ -289,6 +330,30 @@ namespace MapItPrices.Controllers
                         };
 
             return Json(items.OrderBy(i => i.Price));
+        }
+
+        [HttpPost]
+        [Compress]
+        public JsonResult GetItemPrices2(LocationBasedRequest request)
+        {
+            MapItResponse response = new MapItResponse();
+
+            MapItPrices.Models.Ellipsoid.BoundingBox box = Ellipsoid.FindBoundingBox(request.Latitude, request.Longitude, 9.0);
+
+            // Do an in-memory JOIN so we can actually use new BeerItem()
+            var users = MapItDB.Users;
+            var items = from item in MapItDB.StoreItems.AsEnumerable()
+                        where item.Item.Categories.Any(c => c.Name == "Beer") &&
+                            item.Store.Latitude > box.LatMin &&
+                            item.Store.Latitude < box.LatMax &&
+                            item.Store.Longitude > box.LngMin &&
+                            item.Store.Longitude < box.LngMax
+                        join user in users on item.UserID equals user.ID
+                        select new BeerItem(item, user);
+
+            response.Response.items = items.OrderBy(i => i.Price).ToArray();
+
+            return Json(response);
         }
 
         [HttpPost]
@@ -331,14 +396,7 @@ namespace MapItPrices.Controllers
         {
             MapItResponse response = new MapItResponse();
 
-            if (request.item == null)
-            {
-                response.Meta.Code = Meta.BADREQUEST;
-                response.Meta.ErrorMessage = "invalid request. No Item selected";
-                return Json(response);
-            }
-
-            int storeid = request.item.StoreId;
+            int storeid = request.StoreId;
 
             if (storeid == 0)
             {
@@ -669,13 +727,24 @@ namespace MapItPrices.Controllers
         {
             MapItResponse response = new MapItResponse();
 
+            if (request.StoreId == 0)
+            {
+                response.Meta.Code = Meta.BADREQUEST;
+                response.Meta.ErrorMessage = "Bad Store Request [" + request.StoreId + "]";
+            }
+
             var store = MapItDB.Stores.SingleOrDefault(s => s.ID == request.StoreId);
             if (store != null)
             {
-                response.Response.store = new BeerStoreResult(store);
+                response.Response.store = new BeerStore(store);
             }
 
             return Json(response);
+        }
+
+        private void GeoCodeStoresWithoutGPS(BeerStore store)
+        {
+            CommonDBActions.GeoCodeStore(store);
         }
 
         private void GeoCodeStoresWithoutGPS(int itemid)

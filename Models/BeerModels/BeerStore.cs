@@ -4,17 +4,19 @@ using System.Linq;
 using System.Web;
 using MapItPrices.Models;
 
-namespace MapItPrices.ViewModels
+namespace MapItPrices.Models.BeerModels
 {
-    public class BeerStoreResult
+    public class BeerStore
     {
-        public BeerStoreResult(Store store)
+        public BeerStore(Store store)
         {
             ID = store.ID;
             Name = store.Name;
             Longitude = store.Longitude ?? 0;
             Latitude = store.Latitude ?? 0;
-            Address = new
+            FoursquareVenueID = store.FoursquareVenueID;
+
+            Address = new Address()
             {
                 Street = store.Address,
                 City = store.City,
@@ -27,6 +29,7 @@ namespace MapItPrices.ViewModels
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double Distance { get; set; }
-        public object Address { get; set; }
+        public Address Address { get; set; }
+        public string FoursquareVenueID { get; set; }
     }
 }

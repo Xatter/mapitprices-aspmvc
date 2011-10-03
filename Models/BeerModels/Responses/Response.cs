@@ -10,8 +10,8 @@ namespace MapItPrices.Models.BeerModels.Responses
     {
         public BeerUser user { get; set; }
         public BeerItem item { get; set; }
-        public BeerStoreResult store { get; set; }
+        public BeerStore store { get; set; }
         public BeerItem[] items { get; set; }
-        public BeerStoreResult[] stores { get; set; }
+        public BeerStore[] stores { get; set; }
     }
 }

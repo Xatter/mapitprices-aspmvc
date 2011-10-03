@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MapItPrices.Models.BeerModels
 {
-    public class LoginModel : BaseRequest
+    public class LoginRequest : BaseRequest
     {
         public string SessionToken { get; set; }
         public string email { get; set; }

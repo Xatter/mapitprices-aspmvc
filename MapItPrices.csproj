@@ -123,17 +123,21 @@
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BeerController.cs" />
+    <Compile Include="Models\BeerModels\Address.cs" />
+    <Compile Include="Models\BeerModels\Requests\LocationBasedRequest.cs" />
     <Compile Include="Models\BeerModels\Requests\StoreItemsRequest.cs" />
     <Compile Include="Models\BeerModels\BeerItem.cs" />
-    <Compile Include="Models\BeerModels\NormalizedUser.cs" />
+    <Compile Include="Models\BeerModels\BeerUser.cs" />
     <Compile Include="Models\BeerModels\Requests\StoreRequest.cs" />
+    <Compile Include="Models\BeerModels\Responses\LoginResponse.cs" />
+    <Compile Include="Models\BeerModels\Responses\Response.cs" />
+    <Compile Include="Models\Ellipsoid.cs" />
     <Compile Include="Models\Foursquare\Venue.cs" />
     <Compile Include="Models\BeerModels\Requests\ReportPriceRequest.cs" />
     <Compile Include="Models\BeerModels\Responses\MapItResponse.cs" />
     <Compile Include="Models\BeerModels\Requests\BaseRequest.cs" />
     <Compile Include="Models\BeerModels\Requests\LoginModel.cs" />
     <Compile Include="Models\BeerModels\Responses\Meta.cs" />
-    <Compile Include="Models\BeerModels\Responses\Response.cs" />
     <Compile Include="Models\Foursquare\FoursquareUser.cs" />
     <Compile Include="Controllers\GroupedStoreItem.cs" />
     <Compile Include="Controllers\MobileController.cs" />
@@ -195,7 +199,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\BeerStoreResult.cs" />
+    <Compile Include="Models\BeerModels\BeerStore.cs" />
     <Compile Include="ViewModels\ReportPriceViewModel.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\APIController.cs" />

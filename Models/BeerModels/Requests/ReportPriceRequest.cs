@@ -11,5 +11,8 @@ namespace MapItPrices.Models.BeerModels.Requests
         public StoreItem item { get; set; }
         public Venue store { get; set; }
         public double newprice { get; set; }
+
+        public double lat { get; set; }
+        public double lng { get; set; }
     }
 }

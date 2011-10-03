@@ -37,7 +37,7 @@ namespace MapItPrices.Models
                 Longitude = long2 ?? 0
             };
 
-            return Haversine.Distance(pos1, pos2, DistanceType.Miles);
+            return Haversine.Distance(pos1, pos2, DistanceType.Kilometers);
         }
 
         /// <summary>

@@ -9,5 +9,6 @@ namespace MapItPrices.Models.BeerModels.Requests
     public class StoreItemsRequest
     {
         public StoreItem item { get; set; }
+        public int StoreId { get; set; }
     }
 }
