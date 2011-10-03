@@ -141,15 +141,16 @@ namespace MapItPrices.Controllers
         public JsonResult CreateUser(FormCollection collection)
         {
             string email = collection["email"];
+
             if (!string.IsNullOrEmpty(email))
             {
-                email = email.Trim().ToUpper();
+                email = email.Trim();
             }
 
             string password = collection["password"];
             string username = collection["username"];
 
-            var usercheck = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == email);
+            var usercheck = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == email.ToUpper());
 
             if (usercheck == null)
             {
@@ -162,13 +163,7 @@ namespace MapItPrices.Controllers
                 newUser.SessionToken = Session.SessionID;
                 MapItDB.SaveChanges();
 
-                return Json(new
-                {
-                    ID = newUser.ID,
-                    Username = newUser.Username,
-                    Email = newUser.Email,
-                    SessionToken = newUser.SessionToken
-                });
+                return Json(new BeerUser(newUser));
             }
             else if (usercheck.OpenIDs != null)
             {
@@ -334,13 +329,26 @@ namespace MapItPrices.Controllers
         [Compress]
         public JsonResult GetAllItemsAtStore2(StoreItemsRequest request)
         {
+            MapItResponse response = new MapItResponse();
+
+            if (request.item == null)
+            {
+                response.Meta.Code = Meta.BADREQUEST;
+                response.Meta.ErrorMessage = "invalid request. No Item selected";
+                return Json(response);
+            }
+
             int storeid = request.item.StoreId;
 
             if (storeid == 0)
             {
                 // that's a problem.
+                response.Meta.Code = Meta.BADREQUEST;
+                response.Meta.ErrorMessage = "invalid [StoreID=storeid]";
+                return Json(response);
             }
 
+            // Do an in-memory JOIN so we can actually use new BeerItem()
             var users = MapItDB.Users;
             var items = from item in MapItDB.StoreItems.AsEnumerable()
                         where item.StoreId == storeid &&
@@ -348,7 +356,9 @@ namespace MapItPrices.Controllers
                         join user in users on item.UserID equals user.ID
                         select new BeerItem(item, user);
 
-            return Json(items.OrderBy(i => i.Name));
+            response.Response.items = items.OrderBy(i => i.Name).ToArray();
+
+            return Json(response);
         }
 
         [HttpPost]

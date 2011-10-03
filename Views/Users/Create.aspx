@@ -25,14 +25,6 @@
             </div>            
             
             <div class="editor-label">
-                <%: Html.LabelFor(model => model.User.RealName) %>
-            </div>
-            <div class="editor-field">
-                <%: Html.TextBoxFor(model => model.User.RealName) %>
-                <%: Html.ValidationMessageFor(model => model.User.RealName) %>
-            </div>
-
-            <div class="editor-label">
                 <%: Html.LabelFor(model => model.User.Email) %>
             </div>
 

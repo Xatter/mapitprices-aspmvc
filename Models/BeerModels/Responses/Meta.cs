@@ -16,6 +16,7 @@ namespace MapItPrices.Models.BeerModels.Responses
 
         public static readonly string NOCONTENT = "204";
         public static readonly string RESETCONTENT = "205";
+        public static readonly string BADREQUEST = "400";
 
         public string Code { get; set; }
         public string ErrorMessage { get; set; }

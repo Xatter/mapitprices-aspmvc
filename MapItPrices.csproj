@@ -357,7 +357,6 @@
     <Content Include="Scripts\openid-jquery.js" />
     <Content Include="Elmah-SQLServer.sql" />
     <Content Include="Views\Item\Details.aspx" />
-    <Content Include="Views\Map\Index.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
     <Content Include="Views\ShoppingList\Index.aspx" />
     <Content Include="Views\Users\Authenticate.aspx" />
