@@ -182,6 +182,54 @@ namespace MapItPrices.Controllers
 
         [HttpPost]
         [Compress]
+        public JsonResult CreateUser(LoginRequest request)
+        {
+            MapItResponse response = new MapItResponse();
+            var usercheck = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == request.email.ToUpper());
+
+            if (usercheck == null)
+            {
+                usercheck = MapItDB.Users.SingleOrDefault(u => u.Username.ToUpper() == request.username.ToUpper());
+                if (usercheck != null)
+                {
+                    response.Meta.Code = Meta.BADREQUEST;
+                    response.Meta.ErrorMessage = "Username already exists. Please choose another.";
+                    return Json(response);
+                }
+
+                User newUser = new User();
+                newUser.Email = request.email;
+                newUser.Password = request.password;
+                newUser.Username = request.username;
+
+                MapItDB.Users.Add(newUser);
+                newUser.SessionToken = Session.SessionID;
+                MapItDB.SaveChanges();
+
+                response.Response.user = new BeerUser(newUser);
+                response.Meta.Code = Meta.CREATED;
+
+                return Json(response);
+            }
+            else if (usercheck.OpenIDs != null)
+            {
+                // If email already exists and it has an OpenID then just update the password field
+                usercheck.Password = request.password;
+                usercheck.SessionToken = Session.SessionID;
+                MapItDB.SaveChanges();
+                response.Response.user = new BeerUser(usercheck);
+                return Json(response);
+            }
+            else
+            {
+                response.Meta.Code = Meta.BADREQUEST;
+                response.Meta.ErrorMessage = "Email address already exists.";
+                return Json(response);
+            }            
+        }
+
+        [HttpPost]
+        [Compress]
         public JsonResult GetItemPricesByUPC(FormCollection collection)
         {
             string upc = collection["upc"];
@@ -351,6 +399,18 @@ namespace MapItPrices.Controllers
                         join user in users on item.UserID equals user.ID
                         select new BeerItem(item, user);
 
+            if (items.Count() == 0)
+            {
+                box = Ellipsoid.FindBoundingBox(40.75, -73.98, 9.0);
+                items = from item in MapItDB.StoreItems.AsEnumerable()
+                            where item.Item.Categories.Any(c => c.Name == "Beer") &&
+                                item.Store.Latitude > box.LatMin &&
+                                item.Store.Latitude < box.LatMax &&
+                                item.Store.Longitude > box.LngMin &&
+                                item.Store.Longitude < box.LngMax
+                            join user in users on item.UserID equals user.ID
+                            select new BeerItem(item, user);
+            }
             response.Response.items = items.OrderBy(i => i.Price).ToArray();
 
             return Json(response);
