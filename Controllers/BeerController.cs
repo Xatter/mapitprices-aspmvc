@@ -182,7 +182,7 @@ namespace MapItPrices.Controllers
 
         [HttpPost]
         [Compress]
-        public JsonResult CreateUser(LoginRequest request)
+        public JsonResult CreateUser2(LoginRequest request)
         {
             MapItResponse response = new MapItResponse();
             var usercheck = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == request.email.ToUpper());
@@ -211,7 +211,7 @@ namespace MapItPrices.Controllers
 
                 return Json(response);
             }
-            else if (usercheck.OpenIDs != null)
+            else if (usercheck.OpenIDs != null && usercheck.OpenIDs.Count > 0)
             {
                 // If email already exists and it has an OpenID then just update the password field
                 usercheck.Password = request.password;
