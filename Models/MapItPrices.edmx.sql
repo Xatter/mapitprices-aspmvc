@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 09/29/2011 16:48:18
--- Generated from EDMX file: T:\Codes\C#\mapitprices\Models\MapItPrices.edmx
+-- Date Created: 10/04/2011 10:14:41
+-- Generated from EDMX file: C:\mapitprices\Models\MapItPrices.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -148,7 +148,7 @@ CREATE TABLE [dbo].[Stores] (
     [Name] nvarchar(100)  NOT NULL,
     [Address] nvarchar(200)  NULL,
     [City] nvarchar(30)  NULL,
-    [State] nvarchar(2)  NULL,
+    [State] nvarchar(50)  NULL,
     [Zip] nvarchar(10)  NULL,
     [Latitude] float  NULL,
     [Longitude] float  NULL,

@@ -10,6 +10,8 @@ using MapItPrices.Models.Foursquare;
 using MapItPrices.Models.BeerModels;
 using MapItPrices.Models.BeerModels.Requests;
 using MapItPrices.Models.BeerModels.Responses;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace MapItPrices.Controllers
 {
@@ -33,7 +35,7 @@ namespace MapItPrices.Controllers
 
             if (user != null)
             {
-                response.Response.user = new BeerUser(user);
+                response.Response.user = new LoginResponse(user);
             }
             else
             {
@@ -44,7 +46,7 @@ namespace MapItPrices.Controllers
                 MapItDB.Users.Add(newUser);
                 MapItDB.SaveChanges();
 
-                response.Response.user = new BeerUser(newUser);
+                response.Response.user = new LoginResponse(newUser);
             }
 
             return Json(response);
@@ -91,7 +93,7 @@ namespace MapItPrices.Controllers
                 MapItDB.SaveChanges();
             }
 
-            response.Response.user = new BeerUser(user);
+            response.Response.user = new LoginResponse(user);
 
             return Json(response);
         }
@@ -185,6 +187,13 @@ namespace MapItPrices.Controllers
         public JsonResult CreateUser2(LoginRequest request)
         {
             MapItResponse response = new MapItResponse();
+            if (string.IsNullOrWhiteSpace(request.username))
+            {
+                response.Meta.Code = Meta.BADREQUEST;
+                response.Meta.ErrorMessage = "You can't have a blank username.";
+                return Json(response);
+            }
+
             var usercheck = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == request.email.ToUpper());
 
             if (usercheck == null)
@@ -225,7 +234,7 @@ namespace MapItPrices.Controllers
                 response.Meta.Code = Meta.BADREQUEST;
                 response.Meta.ErrorMessage = "Email address already exists.";
                 return Json(response);
-            }            
+            }
         }
 
         [HttpPost]
@@ -403,13 +412,13 @@ namespace MapItPrices.Controllers
             {
                 box = Ellipsoid.FindBoundingBox(40.75, -73.98, 9.0);
                 items = from item in MapItDB.StoreItems.AsEnumerable()
-                            where item.Item.Categories.Any(c => c.Name == "Beer") &&
-                                item.Store.Latitude > box.LatMin &&
-                                item.Store.Latitude < box.LatMax &&
-                                item.Store.Longitude > box.LngMin &&
-                                item.Store.Longitude < box.LngMax
-                            join user in users on item.UserID equals user.ID
-                            select new BeerItem(item, user);
+                        where item.Item.Categories.Any(c => c.Name == "Beer") &&
+                            item.Store.Latitude > box.LatMin &&
+                            item.Store.Latitude < box.LatMax &&
+                            item.Store.Longitude > box.LngMin &&
+                            item.Store.Longitude < box.LngMax
+                        join user in users on item.UserID equals user.ID
+                        select new BeerItem(item, user);
             }
             response.Response.items = items.OrderBy(i => i.Price).ToArray();
 
@@ -524,7 +533,6 @@ namespace MapItPrices.Controllers
 
 
         [HttpPost]
-        [Compress]
         public JsonResult ReportPrice2(ReportPriceRequest request)
         {
             checkAndSetCurrentUser(); // TODO: This should be an AuthorizationAttribute somehow
@@ -561,6 +569,7 @@ namespace MapItPrices.Controllers
                 store.State = request.store.location.state;
                 store.Latitude = request.store.location.lat;
                 store.Longitude = request.store.location.lng;
+                store.Created = DateTime.Now;
                 store.User = _currentUser;
 
                 MapItDB.Stores.Add(store);
@@ -575,17 +584,30 @@ namespace MapItPrices.Controllers
             }
 
             newPrice.ItemId = request.item.ItemId;
+            newPrice.Item = MapItDB.Items.SingleOrDefault(i => i.ID == request.item.ItemId);
             newPrice.Store = store;
             newPrice.User = _currentUser;
             newPrice.Price = (decimal)request.newprice;
             newPrice.Quantity = quantity;
             newPrice.LastUpdated = DateTime.Now;
 
-            MapItDB.SaveChanges();
-
-            response.Response.item = new BeerItem(newPrice, newPrice.User);
-            response.Meta.Code = Meta.CREATED;
-
+            try
+            {
+                MapItDB.SaveChanges();
+                response.Response.item = new BeerItem(newPrice, newPrice.User);
+                response.Meta.Code = Meta.CREATED;
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                response.Meta.Code = Meta.ERROR;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+            }
 
             return Json(response);
         }

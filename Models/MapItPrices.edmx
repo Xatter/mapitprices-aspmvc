@@ -116,7 +116,7 @@
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
     <Property Name="Address" Type="nvarchar" Nullable="true" MaxLength="200" />
     <Property Name="City" Type="nvarchar" Nullable="true" MaxLength="30" />
-    <Property Name="State" Type="nvarchar" Nullable="true" MaxLength="2" />
+    <Property Name="State" Type="nvarchar" Nullable="true" MaxLength="50" />
     <Property Name="Zip" Type="nvarchar" Nullable="true" MaxLength="10" />
     <Property Name="Latitude" Type="float" Nullable="true" />
     <Property Name="Longitude" Type="float" Nullable="true" />
@@ -508,7 +508,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="Address" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
           <Property Name="City" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
-          <Property Name="State" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
+          <Property Name="State" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Zip" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="StoreItems" Relationship="MapItPricesModel.FK_StoreItems_Stores" FromRole="Store" ToRole="StoreItem" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Public" />
           <Property Type="Double" Name="Latitude" Nullable="true" />
