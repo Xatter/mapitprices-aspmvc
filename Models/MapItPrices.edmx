@@ -495,7 +495,7 @@
           <NavigationProperty Name="Item" Relationship="MapItPricesModel.FK_StoreItems_Items" FromRole="StoreItem" ToRole="Item" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Public" />
           <NavigationProperty Name="Store" Relationship="MapItPricesModel.FK_StoreItems_Stores" FromRole="StoreItem" ToRole="Store" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Public" />
           <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="MapItPricesModel.UserStoreItem" FromRole="StoreItem" ToRole="User" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <NavigationProperty Name="User" Relationship="MapItPricesModel.UserStoreItem" FromRole="StoreItem" ToRole="User" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="DateTime" Name="Created" Nullable="false" a:StoreGeneratedPattern="Computed" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="Int32" Name="Quantity" />

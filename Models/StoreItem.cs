@@ -24,6 +24,6 @@ namespace MapItPrices.Models
     
         public virtual Item Item { get; set; }
         public virtual Store Store { get; set; }
-        public virtual User User { internal get; set; }
+        public virtual User User { get; set; }
     }
 }

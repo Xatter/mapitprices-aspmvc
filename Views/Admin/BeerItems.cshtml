@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MapItPrices.Models.StoreItem>
+@{
+    ViewBag.Title = "BeerItems";
+}
+<h2>
+    BeerItems</h2>
+<table>
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            Item
+        </th>
+        <th>
+            Store
+        </th>
+
+        <th>
+            Price
+        </th>
+        <th>
+            LastUpdated
+        </th>
+        <th>
+            Created
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Store.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+        </tr>
+    }
+</table>
