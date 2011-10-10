@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 10/04/2011 10:14:41
--- Generated from EDMX file: C:\mapitprices\Models\MapItPrices.edmx
+-- Date Created: 10/10/2011 07:50:20
+-- Generated from EDMX file: T:\Codes\C#\mapitprices\Models\MapItPrices.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -172,7 +172,7 @@ CREATE TABLE [dbo].[Users] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [Created] datetime  NOT NULL,
     [LastUpdated] datetime  NOT NULL,
-    [Password] nvarchar(max)  NOT NULL,
+    [Password] nvarchar(max)  NULL,
     [SessionToken] nvarchar(max)  NOT NULL,
     [Username] nvarchar(max)  NOT NULL
 );

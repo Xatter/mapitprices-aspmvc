@@ -141,7 +141,7 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Created" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
-    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="true" />
     <Property Name="SessionToken" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
@@ -571,7 +571,7 @@
           <NavigationProperty Name="ShoppingLists" Relationship="MapItPricesModel.UserShoppingList" FromRole="User" ToRole="ShoppingList" />
           <Property Type="DateTime" Name="Created" Nullable="false" a:StoreGeneratedPattern="Computed" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
-          <Property Type="String" Name="Password" Nullable="false" />
+          <Property Type="String" Name="Password" Nullable="true" />
           <Property Type="String" Name="SessionToken" Nullable="false" />
           <Property Type="String" Name="Username" Nullable="false" />
         </EntityType>

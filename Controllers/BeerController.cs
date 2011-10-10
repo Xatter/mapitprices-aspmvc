@@ -12,6 +12,7 @@ using MapItPrices.Models.BeerModels.Requests;
 using MapItPrices.Models.BeerModels.Responses;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using Elmah;
 
 namespace MapItPrices.Controllers
 {
@@ -44,7 +45,24 @@ namespace MapItPrices.Controllers
                 newUser.Username = login.username;
                 newUser.SessionToken = Session.SessionID;
                 MapItDB.Users.Add(newUser);
-                MapItDB.SaveChanges();
+                try
+                {
+                    MapItDB.SaveChanges();
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    response.Meta.Code = Meta.ERROR;
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            //TODO: something with this information. Prefereably Elmah
+                            response.Meta.ErrorMessage += validationError;
+                        }
+                    }
+
+                    return Json(response);
+                }
 
                 response.Response.user = new LoginResponse(newUser);
             }
@@ -604,7 +622,7 @@ namespace MapItPrices.Controllers
                 {
                     foreach (var validationError in validationErrors.ValidationErrors)
                     {
-                        Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        //TODO: something with this information. Prefereably Elmah
                     }
                 }
             }
