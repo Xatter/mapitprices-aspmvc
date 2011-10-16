@@ -797,6 +797,52 @@ namespace MapItPrices.Controllers
         }
 
         [HttpPost]
+        public JsonResult CreateItem2(BeerItem beeritem)
+        {
+            MapItResponse response = new MapItResponse();
+            response.Meta.Code = Meta.CREATED;
+
+            if (string.IsNullOrWhiteSpace(beeritem.Name))
+            {
+                response.Meta.Code = Meta.BADREQUEST;
+                response.Meta.ErrorMessage = "A Name is Required.";
+                return Json(response);
+            }
+
+            if (string.IsNullOrWhiteSpace(beeritem.Size))
+            {
+                response.Meta.Code = Meta.BADREQUEST;
+                response.Meta.ErrorMessage = "A Size is Required.";
+                return Json(response);
+            }
+
+            var beerCategory = MapItDB.Categories.SingleOrDefault(c => c.Name == "Beer");
+
+            Item item = new Item();
+            item.Name = beeritem.Name.Trim();
+            item.Brand = (beeritem.Brand ?? String.Empty).Trim();
+            item.Size = beeritem.Size.Trim();
+            item.UPC = (beeritem.UPC ?? String.Empty).Trim();
+            item.Categories.Add(beerCategory);
+            item.User = _currentUser;
+
+            MapItDB.Items.Add(item);
+
+            try
+            {
+                MapItDB.SaveChanges();
+                response.Response.item = new BeerItem(item, _currentUser);
+            }
+            catch(Exception e)
+            {
+                response.Meta.Code = Meta.ERROR;
+                response.Meta.ErrorMessage = e.Message;
+            }
+
+            return Json(response);
+        }
+
+        [HttpPost]
         [Compress]
         public JsonResult GetStore(FormCollection collection)
         {

@@ -7,11 +7,15 @@ namespace MapItPrices.Models.BeerModels
 {
     public class BeerItem
     {
+        public BeerItem()
+        {
+        }
 
         public BeerItem(StoreItem newPrice, User user)
         {
             this.ItemId = newPrice.ItemId;
             this.Name = newPrice.Item.Name;
+            this.Brand = newPrice.Item.Brand;
             this.Size = newPrice.Item.Size;
             this.UPC = newPrice.Item.UPC;
             this.StoreId = newPrice.StoreId;
@@ -25,6 +29,7 @@ namespace MapItPrices.Models.BeerModels
         {
             this.ItemId = item.ID;
             this.Name = item.Name;
+            this.Brand = item.Brand;
             this.Size = item.Size;
             this.UPC = item.UPC;
             this.LastUpdated = item.LastUpdated;
@@ -34,6 +39,7 @@ namespace MapItPrices.Models.BeerModels
         public int ItemId { get; set; }
         public int StoreId { get; set; }
         public string Name { get; set; }
+        public string Brand { get; set; }
         public decimal Price { get; set; }
         public int? Quantity { get; set; }
         public DateTime LastUpdated { get; set; }
