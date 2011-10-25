@@ -13,6 +13,7 @@ using MapItPrices.Models.BeerModels.Responses;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using Elmah;
+using System.Net.Mail;
 
 namespace MapItPrices.Controllers
 {
@@ -212,7 +213,7 @@ namespace MapItPrices.Controllers
                 return Json(response);
             }
 
-            var usercheck = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == request.email.ToUpper());
+            var usercheck = MapItDB.Users.FirstOrDefault(u => u.Email.ToUpper() == request.email.ToUpper());
 
             if (usercheck == null)
             {
@@ -224,13 +225,24 @@ namespace MapItPrices.Controllers
                     return Json(response);
                 }
 
+                try
+                {
+                    MailAddress mailAddress = new MailAddress(request.email);
+                }
+                catch (Exception e)
+                {
+                    response.Meta.Code = Meta.BADREQUEST;
+                    response.Meta.ErrorMessage = "Email address appears to be Invalid. Please enter a valid email address.";
+                    return Json(response);
+                }
+              
                 User newUser = new User();
                 newUser.Email = request.email;
                 newUser.Password = request.password;
                 newUser.Username = request.username;
 
                 MapItDB.Users.Add(newUser);
-                newUser.SessionToken = Session.SessionID;
+                newUser.SessionToken = Session.SessionID; 
                 MapItDB.SaveChanges();
 
                 response.Response.user = new BeerUser(newUser);

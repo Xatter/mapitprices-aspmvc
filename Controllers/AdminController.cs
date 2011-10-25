@@ -25,20 +25,8 @@ namespace MapItPrices.Controllers
         }
 
         [Authorize]
-        public ActionResult WhoSignedUp()
-        {
-            return View(MapItDB.BetaSignups);
-        }
-
-        [Authorize]
         public ActionResult BeerItems()
         {
-            //var users = MapItDB.Users;
-            //var items = from item in MapItDB.StoreItems.AsEnumerable()
-            //            where item.Item.Categories.Any(c => c.Name == "Beer")
-            //            join u in users on item.UserID equals u.ID
-            //            select new BeerItem(item, u);
-
             var items = from item in MapItDB.StoreItems
                         where item.Item.Categories.Any(c => c.Name == "Beer")
                         orderby item.LastUpdated descending
@@ -50,7 +38,7 @@ namespace MapItPrices.Controllers
         [Authorize]
         public ActionResult Users()
         {
-            return View(MapItDB.Users);
+            return View(MapItDB.Users.OrderByDescending(u => u.Created));
         }
     }
 }
