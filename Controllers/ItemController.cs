@@ -85,7 +85,7 @@ namespace MapItPrices.Controllers
         [Authorize]
         public ActionResult Edit(Item updatedItem)
         {
-            var item = MapItDB.Items.SingleOrDefault(i => i.ID == updatedItem.ID);
+            var item = MapItDB.Items.FirstOrDefault(i => i.ID == updatedItem.ID);
 
             if (item != null)
             {
@@ -138,7 +138,7 @@ namespace MapItPrices.Controllers
 
             StoreItem storeItem = vm.StoreItem;
 
-            storeItem = MapItDB.StoreItems.SingleOrDefault(i => i.ItemId == vm.StoreItem.Item.ID && i.StoreId == storeItem.Store.ID);
+            storeItem = MapItDB.StoreItems.FirstOrDefault(i => i.ItemId == vm.StoreItem.Item.ID && i.StoreId == storeItem.Store.ID);
             if (storeItem == null)
             {
                 storeItem = new StoreItem();

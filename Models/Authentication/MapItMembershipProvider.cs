@@ -22,7 +22,7 @@ namespace MapItPrices.Models
 
         public override bool ValidateUser(string username, string password)
         {
-            var user = mapitDB.OpenIDs.SingleOrDefault(o => o.ClaimedIdentifier == username);
+            var user = mapitDB.OpenIDs.FirstOrDefault(o => o.ClaimedIdentifier == username);
             return user != null;
         }
 

@@ -72,7 +72,7 @@ namespace MapItPrices.Controllers
         [HttpPost]
         public ActionResult RequestBetaCode(BetaCodeRequest request)
         {
-            var inviteCode = MapItDB.BetaInviteCodes.SingleOrDefault(c => c.InviteCode.ToUpper() == request.BetaCode.ToUpper());
+            var inviteCode = MapItDB.BetaInviteCodes.FirstOrDefault(c => c.InviteCode.ToUpper() == request.BetaCode.ToUpper());
             if (inviteCode == null)
             {
                 request.ErrorMessage = "Invalid Beta Code";
@@ -158,7 +158,7 @@ namespace MapItPrices.Controllers
                     Session["FriendlyIdentifier"] = response.FriendlyIdentifierForDisplay;
                     var identifyer = response.ClaimedIdentifier.ToString();
 
-                    var existingUser = MapItDB.OpenIDs.SingleOrDefault(o => o.ClaimedIdentifier == identifyer);
+                    var existingUser = MapItDB.OpenIDs.FirstOrDefault(o => o.ClaimedIdentifier == identifyer);
 
                     if (existingUser == null)
                     {

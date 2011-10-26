@@ -77,7 +77,7 @@ namespace MapItPrices.Models
         {
             try
             {
-                var store = MapItDB.Stores.SingleOrDefault(s => s.ID == newStoreValues.ID);
+                var store = MapItDB.Stores.FirstOrDefault(s => s.ID == newStoreValues.ID);
                 if (store != null)
                 {
                     store.Name = newStoreValues.Name;

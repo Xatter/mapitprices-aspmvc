@@ -34,7 +34,7 @@ namespace MapItPrices.Controllers
 
             if (Request.IsAuthenticated)
             {
-                var openid = MapItDB.OpenIDs.SingleOrDefault(o => o.ClaimedIdentifier == User.Identity.Name);
+                var openid = MapItDB.OpenIDs.FirstOrDefault(o => o.ClaimedIdentifier == User.Identity.Name);
                 if (openid != null)
                 {
                     ViewData["RealName"] = openid.User.Email;
@@ -54,7 +54,7 @@ namespace MapItPrices.Controllers
                 {
                     if (User != null)
                     {
-                        var openid = this.MapItDB.OpenIDs.SingleOrDefault(o => o.ClaimedIdentifier == User.Identity.Name);
+                        var openid = this.MapItDB.OpenIDs.FirstOrDefault(o => o.ClaimedIdentifier == User.Identity.Name);
                         if (openid != null)
                         {
                             return openid.User;

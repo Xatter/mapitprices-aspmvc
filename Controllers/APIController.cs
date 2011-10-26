@@ -18,7 +18,7 @@ namespace MapItPrices.Controllers
         public APIController()
             : base()
         {
-            _currentUser = MapItDB.Users.SingleOrDefault(u => u.Email == "jim@mapitprices.com");
+            _currentUser = MapItDB.Users.FirstOrDefault(u => u.Email == "jim@mapitprices.com");
             _db = new CommonDBActions(this.MapItDB, _currentUser);
         }
 
@@ -227,7 +227,7 @@ namespace MapItPrices.Controllers
         {
             try
             {
-                var itemprice = MapItDB.StoreItems.SingleOrDefault(i => i.ItemId == itemid && i.StoreId == storeid);
+                var itemprice = MapItDB.StoreItems.FirstOrDefault(i => i.ItemId == itemid && i.StoreId == storeid);
 
                 if (itemprice == null)
                 {

@@ -15,7 +15,7 @@ namespace MapItPrices.Models.Attributes
             string sessionToken = request.Headers["SessionToken"];
 
             MapItPricesEntities db = new MapItPricesEntities();
-            User user = db.Users.SingleOrDefault(u => u.SessionToken == sessionToken);
+            User user = db.Users.FirstOrDefault(u => u.SessionToken == sessionToken);
 
             if (user == null)
                 return false;

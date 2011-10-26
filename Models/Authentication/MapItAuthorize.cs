@@ -26,7 +26,7 @@ namespace MapItPrices.Models
             if (!user.Identity.IsAuthenticated)
                 return false;
 
-            var openid = mapitDB.OpenIDs.SingleOrDefault(o => o.ClaimedIdentifier == user.Identity.Name);
+            var openid = mapitDB.OpenIDs.FirstOrDefault(o => o.ClaimedIdentifier == user.Identity.Name);
             
             if (openid == null)
             {

@@ -26,7 +26,7 @@ namespace MapItPrices.Controllers
                 return RedirectToAction("Index");
             }
             
-            var alreadyExists = MapItDB.BetaSignups.SingleOrDefault(s => s.Email.ToUpper() == email.ToUpper());
+            var alreadyExists = MapItDB.BetaSignups.FirstOrDefault(s => s.Email.ToUpper() == email.ToUpper());
 
             if (alreadyExists == null)
             {

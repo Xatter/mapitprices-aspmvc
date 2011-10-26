@@ -24,14 +24,14 @@ namespace MapItPrices.Controllers
         public BeerController()
         {
             // some default user
-            _currentUser = MapItDB.Users.SingleOrDefault(u => u.Email == "jim@mapitprices.com");
+            _currentUser = MapItDB.Users.FirstOrDefault(u => u.Email == "jim@mapitprices.com");
         }
 
         [HttpPost]
         [Compress]
         public JsonResult FoursquareLogin(LoginRequest login)
         {
-            User user = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == login.email.ToUpper());
+            User user = MapItDB.Users.FirstOrDefault(u => u.Email.ToUpper() == login.email.ToUpper());
 
             MapItResponse response = new MapItResponse();
 
@@ -81,7 +81,7 @@ namespace MapItPrices.Controllers
             // SessionToken login
             if (!string.IsNullOrEmpty(login.SessionToken))
             {
-                user = MapItDB.Users.SingleOrDefault(u => u.SessionToken == login.SessionToken);
+                user = MapItDB.Users.FirstOrDefault(u => u.SessionToken == login.SessionToken);
                 if (user == null)
                 {
                     response.Meta.Code = "401";
@@ -91,7 +91,7 @@ namespace MapItPrices.Controllers
             else
             {
                 // Username/Password login
-                user = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == login.email.ToUpper());
+                user = MapItDB.Users.FirstOrDefault(u => u.Email.ToUpper() == login.email.ToUpper());
 
                 if (user == null)
                 {
@@ -126,14 +126,14 @@ namespace MapItPrices.Controllers
 
             if (!string.IsNullOrEmpty(sessionToken))
             {
-                user = MapItDB.Users.SingleOrDefault(u => u.SessionToken == sessionToken);
+                user = MapItDB.Users.FirstOrDefault(u => u.SessionToken == sessionToken);
             }
             else
             {
                 string username = collection["email"];
                 string password = collection["password"];
 
-                user = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == username.ToUpper());
+                user = MapItDB.Users.FirstOrDefault(u => u.Email.ToUpper() == username.ToUpper());
 
                 if (user == null)
                     return Json(new { });
@@ -171,7 +171,7 @@ namespace MapItPrices.Controllers
             string password = collection["password"];
             string username = collection["username"];
 
-            var usercheck = MapItDB.Users.SingleOrDefault(u => u.Email.ToUpper() == email.ToUpper());
+            var usercheck = MapItDB.Users.FirstOrDefault(u => u.Email.ToUpper() == email.ToUpper());
 
             if (usercheck == null)
             {
@@ -217,7 +217,7 @@ namespace MapItPrices.Controllers
 
             if (usercheck == null)
             {
-                usercheck = MapItDB.Users.SingleOrDefault(u => u.Username.ToUpper() == request.username.ToUpper());
+                usercheck = MapItDB.Users.FirstOrDefault(u => u.Username.ToUpper() == request.username.ToUpper());
                 if (usercheck != null)
                 {
                     response.Meta.Code = Meta.BADREQUEST;
@@ -588,7 +588,7 @@ namespace MapItPrices.Controllers
             if (quantity == 0)
                 quantity = 1;
 
-            Store store = MapItDB.Stores.SingleOrDefault(s => s.FoursquareVenueID == request.store.id);
+            Store store = MapItDB.Stores.FirstOrDefault(s => s.FoursquareVenueID == request.store.id);
             if (store == null)
             {
                 store = new Store();
@@ -605,7 +605,7 @@ namespace MapItPrices.Controllers
                 MapItDB.Stores.Add(store);
             }
 
-            StoreItem newPrice = MapItDB.StoreItems.SingleOrDefault(s => s.ItemId == request.item.ItemId && s.StoreId == store.ID);
+            StoreItem newPrice = MapItDB.StoreItems.FirstOrDefault(s => s.ItemId == request.item.ItemId && s.StoreId == store.ID);
 
             if (newPrice == null)
             {
@@ -614,7 +614,7 @@ namespace MapItPrices.Controllers
             }
 
             newPrice.ItemId = request.item.ItemId;
-            newPrice.Item = MapItDB.Items.SingleOrDefault(i => i.ID == request.item.ItemId);
+            newPrice.Item = MapItDB.Items.FirstOrDefault(i => i.ID == request.item.ItemId);
             newPrice.Store = store;
             newPrice.User = _currentUser;
             newPrice.Price = (decimal)request.newprice;
@@ -678,7 +678,7 @@ namespace MapItPrices.Controllers
                 quantity = 1;
             }
 
-            var storeitem = MapItDB.StoreItems.SingleOrDefault(s => s.ItemId == itemid && s.StoreId == storeid);
+            var storeitem = MapItDB.StoreItems.FirstOrDefault(s => s.ItemId == itemid && s.StoreId == storeid);
             if (storeitem == null)
             {
                 storeitem = new StoreItem();
@@ -708,7 +708,7 @@ namespace MapItPrices.Controllers
             String sessionToken = this.Request.Headers["SessionToken"];
             if (!string.IsNullOrEmpty(sessionToken))
             {
-                _currentUser = MapItDB.Users.SingleOrDefault(u => u.SessionToken == sessionToken);
+                _currentUser = MapItDB.Users.FirstOrDefault(u => u.SessionToken == sessionToken);
             }
         }
 
@@ -777,7 +777,7 @@ namespace MapItPrices.Controllers
             {
                 return Json(new { });
             }
-            var beerCategory = MapItDB.Categories.SingleOrDefault(c => c.Name == "Beer");
+            var beerCategory = MapItDB.Categories.FirstOrDefault(c => c.Name == "Beer");
 
             string brand = collection["Brand"];
             string size = collection["Size"];
@@ -828,7 +828,7 @@ namespace MapItPrices.Controllers
                 return Json(response);
             }
 
-            var beerCategory = MapItDB.Categories.SingleOrDefault(c => c.Name == "Beer");
+            var beerCategory = MapItDB.Categories.FirstOrDefault(c => c.Name == "Beer");
 
             Item item = new Item();
             item.Name = beeritem.Name.Trim();
@@ -864,7 +864,7 @@ namespace MapItPrices.Controllers
                 return Json(new object { });
             }
 
-            var store = MapItDB.Stores.SingleOrDefault(s => s.ID == storeid);
+            var store = MapItDB.Stores.FirstOrDefault(s => s.ID == storeid);
             if (store.Latitude == null && store.Longitude == null)
             {
                 CommonDBActions.GeoCodeStore(store);
@@ -891,7 +891,7 @@ namespace MapItPrices.Controllers
                 response.Meta.ErrorMessage = "Bad Store Request [" + request.StoreId + "]";
             }
 
-            var store = MapItDB.Stores.SingleOrDefault(s => s.ID == request.StoreId);
+            var store = MapItDB.Stores.FirstOrDefault(s => s.ID == request.StoreId);
             if (store != null)
             {
                 response.Response.store = new BeerStore(store);
